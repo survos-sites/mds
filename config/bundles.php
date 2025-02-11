@@ -18,4 +18,6 @@ return [
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
     Survos\CoreBundle\SurvosCoreBundle::class => ['all' => true],
     Survos\WorkflowBundle\SurvosWorkflowBundle::class => ['all' => true],
+    Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
+
 ];
