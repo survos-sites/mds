@@ -30,6 +30,7 @@ final class ExtractHandler
 
     public function __invoke(Extract $message): void
     {
+        // we _could_ cache the page data the database if the process gets disrupted.
         // read the data and dispatch then next
 
         $url = $message->url;
