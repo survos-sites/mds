@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Message\Extract;
+use App\Message\ExtractMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Survos\Scraper\Service\ScraperService;
@@ -24,7 +24,6 @@ final class AppScrapeCommand extends InvokableServiceCommand
     use RunsCommands;
     use RunsProcesses;
 
-    const BASE_URL = 'https://mds-data-1.ciim.k-int.com/api/v1/extract';
 
     public function __construct(
         protected EntityManagerInterface            $entityManager,
@@ -56,9 +55,7 @@ EOL
     public function __invoke(
         IO $io,
     ): int {
-        // the 'data' is the output, the .json files, for the next step
-        $url = self::BASE_URL . '?resume=' . $this->apiKey;
-        $this->bus->dispatch(new Extract($url));
-
+        // kick off the search
+        $this->bus->dispatch(new ExtractMessage($this->apiKey));
         return self::SUCCESS;    }
 }

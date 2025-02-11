@@ -1,9 +1,12 @@
 {
     "controllers": {
-        "@survos/workflow-helper-bundle": {
-            "workflow": {
+        "@survos/simple-datatables-bundle": {
+            "table": {
                 "enabled": true,
-                "fetch": "eager"
+                "fetch": "lazy",
+                "autoimport": {
+                    "@survos/simple-datatables/style.css": true
+                }
             }
         },
         "@symfony/ux-turbo": {

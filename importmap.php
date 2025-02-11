@@ -25,4 +25,11 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'simple-datatables' => [
+        'version' => '9.2.2',
+    ],
+    'simple-datatables/dist/style.min.css' => [
+        'version' => '9.2.2',
+        'type' => 'css',
+    ],
 ];
