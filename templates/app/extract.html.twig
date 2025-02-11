@@ -4,6 +4,9 @@
     <twig:simple_datatables
             :data="data"
             :columns="columns">
+        <twig:block name="remaining">
+            {{ row.remaining|number_format }}
+        </twig:block>
         <twig:block name="source">
             {{ row.source.code }}
         </twig:block>

@@ -67,7 +67,7 @@ final class AppController extends AbstractController
         #[MapQueryParameter] int $limit = 10
     ): Response|array
     {
-        $lastExtract = $this->extractRepository->findBy([], ['createdAt' => 'DESC'], 2);
+        $lastExtract = $this->extractRepository->findBy([], ['createdAt' => 'DESC'], 9);
 
         return [
             'columns' => [                'tokenCode',

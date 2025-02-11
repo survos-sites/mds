@@ -29,10 +29,9 @@ final class ExtractHandler
         private readonly MessageBusInterface    $messageBus,
         private readonly RecordRepository       $recordRepository,
         private readonly SourceRepository       $sourceRepository,
-        private ExtractRepository $extractRepository,
+        private ExtractRepository               $extractRepository,
         private HttpClientInterface             $httpClient,
-        private CacheInterface                  $cache, // really only for testing, the pages are small and fast
-        private array $seen = []
+        private array                           $seen = []
     )
     {
     }
@@ -62,17 +61,16 @@ final class ExtractHandler
         }
         $data = $response->toArray();
         $stats = $data['stats'];
-        $duration = 1000* ($response->getInfo()['total_time']);
+        $duration = 1000 * ($response->getInfo()['total_time']);
         $extract
             ->setResponse($data) // for debugging, but huge!  maybe for re-processing
             ->setDuration((int)$duration)
-            ->setLatency($stats['latency']);
-        ;
+            ->setLatency($stats['latency']);;
 //        $this->entityManager->flush(); dd($stats);
-        if (empty($limit)) {
-            $limit = $data['stats']['total'] / $data['stats']['results'];
-        }
-        $url = $data['next_url'] ?? null;
+//        if (empty($limit)) {
+//            $limit = $data['stats']['total'] / $data['stats']['results'];
+//        }
+//        $url = $data['next_url'] ?? null;
         foreach ($data['data'] as $idx => $item) {
             // there can be multiple identifiers.  use the admin uuid if it exists
             $admin = $item['@admin'];
@@ -82,14 +80,13 @@ final class ExtractHandler
             $sourceData = $admin['data_source'];
             $sourceCode = $sourceData['code'];
             // flush after each...
-//            if (!$source = $this->seen[$sourceCode]??false)
-            {
-                if (!$source = $this->sourceRepository->findOneBy(['code' => $sourceCode])) {
-                    assert($sourceData['code'] == $sourceCode, $sourceData['code'] . "<> $sourceCode");
-                    $source = new Source($sourceCode, $sourceData['name'], $sourceData['organisation'], $sourceData['group']);
-                    $this->entityManager->persist($source);
-                    $this->entityManager->flush();
-                }
+            if (array_key_exists($sourceCode, $this->seen)) {
+                $source = $this->seen[$sourceCode];
+            } elseif (!$source = $this->sourceRepository->findOneBy(['code' => $sourceCode])) {
+                assert($sourceData['code'] == $sourceCode, $sourceData['code'] . "<> $sourceCode");
+                $source = new Source($sourceCode, $sourceData['name'], $sourceData['organisation'], $sourceData['group']);
+                $this->entityManager->persist($source);
+                $this->entityManager->flush();
                 $this->seen[$sourceCode] = $source;
             }
 
@@ -99,15 +96,15 @@ final class ExtractHandler
                 continue;
             }
 
-            if (!$record = $this->recordRepository->find($id)) {
-                $record = new Record($id, $item);
-                $this->entityManager->persist($record);
-            }
+//            if (!$record = $this->recordRepository->find($id)) {
+            $record = new Record($id, $item);
+            $this->entityManager->persist($record);
+//            }
 
             $source->addRecord($record);
         }
         if ($data['has_next']) {
-            $remaining =  $data['stats']['remaining'];
+            $remaining = $data['stats']['remaining'];
             $nextToken = $data['resume'];
             $extract
                 ->setRemaining($remaining)
