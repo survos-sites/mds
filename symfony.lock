@@ -52,6 +52,9 @@
             "tests/bootstrap.php"
         ]
     },
+    "survos/core-bundle": {
+        "version": "1.5.503"
+    },
     "survos/deployment-bundle": {
         "version": "1.5.503"
     },
