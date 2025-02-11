@@ -13,6 +13,7 @@
         "doctrine/orm": "^3.3.2",
         "survos/simple-datatables-bundle": "^1.5",
         "survos/workflow-helper-bundle": "^1.5.503",
+        "symfony/amqp-messenger": "^7.2",
         "symfony/asset": "^7.2",
         "symfony/asset-mapper": "^7.2.3",
         "symfony/console": "^7.2.1",

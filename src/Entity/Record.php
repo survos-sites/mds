@@ -9,10 +9,10 @@ use Survos\WorkflowBundle\Traits\MarkingInterface;
 use Survos\WorkflowBundle\Traits\MarkingTrait;
 
 #[ORM\Entity(repositoryClass: RecordRepository::class)]
-class Record implements MarkingInterface, RecordWorkflowInterface
+class Record implements MarkingInterface, RecordWorkflowInterface, \Stringable
 {
     use MarkingTrait;
-    #[ORM\ManyToOne(inversedBy: 'records')]
+    #[ORM\ManyToOne(inversedBy: 'records',cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Source $source = null;
 
@@ -49,4 +49,8 @@ class Record implements MarkingInterface, RecordWorkflowInterface
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return (string) $this->getId();
+    }
 }

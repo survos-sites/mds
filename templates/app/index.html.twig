@@ -11,7 +11,14 @@
         <b>Total: {{ count }}</b>
 
         {% set columns = columnsByClass[class] %}
-        {{ dump(columns) }}
+        <twig:simple_datatables
+            :data="data[class]"
+            :columns="columns">
+            <twig:block name="tokenCode">
+                <span title="{{ row.token }}">{{ row.tokenCode }}</span>
+            </twig:block>
+
+        </twig:simple_datatables>
         @todo: table
     {% endfor %}
 {% endblock %}

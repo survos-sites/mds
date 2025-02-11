@@ -43,12 +43,15 @@ final class ExtractHandler
         // read the data and dispatch then next
 
         $token = $message->token;
+        dump($token);
         $url = self::BASE_URL . $token;
         $tokenCode = Extract::calcCode($token);
         if (!$extract = $this->extractRepository->findOneBy(['tokenCode' => $tokenCode])) {
             $extract = new Extract($token);
             $this->entityManager->persist($extract);
         }
+
+
         $response = $this->httpClient->request('GET', $url, [
             'headers' => [
                 'Accept' => 'application/json',
@@ -74,25 +77,33 @@ final class ExtractHandler
             // there can be multiple identifiers.  use the admin uuid if it exists
             $admin = $item['@admin'];
             $id = $admin['sequence'];
+
+            SurvosUtils::assertKeyExists('data_source', $admin);
+            $sourceData = $admin['data_source'];
+            $sourceCode = $sourceData['code'];
+            dump($sourceCode);
+            if (!$source = $this->seen[$sourceCode]??false) {
+                if (!$source = $this->sourceRepository->findOneBy(['code' => $sourceCode])) {
+                    dd($sourceData);
+                    $source = new Source(...array_values($sourceData));
+                    dump($sourceData, $source, $source->getCode());
+                    $this->entityManager->persist($source);
+                    $this->entityManager->flush();
+                }
+                $this->seen[$sourceCode] = $source;
+            }
+
             // if it already exists, assume we also have the source
-            if ($this->recordRepository->find($id)) {
+            if ($record = $this->recordRepository->find($id)) {
+                assert($record->getSource() == $source);
                 continue;
             }
 
-//            if (!$record = $this->recordRepository->find($id)) {
+            if (!$record = $this->recordRepository->find($id)) {
                 $record = new Record($id, $item);
                 $this->entityManager->persist($record);
-//            }
-            SurvosUtils::assertKeyExists('data_source', $admin);
-            $sourceData = $admin['data_source'];
-            $code = $sourceData['code'];
-            if (!$source = $this->seen[$code]??false) {
-                if (!$source = $this->sourceRepository->findOneBy(['code' => $code])) {
-                    $source = new Source(...array_values($sourceData));
-                    $this->entityManager->persist($source);
-                    $this->seen[$code] = $source;
-                }
             }
+
             $source->addRecord($record);
         }
         $this->entityManager->flush();

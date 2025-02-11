@@ -29,7 +29,7 @@ final class AppController extends AbstractController
     {
         $columnsByClass = [
             Extract::class => [
-                'token',
+                'tokenCode',
                 'duration',
                 'latency'
             ],
@@ -39,6 +39,7 @@ final class AppController extends AbstractController
             ],
             Source::class => [
                 'code',
+                'recordCount',
                 'name',
                 'org',
                 'grp'
