@@ -13,4 +13,7 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
+    Survos\Bundle\MakerBundle\SurvosMakerBundle::class => ['dev' => true, 'test' => true],
+    Bizkit\VersioningBundle\BizkitVersioningBundle::class => ['all' => true],
+    Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
 ];
