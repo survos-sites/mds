@@ -17,4 +17,5 @@ return [
     Bizkit\VersioningBundle\BizkitVersioningBundle::class => ['all' => true],
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
     Survos\CoreBundle\SurvosCoreBundle::class => ['all' => true],
+    Survos\WorkflowBundle\SurvosWorkflowBundle::class => ['all' => true],
 ];

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250211020930 extends AbstractMigration
+final class Version20250211021753 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,7 @@ final class Version20250211020930 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE record (id INT NOT NULL, source_id INT NOT NULL, data JSONB NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE record (id INT NOT NULL, source_id INT NOT NULL, data JSONB NOT NULL, marking VARCHAR(32) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_9B349F91953C1C61 ON record (source_id)');
         $this->addSql('CREATE TABLE source (id SERIAL NOT NULL, record_count INT DEFAULT NULL, code VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, org VARCHAR(255) DEFAULT NULL, grp VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX source_code ON source (code)');
