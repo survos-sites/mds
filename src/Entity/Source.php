@@ -23,6 +23,9 @@ class Source
     #[ORM\OneToMany(targetEntity: Record::class, mappedBy: 'source', orphanRemoval: true)]
     private Collection $records;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $recordCount = null;
+
     /**
      * @param int|null $id
      */
@@ -41,6 +44,7 @@ class Source
     )
     {
         $this->records = new ArrayCollection();
+        $this->recordCount = 0;
     }
 
 
@@ -110,6 +114,7 @@ class Source
         if (!$this->records->contains($record)) {
             $this->records->add($record);
             $record->setSource($this);
+            $this->recordCount++;
         }
 
         return $this;
@@ -121,8 +126,21 @@ class Source
             // set the owning side to null (unless already changed)
             if ($record->getSource() === $this) {
                 $record->setSource(null);
+                $this->recordCount--;
             }
         }
+
+        return $this;
+    }
+
+    public function getRecordCount(): ?int
+    {
+        return $this->recordCount;
+    }
+
+    public function setRecordCount(?int $recordCount): static
+    {
+        $this->recordCount = $recordCount;
 
         return $this;
     }
