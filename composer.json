@@ -14,7 +14,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.4.1",
         "doctrine/orm": "^3.3.2",
         "knplabs/knp-time-bundle": "^2.4",
-        "survos/bootstrap-bundle": "*",
+        "survos/bootstrap-bundle": "^1.5",
         "survos/command-bundle": "^1.5.503",
         "survos/simple-datatables-bundle": "^1.5.503",
         "survos/workflow-helper-bundle": "^1.5.503",
@@ -56,6 +56,7 @@
         "allow-plugins": {
             "endroid/installer": true,
             "php-http/discovery": true,
+            "survos/installer": true,
             "symfony/flex": true,
             "symfony/runtime": true
         },

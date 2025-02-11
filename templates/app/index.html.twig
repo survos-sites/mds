@@ -4,39 +4,10 @@
 
 {% block body %}
 
-    <h3>Recent</h3>
-    <ul>
-    {% for extract in lastExtract %}
-        <li><textarea cols="80">{{ extract.token }}</textarea>
-            <textarea cols="80">{{ extract.nextToken }}</textarea>
-            <code>{{ extract.tokenCode }}</code>
-            {{ extract.createdAt|ago }}
-
-        </li>
-    {% endfor %}
-    </ul>
-
     {% for class, count in counts %}
         <h3>
-            {{ class }}
+            {{ class }}: {{ count }}
         </h3>
-        <b>Total: {{ count }}</b>
 
-        {% set columns = columnsByClass[class] %}
-        <twig:simple_datatables
-            :data="data[class]"
-            :columns="columns">
-            <twig:block name="source">
-                {{ row.source.code }}
-            </twig:block>
-            <twig:block name="tokenCode">
-                <span title="{{ row.token }}">{{ row.tokenCode }}</span>
-            </twig:block>
-            <twig:block name="nextToken">
-                <span title="{{ row.nextToken }}">{{ row.nextToken|length }}</span>
-            </twig:block>
-
-        </twig:simple_datatables>
-        @todo: table
     {% endfor %}
 {% endblock %}

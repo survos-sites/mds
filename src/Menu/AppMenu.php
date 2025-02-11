@@ -2,6 +2,10 @@
 
 namespace App\Menu;
 
+use App\Entity\Extract;
+use App\Entity\Record;
+use App\Entity\Source;
+use Doctrine\ORM\EntityManagerInterface;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Service\MenuService;
 use Survos\BootstrapBundle\Traits\KnpMenuHelperInterface;
@@ -28,6 +32,7 @@ final class AppMenu implements KnpMenuHelperInterface
         #[Autowire('%kernel.environment%')] protected string $env,
         private MenuService $menuService,
         private Security $security,
+        private EntityManagerInterface $entityManager,
         private ?AuthorizationCheckerInterface $authorizationChecker = null
     ) {
     }
@@ -43,15 +48,19 @@ final class AppMenu implements KnpMenuHelperInterface
     {
         $menu = $event->getMenu();
         $options = $event->getOptions();
+        $this->add($menu, 'app_homepage');
+
+        foreach ([Record::class => 'record', Source::class=>'source', Extract::class=>'extract'] as $class=>$code) {
+            $repo = $this->entityManager->getRepository($class);
+            $this->add($menu, 'app_' . $code, label: $code, badge: $repo->count());
+        }
 
         //        $this->add($menu, 'app_homepage');
         // for nested menus, don't add a route, just a label, then use it for the argument to addMenuItem
 
         $nestedMenu = $this->addSubmenu($menu, 'Credits');
-
         foreach (['bundles', 'javascript'] as $type) {
             // $this->addMenuItem($nestedMenu, ['route' => 'survos_base_credits', 'rp' => ['type' => $type], 'label' => ucfirst($type)]);
-            $this->addMenuItem($nestedMenu, ['uri' => "#$type", 'label' => ucfirst($type)]);
         }
     }
 }

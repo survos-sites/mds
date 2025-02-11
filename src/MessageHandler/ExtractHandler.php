@@ -107,16 +107,19 @@ final class ExtractHandler
             $source->addRecord($record);
         }
         if ($data['has_next']) {
+            $remaining =  $data['stats']['remaining'];
             $nextToken = $data['resume'];
             $extract
+                ->setRemaining($remaining)
                 ->setNextToken($nextToken);
         }
         $this->entityManager->flush();
 
-        if ($data['stats']['remaining']) {
+        if ($remaining) {
             if ($data['has_next']) {
                 $nextToken = $data['resume'];
                 $extract
+                    ->setRemaining($remaining)
                     ->setNextToken($nextToken);
                 $extract->setNextToken($nextToken);
 

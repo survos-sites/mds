@@ -32,4 +32,11 @@ return [
         'version' => '9.2.2',
         'type' => 'css',
     ],
+    '@tabler/core' => [
+        'version' => '1.0.0',
+    ],
+    '@tabler/core/dist/css/tabler.min.css' => [
+        'version' => '1.0.0',
+        'type' => 'css',
+    ],
 ];

@@ -1,5 +1,12 @@
 {
     "controllers": {
+        "@survos/bootstrap-bundle": {
+            "search": {
+                "enabled": true,
+                "fetch": "lazy",
+                "autoimport": []
+            }
+        },
         "@survos/simple-datatables-bundle": {
             "table": {
                 "enabled": true,
