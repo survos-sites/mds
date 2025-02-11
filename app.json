@@ -3,12 +3,14 @@
     "description": "Use the API to download the data from Museum Data Service",
     "keywords": [
         "php",
-        "symfony"
+        "symfony",
+        "api",
+        "museum data service"
     ],
     "cron": [
         {
-            "command": "php -d memory_limit=2G bin/console mess:consume async  --time-limit 55",
-            "schedule": "*/1 * * * *"
+            "command": "php -d memory_limit=2G bin/console mess:consume async  --time-limit 290",
+            "schedule": "*/5 * * * *"
         }
     ],
 

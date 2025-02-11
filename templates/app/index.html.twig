@@ -5,12 +5,16 @@
 {% block body %}
 
     <h3>Recent</h3>
+    <ul>
     {% for extract in lastExtract %}
-        <li>
-            {{ extract.token }}
-            {{ extract.nextToken }}
+        <li><textarea cols="80">{{ extract.token }}</textarea>
+            <textarea cols="80">{{ extract.nextToken }}</textarea>
+            <code>{{ extract.tokenCode }}</code>
+            {{ extract.createdAt|ago }}
+
         </li>
     {% endfor %}
+    </ul>
 
     {% for class, count in counts %}
         <h3>
