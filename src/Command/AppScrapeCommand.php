@@ -56,7 +56,7 @@ EOL
 
     public function __invoke(
         IO $io,
-        #[Argument(description: "env api key if not defined")] ?string $apiKey=null,
+        #[Argument(name: 'api-key', description: "env api key if not defined")] ?string $apiKey=null,
     ): int {
         $apiKey=$apiKey??$this->apiKey;
         // kick off the search, sync so we can monitor

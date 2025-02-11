@@ -48,6 +48,8 @@ final class ExtractHandler
         if (!$extract = $this->extractRepository->findOneBy(['tokenCode' => $tokenCode])) {
             $extract = new Extract($token);
             $this->entityManager->persist($extract);
+        } else {
+            // if extract already exists, do something?
         }
 
 
@@ -69,9 +71,9 @@ final class ExtractHandler
                     ->setRemaining($remaining)
                     ->setNextToken($nextToken);
                 $extract->setNextToken($nextToken);
+                // skip if next is already in the database? maybe we need a marking. :-(
                 // not if sync!
                 $envelope = $this->messageBus->dispatch(new ExtractMessage($nextToken));
-
             }
         }
         $duration = 1000 * ($response->getInfo()['total_time']);
@@ -115,12 +117,6 @@ final class ExtractHandler
 //            }
 
             $source->addRecord($record);
-        }
-        if ($data['has_next']) {
-            $nextToken = $data['resume'];
-            $extract
-                ->setRemaining($remaining)
-                ->setNextToken($nextToken);
         }
         $this->entityManager->flush();
 

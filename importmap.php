@@ -39,4 +39,10 @@ return [
         'version' => '1.0.0',
         'type' => 'css',
     ],
+    '@stimulus-components/timeago' => [
+        'version' => '5.0.2',
+    ],
+    'date-fns' => [
+        'version' => '4.1.0',
+    ],
 ];

@@ -73,6 +73,7 @@ final class AppController extends AbstractController
             'columns' => [                'tokenCode',
                 'nextToken',
                 'remaining',
+                'age',
                 'duration',
                 'latency'
             ],

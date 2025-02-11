@@ -4,9 +4,16 @@
     <twig:simple_datatables
             :data="data"
             :columns="columns">
+        <twig:block name="age">
+            <span {{ stimulus_controller('timeago', {
+                datetime: row.createdAt|date('c')
+            }) }}>
+            {{ row.createdAt|ago }}
+            </span>
+            {{ row.createdAt|date('c') }}
+        </twig:block>
         <twig:block name="remaining">
             {{ row.remaining|number_format }}
-            {{ row.createdAt|ago }}
         </twig:block>
         <twig:block name="source">
             {{ row.source.code }}
