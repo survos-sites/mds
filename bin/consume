@@ -3,6 +3,5 @@
 set SYMFONY_DEPRECATIONS_HELPER=disabled
 # more verbose on the first run
 bin/console mess:stats async
-
 ## use sleep  so that you can break out with ^C
-while true; do  bin/console messenger:consume async -vv --no-reset --sleep 4 --limit 200  --time-limit 30; bin/console mess:stats;   done;
+while true; do  bin/console messenger:consume async -v --limit 400  --time-limit 240; echo "pausing..."; bin/console mess:stats && sleep 4;   done;

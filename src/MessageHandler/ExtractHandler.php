@@ -43,7 +43,7 @@ final class ExtractHandler
         // read the data and dispatch then next
 
         $token = $message->token;
-        dump($token);
+//        dump($token); return;
         $url = self::BASE_URL . $token;
         $tokenCode = Extract::calcCode($token);
         if (!$extract = $this->extractRepository->findOneBy(['tokenCode' => $tokenCode])) {
@@ -81,12 +81,12 @@ final class ExtractHandler
             SurvosUtils::assertKeyExists('data_source', $admin);
             $sourceData = $admin['data_source'];
             $sourceCode = $sourceData['code'];
-            dump($sourceCode);
-            if (!$source = $this->seen[$sourceCode]??false) {
+            // flush after each...
+//            if (!$source = $this->seen[$sourceCode]??false)
+            {
                 if (!$source = $this->sourceRepository->findOneBy(['code' => $sourceCode])) {
-                    dd($sourceData);
-                    $source = new Source(...array_values($sourceData));
-                    dump($sourceData, $source, $source->getCode());
+                    assert($sourceData['code'] == $sourceCode, $sourceData['code'] . "<> $sourceCode");
+                    $source = new Source($sourceCode, $sourceData['name'], $sourceData['organisation'], $sourceData['group']);
                     $this->entityManager->persist($source);
                     $this->entityManager->flush();
                 }
@@ -106,11 +106,18 @@ final class ExtractHandler
 
             $source->addRecord($record);
         }
+        if ($data['has_next']) {
+            $nextToken = $data['resume'];
+            $extract
+                ->setNextToken($nextToken);
+        }
         $this->entityManager->flush();
 
         if ($data['stats']['remaining']) {
             if ($data['has_next']) {
                 $nextToken = $data['resume'];
+                $extract
+                    ->setNextToken($nextToken);
                 $extract->setNextToken($nextToken);
 
                 if (!array_key_exists('resume', $data)) {
@@ -121,6 +128,7 @@ final class ExtractHandler
 
             }
         }
+
 
     }
 }

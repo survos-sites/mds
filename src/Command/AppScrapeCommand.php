@@ -13,6 +13,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Zenstruck\Console\Attribute\Argument;
 use Zenstruck\Console\InvokableServiceCommand;
 use Zenstruck\Console\IO;
 use Zenstruck\Console\RunsCommands;
@@ -54,8 +55,10 @@ EOL
 
     public function __invoke(
         IO $io,
+        #[Argument(description: "env api key if not defined")] ?string $apiKey=null,
     ): int {
+        $apiKey=$apiKey??$this->apiKey;
         // kick off the search
-        $this->bus->dispatch(new ExtractMessage($this->apiKey));
+        $this->bus->dispatch(new ExtractMessage($apiKey));
         return self::SUCCESS;    }
 }

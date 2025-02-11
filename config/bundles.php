@@ -20,4 +20,5 @@ return [
     Survos\WorkflowBundle\SurvosWorkflowBundle::class => ['all' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     Survos\SimpleDatatables\SurvosSimpleDatatablesBundle::class => ['all' => true],
+    Survos\CommandBundle\SurvosCommandBundle::class => ['all' => true],
 ];

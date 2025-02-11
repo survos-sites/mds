@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Extract;
 use App\Entity\Record;
 use App\Entity\Source;
+use App\Repository\ExtractRepository;
 use App\Repository\RecordRepository;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,6 +24,7 @@ final class AppController extends AbstractController
 
     #[Route('/', name: 'app_homepage')]
     public function index(
+        ExtractRepository $extractRepository,
         RecordRepository $recordRepository,
         SourceRepository $sourceRepository,
     ): Response
@@ -30,12 +32,14 @@ final class AppController extends AbstractController
         $columnsByClass = [
             Extract::class => [
                 'tokenCode',
+                'nextToken',
                 'duration',
                 'latency'
             ],
             Record::class => [
                 'id',
-                'marking'
+                'marking',
+                'source',
             ],
             Source::class => [
                 'code',
@@ -45,6 +49,8 @@ final class AppController extends AbstractController
                 'grp'
             ]
         ];
+
+        $lastExtract = $extractRepository->findBy([], ['createdAt' => 'DESC'], 2);
         foreach ([Record::class, Source::class, Extract::class] as $class) {
             $repo = $this->entityManager->getRepository($class);
             $counts[$class] = $repo->count();
@@ -54,6 +60,7 @@ final class AppController extends AbstractController
         }
         return $this->render('app/index.html.twig', [
             'counts' => $counts,
+            'lastExtract' => $lastExtract,
             'columnsByClass' => $columnsByClass,
             'data' => $data,
         ]);
