@@ -10,6 +10,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\TransportMessageIdStamp;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -58,7 +59,11 @@ EOL
         #[Argument(description: "env api key if not defined")] ?string $apiKey=null,
     ): int {
         $apiKey=$apiKey??$this->apiKey;
-        // kick off the search
-        $this->bus->dispatch(new ExtractMessage($apiKey));
+        // kick off the search, sync so we can monitor
+
+        $envelope = $this->bus->dispatch(new ExtractMessage($apiKey), [
+            new TransportMessageIdStamp('sync')
+        ]);
+
         return self::SUCCESS;    }
 }

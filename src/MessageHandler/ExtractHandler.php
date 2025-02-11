@@ -61,6 +61,19 @@ final class ExtractHandler
         }
         $data = $response->toArray();
         $stats = $data['stats'];
+        $remaining = $stats['remaining'];
+        if ($remaining) {
+            if ($data['has_next']) {
+                $nextToken = $data['resume'];
+                $extract
+                    ->setRemaining($remaining)
+                    ->setNextToken($nextToken);
+                $extract->setNextToken($nextToken);
+                // not if sync!
+                $envelope = $this->messageBus->dispatch(new ExtractMessage($nextToken));
+
+            }
+        }
         $duration = 1000 * ($response->getInfo()['total_time']);
         $extract
             ->setResponse($data) // for debugging, but huge!  maybe for re-processing
@@ -104,7 +117,6 @@ final class ExtractHandler
             $source->addRecord($record);
         }
         if ($data['has_next']) {
-            $remaining = $data['stats']['remaining'];
             $nextToken = $data['resume'];
             $extract
                 ->setRemaining($remaining)
@@ -112,22 +124,6 @@ final class ExtractHandler
         }
         $this->entityManager->flush();
 
-        if ($remaining) {
-            if ($data['has_next']) {
-                $nextToken = $data['resume'];
-                $extract
-                    ->setRemaining($remaining)
-                    ->setNextToken($nextToken);
-                $extract->setNextToken($nextToken);
-
-                if (!array_key_exists('resume', $data)) {
-                    dd(data: $data, admin: $admin);
-                }
-                SurvosUtils::assertKeyExists('resume', $data);
-                $this->messageBus->dispatch(new ExtractMessage($nextToken));
-
-            }
-        }
 
 
     }
