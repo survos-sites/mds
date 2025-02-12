@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ExtractRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\WorkflowBundle\Traits\MarkingInterface;
@@ -28,8 +30,13 @@ class Extract implements MarkingInterface
     #[ORM\Id]
     private ?string $tokenCode = null;
 
-    #[ORM\Column(nullable: true, options: ['jsonb' => true])]
+
+    // debug only, data is stored in Record
+    #[ORM\Column(type: Types::JSON, nullable: true, options: ['jsonb' => true])]
     private ?array $response = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true, options: ['jsonb' => true])]
+    private ?array $stats = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -52,6 +59,17 @@ class Extract implements MarkingInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $resume = null;
 
+    #[ORM\ManyToOne(inversedBy: 'extracts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Source $source = null;
+
+    /**
+     * @var Collection<int, Record>
+     */
+    #[ORM\OneToMany(targetEntity: Record::class, mappedBy: 'extract', orphanRemoval: true)]
+    private Collection $records;
+
+
 
     /**
      * @param string|null $token
@@ -61,6 +79,7 @@ class Extract implements MarkingInterface
         $this->token = $token;
         $this->createdAt = new \DateTimeImmutable();
         $this->tokenCode = self::calcCode($token);
+        $this->records = new ArrayCollection();
     }
 
     static public function calcCode(string $token): string
@@ -184,6 +203,60 @@ class Extract implements MarkingInterface
     public function setTokenCode(string $tokenCode): static
     {
         $this->tokenCode = $tokenCode;
+
+        return $this;
+    }
+
+    public function getSource(): ?Source
+    {
+        return $this->source;
+    }
+
+    public function setSource(?Source $source): static
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    public function getStats(): ?array
+    {
+        return $this->stats;
+    }
+
+    public function setStats(?array $stats): static
+    {
+        $this->stats = $stats;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Record>
+     */
+    public function getRecords(): Collection
+    {
+        return $this->records;
+    }
+
+    public function addRecord(Record $record): static
+    {
+        if (!$this->records->contains($record)) {
+            $this->records->add($record);
+            $record->setExtract($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecord(Record $record): static
+    {
+        if ($this->records->removeElement($record)) {
+            // set the owning side to null (unless already changed)
+            if ($record->getExtract() === $this) {
+                $record->setExtract(null);
+            }
+        }
 
         return $this;
     }

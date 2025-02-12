@@ -39,13 +39,24 @@ final class AppMuseumsCommand extends InvokableServiceCommand
         $crawler = new Crawler($html, $url);
         $crawler->filter('.museum-overview__content')->each(function (Crawler $node)  {
             $html = $node->html();
+            if (preg_match('|q=(.*?)&amp;show_all=1|', $html, $matches)) {
+                $q = $matches[1];
+                // get API key
+//                https://museumdata.uk/get-api-token/get_api_token.php?user_id=4PZkaU6f9aRXejEE&institution=Museado&q=$q
+            }
             if (preg_match('|https://museumdata.uk/museums/(q\d+)/|',$html, $matches )) {
                 $sourceCode = strtoupper($matches[1]);
                 if (!$source = $this->sourceRepository->findOneBy(['grp' => $sourceCode])) {
                     $source = new Source($sourceCode);
                 }
-                dd($matches);
             }
+            $apiKey = 'kolXdB9v45--JPmMLvBvsO1WvP3nLAZF0UEGfrGqE6i-xayFbZL9htn5kbNgq/ba/YKA/pMtJPE8xGOhKMzBqLTUorG9zwUWjmpX7eIGGMT2CxPG8luPNbzO/kWi-eAwzY/aBG5ZD-QUPX8O6JZIYWu3L1KcP53N80MHmDapL9SaDzZDRBnPAc-ninTpjd2Y4jXJAplhltAAP3H-WMQf0-BYwohdUwvElJV5EytIewBz3j-idTiMOHUrL0jbZUGjXIwMVXQprJmE/C2s/ldSHUFKTqeV7/IAMXcqspxapNA=';
+            $name = urldecode($q);
+            $source
+                ->setName($name);
+            $source->setApiKey($apiKey);
+            dd($matches, $html, );
+            dd($html);
             dd($node->html());
 
         });
@@ -54,3 +65,4 @@ final class AppMuseumsCommand extends InvokableServiceCommand
         return self::SUCCESS;
     }
 }
+

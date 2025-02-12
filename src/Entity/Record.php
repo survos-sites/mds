@@ -16,6 +16,10 @@ class Record implements MarkingInterface, RecordWorkflowInterface, \Stringable
     #[ORM\JoinColumn(nullable: false)]
     private ?Source $source = null;
 
+    #[ORM\ManyToOne(inversedBy: 'records')]
+    #[ORM\JoinColumn(referencedColumnName: 'tokenCode', nullable: false)]
+    private ?Extract $extract = null;
+
     public function __construct(
         #[ORM\Id]
         #[ORM\Column]
@@ -52,5 +56,17 @@ class Record implements MarkingInterface, RecordWorkflowInterface, \Stringable
     public function __toString(): string
     {
         return (string) $this->getId();
+    }
+
+    public function getExtract(): ?Extract
+    {
+        return $this->extract;
+    }
+
+    public function setExtract(?Extract $extract): static
+    {
+        $this->extract = $extract;
+
+        return $this;
     }
 }

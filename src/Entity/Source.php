@@ -3,14 +3,19 @@
 namespace App\Entity;
 
 use App\Repository\SourceRepository;
+use App\Workflow\SourceWorkflowInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\WorkflowBundle\Traits\MarkingInterface;
+use Survos\WorkflowBundle\Traits\MarkingTrait;
 
 #[ORM\Entity(repositoryClass: SourceRepository::class)]
 #[ORM\UniqueConstraint(name: 'source_code', columns: ['code'])]
-class Source
+class Source implements MarkingInterface, SourceWorkflowInterface
 {
+    use MarkingTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,6 +30,19 @@ class Source
 
     #[ORM\Column(nullable: true)]
     private ?int $recordCount = null;
+
+    // the starting API key
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $apiKey = null;
+
+    /**
+     * @var Collection<int, Extract>
+     */
+    #[ORM\OneToMany(targetEntity: Extract::class, mappedBy: 'source', orphanRemoval: true)]
+    private Collection $extracts;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $expectedCount = null;
 
     /**
      * @param int|null $id
@@ -45,6 +63,8 @@ class Source
     {
         $this->records = new ArrayCollection();
         $this->recordCount = 0;
+        $this->extracts = new ArrayCollection();
+        $this->marking = self::PLACE_NEW;
     }
 
 
@@ -141,6 +161,60 @@ class Source
     public function setRecordCount(?int $recordCount): static
     {
         $this->recordCount = $recordCount;
+
+        return $this;
+    }
+
+    public function getApiKey(): ?string
+    {
+        return $this->apiKey;
+    }
+
+    public function setApiKey(?string $apiKey): static
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Extract>
+     */
+    public function getExtracts(): Collection
+    {
+        return $this->extracts;
+    }
+
+    public function addExtract(Extract $extract): static
+    {
+        if (!$this->extracts->contains($extract)) {
+            $this->extracts->add($extract);
+            $extract->setSource($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExtract(Extract $extract): static
+    {
+        if ($this->extracts->removeElement($extract)) {
+            // set the owning side to null (unless already changed)
+            if ($extract->getSource() === $this) {
+                $extract->setSource(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getExpectedCount(): ?int
+    {
+        return $this->expectedCount;
+    }
+
+    public function setExpectedCount(int $expectedCount): static
+    {
+        $this->expectedCount = $expectedCount;
 
         return $this;
     }
