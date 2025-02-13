@@ -6,3 +6,6 @@ It's a bizarre API, you get a key that start off the record fetch ("extract") an
 
 
 curl "https://museumdata.uk/explore-collections/?_sfm_has_object_records=1&_sf_ppp=100"  > data/museums.html 
+
+
+bin/console doctrine:query:sql "delete from messenger_messages where queue_name='failed'" 

@@ -7,31 +7,38 @@ use App\Workflow\RecordWorkflowInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\WorkflowBundle\Traits\MarkingInterface;
 use Survos\WorkflowBundle\Traits\MarkingTrait;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: RecordRepository::class)]
 class Record implements MarkingInterface, RecordWorkflowInterface, \Stringable
 {
     use MarkingTrait;
-    #[ORM\ManyToOne(inversedBy: 'records',cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Source $source = null;
-
-    #[ORM\ManyToOne(inversedBy: 'records')]
-    #[ORM\JoinColumn(referencedColumnName: 'tokenCode', nullable: false)]
-    private ?Extract $extract = null;
 
     public function __construct(
         #[ORM\Id]
-        #[ORM\Column]
-        private ?int  $id = null,
+        #[ORM\Column(type: UuidType::NAME)]
+        private Uuid $id,
+
+        #[ORM\ManyToOne(inversedBy: 'records',cascade: ['persist', 'remove'])]
+        #[ORM\JoinColumn(nullable: false)]
+        private Source $source,
 
         #[ORM\Column(options: ['jsonb' => true])]
-        private array $data = [],
+        private array $data,
+
+        #[ORM\ManyToOne(inversedBy: 'records', cascade: ['persist'])]
+        #[ORM\JoinColumn(referencedColumnName: 'token_code', nullable: false)]
+        private Extract $extract
+
+
     ) {
         $this->marking = self::PLACE_NEW;
+        $this->extract->addRecord($this);
+        $this->source->addRecord($this);
     }
 
-    public function getId(): ?int
+    public function getId(): Uuid
     {
         return $this->id;
     }
@@ -55,7 +62,7 @@ class Record implements MarkingInterface, RecordWorkflowInterface, \Stringable
 
     public function __toString(): string
     {
-        return (string) $this->getId();
+        return $this->getId();
     }
 
     public function getExtract(): ?Extract

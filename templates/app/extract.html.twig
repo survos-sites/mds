@@ -23,6 +23,10 @@
         </twig:block>
         <twig:block name="nextToken">
             <span title="{{ row.nextToken }}">{{ row.nextToken|length }}</span>
+                <a href="{{ path('extract_show', {tokenCode: row.tokenCode}) }}">
+                    Show
+                </a>
+
         </twig:block>
 
     </twig:simple_datatables>

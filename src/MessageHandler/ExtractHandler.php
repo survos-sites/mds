@@ -7,13 +7,16 @@ use App\Entity\Record;
 use App\Entity\Source;
 use App\Message\ExtractMessage;
 use App\Repository\ExtractRepository;
+use App\Repository\GrpRepository;
 use App\Repository\RecordRepository;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Log\LoggerInterface;
 use Survos\CoreBundle\Service\SurvosUtils;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -29,8 +32,10 @@ final class ExtractHandler
         private readonly MessageBusInterface    $messageBus,
         private readonly RecordRepository       $recordRepository,
         private readonly SourceRepository       $sourceRepository,
+        private readonly GrpRepository       $grpRepository,
         private ExtractRepository               $extractRepository,
         private HttpClientInterface             $httpClient,
+        private LoggerInterface $logger,
         private array                           $seen = []
     )
     {
@@ -40,65 +45,33 @@ final class ExtractHandler
     {
         // we _could_ cache the page data the database if the process gets disrupted.
         // read the data and dispatch then next
-
-        $token = $message->token;
-//        dump($token); return;
-        $url = self::BASE_URL . $token;
-        $tokenCode = Extract::calcCode($token);
-        if (!$extract = $this->extractRepository->findOneBy(['tokenCode' => $tokenCode])) {
-            $extract = new Extract($token);
-            $this->entityManager->persist($extract);
-        } else {
-            // if extract already exists, do something?
+        $grp = $this->grpRepository->find($message->grpCode);
+        if (!$grp) {
+            assert($grp, "Missing " . $message->grpCode);
+            return;
         }
 
+        if (!$extract = $this->extractRepository->findByTokenCode($message->tokenCode)) {
+            assert($extract, "Missing " . $message->tokenCode);
+            return;
+        }
 
-        $response = $this->httpClient->request('GET', $url, [
-            'headers' => [
-                'Accept' => 'application/json',
-            ]
-        ]);
-        if ($response->getStatusCode() !== 200) {
-            dd($url);
-        }
-        $data = $response->toArray();
-        $stats = $data['stats'];
-        $remaining = $stats['remaining'];
-        if ($remaining) {
-            if ($data['has_next']) {
-                $nextToken = $data['resume'];
-                $extract
-                    ->setRemaining($remaining)
-                    ->setNextToken($nextToken);
-                $extract->setNextToken($nextToken);
-                // skip if next is already in the database? maybe we need a marking. :-(
-                // not if sync!
-                $envelope = $this->messageBus->dispatch(new ExtractMessage($nextToken));
-            }
-        }
-        $duration = 1000 * ($response->getInfo()['total_time']);
-        $extract
-            ->setResponse($data) // for debugging, but huge!  maybe for re-processing
-            ->setDuration((int)$duration)
-            ->setLatency($stats['latency']);;
-//        $this->entityManager->flush(); dd($stats);
-//        if (empty($limit)) {
-//            $limit = $data['stats']['total'] / $data['stats']['results'];
-//        }
-//        $url = $data['next_url'] ?? null;
-        foreach ($data['data'] as $idx => $item) {
+        foreach ($message->data['data'] as $idx => $item) {
             // there can be multiple identifiers.  use the admin uuid if it exists
+            assert(array_key_exists('@admin', $item), "no @admin in #$idx of $message->tokenCode");
             $admin = $item['@admin'];
-            $id = $admin['sequence'];
+            $id = $admin['uuid'];
 
             SurvosUtils::assertKeyExists('data_source', $admin);
             $sourceData = $admin['data_source'];
             $sourceCode = $sourceData['code'];
             // flush after each...
+            // this is the REAL source, not the grp
             if (array_key_exists($sourceCode, $this->seen)) {
                 $source = $this->seen[$sourceCode];
             } elseif (!$source = $this->sourceRepository->findOneBy(['code' => $sourceCode])) {
                 assert($sourceData['code'] == $sourceCode, $sourceData['code'] . "<> $sourceCode");
+                // @todo: add the group here.
                 $source = new Source($sourceCode, $sourceData['name'], $sourceData['organisation'], $sourceData['group']);
                 $this->entityManager->persist($source);
                 $this->entityManager->flush();
@@ -106,17 +79,15 @@ final class ExtractHandler
             }
 
             // if it already exists, assume we also have the source
-            if ($record = $this->recordRepository->find($id)) {
+            $uuid = new Uuid($id);
+            if ($record = $this->recordRepository->find($uuid)) {
                 assert($record->getSource() == $source);
                 continue;
+            } else {
+                $record = new Record($uuid, $source, $item, $extract);
+                $this->entityManager->persist($record);
+                $this->entityManager->flush();
             }
-
-//            if (!$record = $this->recordRepository->find($id)) {
-            $record = new Record($id, $item);
-            $this->entityManager->persist($record);
-//            }
-
-            $source->addRecord($record);
         }
         $this->entityManager->flush();
 

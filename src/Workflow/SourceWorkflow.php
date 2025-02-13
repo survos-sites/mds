@@ -12,7 +12,6 @@ use Symfony\Component\Workflow\Event\TransitionEvent;
 
 // See events at https://symfony.com/doc/current/workflow.html#using-events
 
-// @todo: add the entity class to attach this to.
 #[Workflow(supports: [Source::class], name: self::WORKFLOW_NAME)]
 final class SourceWorkflow implements SourceWorkflowInterface
 {

@@ -25,7 +25,7 @@ class Source implements MarkingInterface, SourceWorkflowInterface
     /**
      * @var Collection<int, Record>
      */
-    #[ORM\OneToMany(targetEntity: Record::class, mappedBy: 'source', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Record::class, mappedBy: 'source', orphanRemoval: true, cascade: ['persist'])]
     private Collection $records;
 
     #[ORM\Column(nullable: true)]
@@ -35,17 +35,12 @@ class Source implements MarkingInterface, SourceWorkflowInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $apiKey = null;
 
-    /**
-     * @var Collection<int, Extract>
-     */
-    #[ORM\OneToMany(targetEntity: Extract::class, mappedBy: 'source', orphanRemoval: true)]
-    private Collection $extracts;
-
     #[ORM\Column(nullable: true)]
     private ?int $expectedCount = null;
 
     /**
-     * @param int|null $id
+     * What a pain -- we don't have the code until after we've fetched the item.  So we need nesting or two entities.
+     *
      */
     public function __construct(
         #[ORM\Column(length: 255, unique: true)]
@@ -63,7 +58,6 @@ class Source implements MarkingInterface, SourceWorkflowInterface
     {
         $this->records = new ArrayCollection();
         $this->recordCount = 0;
-        $this->extracts = new ArrayCollection();
         $this->marking = self::PLACE_NEW;
     }
 
@@ -177,35 +171,6 @@ class Source implements MarkingInterface, SourceWorkflowInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Extract>
-     */
-    public function getExtracts(): Collection
-    {
-        return $this->extracts;
-    }
-
-    public function addExtract(Extract $extract): static
-    {
-        if (!$this->extracts->contains($extract)) {
-            $this->extracts->add($extract);
-            $extract->setSource($this);
-        }
-
-        return $this;
-    }
-
-    public function removeExtract(Extract $extract): static
-    {
-        if ($this->extracts->removeElement($extract)) {
-            // set the owning side to null (unless already changed)
-            if ($extract->getSource() === $this) {
-                $extract->setSource(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getExpectedCount(): ?int
     {

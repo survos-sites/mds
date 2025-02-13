@@ -3,6 +3,7 @@
 namespace App\Menu;
 
 use App\Entity\Extract;
+use App\Entity\Grp;
 use App\Entity\Record;
 use App\Entity\Source;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,11 +31,12 @@ final class AppMenu implements KnpMenuHelperInterface
 
     public function __construct(
         #[Autowire('%kernel.environment%')] protected string $env,
-        private MenuService $menuService,
-        private Security $security,
-        private EntityManagerInterface $entityManager,
-        private ?AuthorizationCheckerInterface $authorizationChecker = null
-    ) {
+        private MenuService                                  $menuService,
+        private Security                                     $security,
+        private EntityManagerInterface                       $entityManager,
+        private ?AuthorizationCheckerInterface               $authorizationChecker = null
+    )
+    {
     }
 
     public function appAuthMenu(KnpMenuEvent $event): void
@@ -50,9 +52,29 @@ final class AppMenu implements KnpMenuHelperInterface
         $options = $event->getOptions();
         $this->add($menu, 'app_homepage');
 
-        foreach ([Record::class => 'record', Source::class=>'source', Extract::class=>'extract'] as $class=>$code) {
+        foreach ([Record::class => 'record', Source::class => 'source', Grp::class => 'grp', Extract::class => 'extract'] as $class => $code) {
             $repo = $this->entityManager->getRepository($class);
             $this->add($menu, 'app_' . $code, label: $code, badge: $repo->count());
+        }
+
+        if ($this->isEnv('dev')) {
+
+            $subMenu = $this->addSubmenu($menu, "Workflows");
+            foreach ([Record::class => 'record', Source::class => 'source',
+                         Extract::class => 'extract'] as $class => $code) {
+                $shortName = new \ReflectionClass($class)->getShortName();
+                $this->add($subMenu, 'survos_command', [
+                    'className' => addslashes($class),
+                    'commandName' => 'survos:workflow:make'],
+                    label: "make workflow " . $class);
+                $this->add($subMenu, 'survos_command', [
+                    'commandName' => 'workflow:iterate',
+                    'className' => addslashes($class),
+                    'transport' => 'sync'
+                ], label: "iterate " . $shortName);
+            }
+            $subMenu = $this->addSubmenu($menu, "Existing Workflows");
+            $this->add($subMenu, 'survos_workflows');
         }
 
         //        $this->add($menu, 'app_homepage');

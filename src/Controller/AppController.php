@@ -6,6 +6,7 @@ use App\Entity\Extract;
 use App\Entity\Record;
 use App\Entity\Source;
 use App\Repository\ExtractRepository;
+use App\Repository\GrpRepository;
 use App\Repository\RecordRepository;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,6 +25,7 @@ final class AppController extends AbstractController
         private ExtractRepository      $extractRepository,
         private RecordRepository       $recordRepository,
         private SourceRepository       $sourceRepository,
+        private GrpRepository           $grpRepository,
 
     )
     {
@@ -31,7 +33,7 @@ final class AppController extends AbstractController
     #[Route('/record', name: 'app_record', methods: ['GET'])]
     #[Template('app/source.html.twig')]
     public function record(Request $request,
-                           #[MapQueryParameter] int $limit = 10
+                           #[MapQueryParameter] int $limit = 100
     ): Response|array
     {
         return [
@@ -51,13 +53,18 @@ final class AppController extends AbstractController
     ): Response|array
     {
         return [
-            'columns' => [
-                'name',
-                'grp',
-                'org',
-                'code',
-            ],
             'data' => $this->sourceRepository->findBy([], [], $limit),
+        ];
+    }
+
+    #[Route('/grp', name: 'app_grp', methods: ['GET'])]
+    #[Template('app/grp.html.twig')]
+    public function grp(Request $request,
+               #[MapQueryParameter] int $limit = 100
+    ): Response|array
+    {
+        return [
+            'data' => $this->grpRepository->findBy([], ['count' => 'ASC'], $limit),
         ];
     }
 
@@ -70,8 +77,10 @@ final class AppController extends AbstractController
         $lastExtract = $this->extractRepository->findBy([], ['createdAt' => 'DESC'], 9);
 
         return [
-            'columns' => [                'tokenCode',
+            'columns' => [
+                'tokenCode',
                 'nextToken',
+                'marking',
                 'remaining',
                 'age',
                 'duration',

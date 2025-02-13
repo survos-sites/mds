@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ExtractRepository;
+use App\Workflow\IExtractWorkflow;
+use App\Workflow\SourceWorkflowInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -13,10 +15,12 @@ use Survos\WorkflowBundle\Traits\MarkingTrait;
 
 #[ORM\Entity(repositoryClass: ExtractRepository::class)]
 #[ApiResource]
-class Extract implements MarkingInterface
+class Extract implements MarkingInterface, \Stringable
 {
 
     use MarkingTrait;
+
+    const BASE_URL = 'https://mds-data-1.ciim.k-int.com/api/v1/extract?resume=';
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $token = null;
@@ -28,8 +32,7 @@ class Extract implements MarkingInterface
      */
     #[ORM\Column(length: 32)]
     #[ORM\Id]
-    private ?string $tokenCode = null;
-
+    private string $tokenCode;
 
     // debug only, data is stored in Record
     #[ORM\Column(type: Types::JSON, nullable: true, options: ['jsonb' => true])]
@@ -60,13 +63,13 @@ class Extract implements MarkingInterface
     private ?string $resume = null;
 
     #[ORM\ManyToOne(inversedBy: 'extracts')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Source $source = null;
+    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'code')]
+    private ?Grp $grp = null;
 
     /**
      * @var Collection<int, Record>
      */
-    #[ORM\OneToMany(targetEntity: Record::class, mappedBy: 'extract', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Record::class, mappedBy: 'extract', orphanRemoval: false)]
     private Collection $records;
 
 
@@ -74,12 +77,15 @@ class Extract implements MarkingInterface
     /**
      * @param string|null $token
      */
-    public function __construct(?string $token)
+    public function __construct(?string $token, Grp $grp)
     {
         $this->token = $token;
         $this->createdAt = new \DateTimeImmutable();
         $this->tokenCode = self::calcCode($token);
         $this->records = new ArrayCollection();
+        $this->setgrp($grp);
+        $grp->addExtract($this);
+        $this->marking=IExtractWorkflow::PLACE_NEW;
     }
 
     static public function calcCode(string $token): string
@@ -195,7 +201,7 @@ class Extract implements MarkingInterface
         return $this;
     }
 
-    public function getTokenCode(): ?string
+    public function getTokenCode(): string
     {
         return $this->tokenCode;
     }
@@ -207,14 +213,14 @@ class Extract implements MarkingInterface
         return $this;
     }
 
-    public function getSource(): ?Source
+    public function getGrp(): ?Grp
     {
-        return $this->source;
+        return $this->grp;
     }
 
-    public function setSource(?Source $source): static
+    public function setGrp(?Grp $grp): static
     {
-        $this->source = $source;
+        $this->grp = $grp;
 
         return $this;
     }
@@ -259,5 +265,20 @@ class Extract implements MarkingInterface
         }
 
         return $this;
+    }
+
+    public function getUrl(): string
+    {
+        return self::BASE_URL . $this->getToken();
+    }
+
+    public function getId(): string
+    {
+        return $this->tokenCode;
+    }
+
+    public function __toString()
+    {
+        return $this->getTokenCode();
     }
 }

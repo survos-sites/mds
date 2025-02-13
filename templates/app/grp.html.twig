@@ -2,30 +2,25 @@
 
 {% block body %}
     {% set columns = [
-        'grp',
         'code',
+        'count',
         'name',
-        'org',
-        'marking',
-        'recordCount'
     ] %}
     <twig:simple_datatables
             :perPage="25"
             :data="data"
             :columns="columns">
-        <twig:block name="id">
-            <a href="{{ path('row_show', {id: row.id}) }}">
-                show {{ row.id }}
+        <twig:block name="code">
+            <a href="{{ path('app_extract', {grp: row.id}) }}">
+                show
             </a>
+            {{ row.id }}
         </twig:block>
-        <twig:block name="source">
-            {{ row.source.code }}
+        <twig:block name="count">
+            10x {{ row.extractCount }} pages of {{ row.count }}
         </twig:block>
         <twig:block name="tokenCode">
             <span title="{{ row.token }}">{{ row.tokenCode }}</span>
-        </twig:block>
-        <twig:block name="nextToken">
-            <span title="{{ row.nextToken }}">{{ row.nextToken|length }}</span>
         </twig:block>
 
     </twig:simple_datatables>

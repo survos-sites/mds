@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Extract;
+use App\Message\ExtractMessage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -31,13 +32,13 @@ class ExtractRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?ExtractMessage
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        public function findByTokenCode(string $value): ?Extract
+        {
+            return $this->createQueryBuilder('e')
+                ->andWhere('e.tokenCode = :val')
+                ->setParameter('val', $value)
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+        }
 }
