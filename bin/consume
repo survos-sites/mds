@@ -5,3 +5,13 @@ set SYMFONY_DEPRECATIONS_HELPER=disabled
 bin/console mess:stats async
 ## use sleep  so that you can break out with ^C
 while true; do  bin/console messenger:consume async -v --limit 400  --time-limit 240; echo "pausing..."; bin/console mess:stats && sleep 4;   done;
+
+for i in {1..12}
+do
+   php -d memory_limit=2G bin/console messenger:consume async 2>&1  &
+done
+
+for i in {1..8}
+do
+   php -d memory_limit=2G bin/console messenger:consume load_records 2>&1  &
+done

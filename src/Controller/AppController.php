@@ -63,8 +63,11 @@ final class AppController extends AbstractController
                #[MapQueryParameter] int $limit = 100
     ): Response|array
     {
-
+        $qb = $this->grpRepository->createQueryBuilder('g')
+            ->select('SUM(g.count) as c');
+        $total = ($qb->getQuery()->getSingleScalarResult());
         return [
+            'total' => $total,
             'data' => $this->grpRepository->findBy([], ['count' => 'DESC'], $limit),
         ];
     }
