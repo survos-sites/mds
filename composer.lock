@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "07b54de6a5addcde7973f96d7ce92f35",
+    "content-hash": "eaf8ef2de37d09f4909f25a53b56ca5c",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -3706,16 +3706,16 @@
         },
         {
             "name": "survos/bootstrap-bundle",
-            "version": "1.5.503",
+            "version": "1.5.504",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/BootstrapBundle.git",
-                "reference": "6579b2e4cbc36a939cad3bc362ba7065efe5c1b2"
+                "reference": "3d717823bff090a8e6c7b420cf5a17446eca2fee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/6579b2e4cbc36a939cad3bc362ba7065efe5c1b2",
-                "reference": "6579b2e4cbc36a939cad3bc362ba7065efe5c1b2",
+                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/3d717823bff090a8e6c7b420cf5a17446eca2fee",
+                "reference": "3d717823bff090a8e6c7b420cf5a17446eca2fee",
                 "shasum": ""
             },
             "require": {
@@ -3793,7 +3793,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/BootstrapBundle/issues",
-                "source": "https://github.com/survos/BootstrapBundle/tree/1.5.503"
+                "source": "https://github.com/survos/BootstrapBundle/tree/1.5.504"
             },
             "funding": [
                 {
@@ -3801,11 +3801,11 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-06T17:13:43+00:00"
+            "time": "2025-02-13T00:52:54+00:00"
         },
         {
             "name": "survos/command-bundle",
-            "version": "1.5.503",
+            "version": "1.5.504",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCommandBundle.git",
@@ -3860,7 +3860,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCommandBundle/issues",
-                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.5.503"
+                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.5.504"
             },
             "funding": [
                 {
@@ -3872,7 +3872,7 @@
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.5.503",
+            "version": "1.5.504",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
@@ -3949,7 +3949,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.503"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.504"
             },
             "funding": [
                 {
@@ -4020,7 +4020,7 @@
         },
         {
             "name": "survos/simple-datatables-bundle",
-            "version": "1.5.503",
+            "version": "1.5.504",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosSimpleDatatablesBundle.git",
@@ -4085,7 +4085,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosSimpleDatatablesBundle/issues",
-                "source": "https://github.com/survos/SurvosSimpleDatatablesBundle/tree/1.5.503"
+                "source": "https://github.com/survos/SurvosSimpleDatatablesBundle/tree/1.5.504"
             },
             "funding": [
                 {
@@ -4097,16 +4097,16 @@
         },
         {
             "name": "survos/workflow-helper-bundle",
-            "version": "1.5.503",
+            "version": "1.5.504",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosWorkflowHelperBundle.git",
-                "reference": "1e4e7838b2f86c61eebe8d66b6f2de23079d8e15"
+                "reference": "053dfb7af1044a244f8778bba89b65e3ecaa9504"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/1e4e7838b2f86c61eebe8d66b6f2de23079d8e15",
-                "reference": "1e4e7838b2f86c61eebe8d66b6f2de23079d8e15",
+                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/053dfb7af1044a244f8778bba89b65e3ecaa9504",
+                "reference": "053dfb7af1044a244f8778bba89b65e3ecaa9504",
                 "shasum": ""
             },
             "require": {
@@ -4145,7 +4145,9 @@
                 "survos/wiki-bundle": "<1.2.57"
             },
             "require-dev": {
+                "nette/php-generator": "^4.1",
                 "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^11.5",
                 "psr/log": "^3.0",
                 "survos/bootstrap-bundle": "^1.5",
                 "symfony/browser-kit": "^6.4 || ^7.1",
@@ -4154,7 +4156,6 @@
                 "symfony/form": "^6.4 || ^7.1",
                 "symfony/framework-bundle": "^6.4 || ^7.1",
                 "symfony/maker-bundle": "^1.5",
-                "symfony/phpunit-bridge": "^6.4 || ^7.1",
                 "symfony/twig-bundle": "^6.4 || ^7.1",
                 "symfony/var-dumper": "^6.4 || ^7.1",
                 "zenstruck/class-metadata": "*"
@@ -4191,7 +4192,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosWorkflowHelperBundle/issues",
-                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.5.503"
+                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.5.504"
             },
             "funding": [
                 {
@@ -4199,7 +4200,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-08T12:05:06+00:00"
+            "time": "2025-02-13T00:52:59+00:00"
         },
         {
             "name": "symfony/amqp-messenger",
@@ -10638,16 +10639,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.12.1",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845"
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/123267b2c49fbf30d78a7b2d333f6be754b94845",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/024473a478be9df5fdaca2c793f2232fe788e414",
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414",
                 "shasum": ""
             },
             "require": {
@@ -10686,7 +10687,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.12.1"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.0"
             },
             "funding": [
                 {
@@ -10694,7 +10695,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-08T17:47:46+00:00"
+            "time": "2025-02-12T12:17:51+00:00"
         },
         {
             "name": "nette/php-generator",
@@ -11453,16 +11454,16 @@
         },
         {
             "name": "roave/better-reflection",
-            "version": "6.56.0",
+            "version": "6.57.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/BetterReflection.git",
-                "reference": "87fc50186197726e2e5aa24acf910743134951fe"
+                "reference": "d5fa8e106a1a046ea9b9a79e4ce95c6b6c158ae0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/87fc50186197726e2e5aa24acf910743134951fe",
-                "reference": "87fc50186197726e2e5aa24acf910743134951fe",
+                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/d5fa8e106a1a046ea9b9a79e4ce95c6b6c158ae0",
+                "reference": "d5fa8e106a1a046ea9b9a79e4ce95c6b6c158ae0",
                 "shasum": ""
             },
             "require": {
@@ -11516,9 +11517,9 @@
             "description": "Better Reflection - an improved code reflection API",
             "support": {
                 "issues": "https://github.com/Roave/BetterReflection/issues",
-                "source": "https://github.com/Roave/BetterReflection/tree/6.56.0"
+                "source": "https://github.com/Roave/BetterReflection/tree/6.57.0"
             },
-            "time": "2025-02-09T11:05:37+00:00"
+            "time": "2025-02-12T20:28:58+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -12500,7 +12501,7 @@
         },
         {
             "name": "survos/deployment-bundle",
-            "version": "1.5.503",
+            "version": "1.5.504",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosDeploymentBundle.git",
@@ -12547,7 +12548,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosDeploymentBundle/issues",
-                "source": "https://github.com/survos/SurvosDeploymentBundle/tree/1.5.503"
+                "source": "https://github.com/survos/SurvosDeploymentBundle/tree/1.5.504"
             },
             "funding": [
                 {
@@ -12559,23 +12560,23 @@
         },
         {
             "name": "survos/maker-bundle",
-            "version": "1.5.503",
+            "version": "1.5.504",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosMakerBundle.git",
-                "reference": "83cf7bcbd5b4c2535dc8035b21d810ee5f5a2d8b"
+                "reference": "ffd66bfc6422d920bdc5b603e1e9fce22ba9a563"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosMakerBundle/zipball/83cf7bcbd5b4c2535dc8035b21d810ee5f5a2d8b",
-                "reference": "83cf7bcbd5b4c2535dc8035b21d810ee5f5a2d8b",
+                "url": "https://api.github.com/repos/survos/SurvosMakerBundle/zipball/ffd66bfc6422d920bdc5b603e1e9fce22ba9a563",
+                "reference": "ffd66bfc6422d920bdc5b603e1e9fce22ba9a563",
                 "shasum": ""
             },
             "require": {
                 "nette/php-generator": "^3.5||^4.1",
                 "php": "^8.3",
                 "roave/better-reflection": "^6.0",
-                "sebastian/diff": "^4.0||^5.0||^6.0.1",
+                "sebastian/diff": "^5.0||^6.0||^7.0",
                 "symfony/config": "^6.4 || ^7.1",
                 "symfony/console": "^6.4 || ^7.1",
                 "symfony/options-resolver": "^6.4 || ^7.1",
@@ -12613,6 +12614,7 @@
                 "haydenpierce/class-finder": "^0.4.3",
                 "phpstan/phpstan": "^2.0",
                 "squizlabs/php_codesniffer": "^3.7",
+                "survos/core-bundle": "^1.5",
                 "symfony/form": "^6.4 || ^7.1",
                 "symfony/http-client": "^6.4 || ^7.1",
                 "symfony/maker-bundle": "^1.5",
@@ -12663,7 +12665,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosMakerBundle/issues",
-                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.5.503"
+                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.5.504"
             },
             "funding": [
                 {
@@ -12671,7 +12673,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-06T17:13:43+00:00"
+            "time": "2025-02-13T00:52:57+00:00"
         },
         {
             "name": "symfony/browser-kit",
