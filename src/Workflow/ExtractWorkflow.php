@@ -122,6 +122,9 @@ class ExtractWorkflow implements IExtractWorkflow
         $this->entityManager->flush(); // this happens in the caller, right?
 
         // the records are handled in another process to not slow down the fetch
+        if ($extract->getGrp()) {
+
+        }
         $this->messageBus->dispatch(new ExtractMessage(
             (string)$extract->getGrp()->getCode(),
             (string)$extract->getTokenCode(),

@@ -28,9 +28,9 @@ class Extract implements MarkingInterface, \Stringable
     /**
      * So we can index, use a code and the whole large token itself
      *
-     * @var string|null
+     * @var string
      */
-    #[ORM\Column(length: 32)]
+    #[ORM\Column(type: Types::STRING, length: 32)]
     #[ORM\Id]
     private string $tokenCode;
 
@@ -64,7 +64,7 @@ class Extract implements MarkingInterface, \Stringable
 
     #[ORM\ManyToOne(inversedBy: 'extracts')]
     #[ORM\JoinColumn(nullable: false, referencedColumnName: 'code')]
-    private ?Grp $grp = null;
+    private Grp $grp;
 
     /**
      * @var Collection<int, Record>
@@ -72,11 +72,6 @@ class Extract implements MarkingInterface, \Stringable
     #[ORM\OneToMany(targetEntity: Record::class, mappedBy: 'extract', orphanRemoval: false)]
     private Collection $records;
 
-
-
-    /**
-     * @param string|null $token
-     */
     public function __construct(?string $token, Grp $grp)
     {
         $this->token = $token;
@@ -213,7 +208,7 @@ class Extract implements MarkingInterface, \Stringable
         return $this;
     }
 
-    public function getGrp(): ?Grp
+    public function getGrp(): Grp
     {
         return $this->grp;
     }

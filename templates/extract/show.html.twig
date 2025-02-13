@@ -4,6 +4,7 @@
 
 {% block body %}
 
-    {{ dump(extract.stats) }}
-    {{ dump(extract.response.data) }}
+    <h1>{{ extract.tokenCode }}</h1>
+    <code>{{ extract.marking }}</code>
+    <pre>{{ extract.response|json_pretty }}</pre>
 {% endblock %}

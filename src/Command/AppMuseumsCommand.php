@@ -59,6 +59,8 @@ final class AppMuseumsCommand extends InvokableServiceCommand
                     $q = $matches[1];
                     $name = urldecode($q);
                     // get API key
+                } else {
+                    return;
                 }
 
 

@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Entity\Extract;
-use App\Message\ExtractMessage;
 use App\Repository\ExtractRepository;
 use App\Repository\GrpRepository;
 use App\Repository\SourceRepository;
@@ -66,7 +65,7 @@ EOL
 
     public function __invoke(
         IO                                                      $io,
-        #[Argument(description: "code for grp")] ?string        $gprCode,
+        #[Argument(name: 'grp', description: "code for grp")] ?string        $gprCode,
         #[Option(description: "dispatch a fetch request")] bool $dispatch = false,
         #[Option(description: "dispatch all groups")] bool      $all = false,
     ): int

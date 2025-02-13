@@ -20,7 +20,8 @@ final class ExtractController extends AbstractController
     #[Route('/extract/{tokenCode}', name: 'extract_show')]
     public function show(string $tokenCode): Response
     {
-        $extract = $this->extractRepository->findOneBy(['tokenCode' => $tokenCode]);
+        $extract = $this->extractRepository->find($tokenCode);
+        assert($extract, "Missing extract $tokenCode");
         return $this->render('extract/show.html.twig', [
             'extract' => $extract,
         ]);
