@@ -63,8 +63,9 @@ final class AppController extends AbstractController
                #[MapQueryParameter] int $limit = 100
     ): Response|array
     {
+
         return [
-            'data' => $this->grpRepository->findBy([], ['count' => 'ASC'], $limit),
+            'data' => $this->grpRepository->findBy([], ['count' => 'DESC'], $limit),
         ];
     }
 

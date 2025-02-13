@@ -4,6 +4,7 @@
     {% set columns = [
         'code',
         'count',
+        'loaded',
         'name',
     ] %}
     <twig:simple_datatables
@@ -17,7 +18,13 @@
             {{ row.id }}
         </twig:block>
         <twig:block name="count">
-            10x {{ row.extractCount }} pages of {{ row.count }}
+            {{ row.count }}
+        </twig:block>
+        <twig:block name="loaded">
+            {% set loaded = min(row.count, row.extractCount * 10) %}
+            {{ (100 * loaded/row.count)|number_format }}%
+            ({{ loaded }})
+
         </twig:block>
         <twig:block name="tokenCode">
             <span title="{{ row.token }}">{{ row.tokenCode }}</span>
