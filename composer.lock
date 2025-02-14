@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b308d6dfa1d9ddf466092b0fdc794044",
+    "content-hash": "7b668fdd27d3f768f11d48422699161c",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -3958,6 +3958,95 @@
                 }
             ],
             "time": "2025-01-25T13:01:03+00:00"
+        },
+        {
+            "name": "survos/crawler-bundle",
+            "version": "1.5.504",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosCrawlerBundle.git",
+                "reference": "a74f84e545f7ac26dc8afd9ac1f987b5a7b19ef4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosCrawlerBundle/zipball/a74f84e545f7ac26dc8afd9ac1f987b5a7b19ef4",
+                "reference": "a74f84e545f7ac26dc8afd9ac1f987b5a7b19ef4",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "^3.3",
+                "php": "^8.3",
+                "symfony/config": "^6.4 || ^7.1",
+                "symfony/console": "^6.4 || ^7.1",
+                "symfony/dependency-injection": "^6.4 || ^7.1",
+                "symfony/http-client-contracts": "^3.5",
+                "symfony/http-kernel": "^6.4 || ^7.1",
+                "symfony/security-bundle": "^6.4 || ^7.1",
+                "symfony/stopwatch": "^6.4 || ^7.1",
+                "symfony/string": "^6.4 || ^7.1"
+            },
+            "conflict": {
+                "survos/api-grid-bundle": "<1.2.57",
+                "survos/auth-bundle": "<1.2.57",
+                "survos/barcode-bundle": "<1.2.57",
+                "survos/bootstrap-bundle": "<1.2.57",
+                "survos/command-bundle": "<1.2.57",
+                "survos/core-bundle": "<1.2.57",
+                "survos/doc-bundle": "<1.2.57",
+                "survos/faker-bundle": "<1.2.57",
+                "survos/grid-bundle": "<1.2.57",
+                "survos/grid-group-bundle": "<1.2.57",
+                "survos/html-prettify-bundle": "<1.2.57",
+                "survos/import-bridge": "<1.2.57",
+                "survos/inspection-bundle": "<1.2.57",
+                "survos/location-bundle": "<1.2.57",
+                "survos/maker-bundle": "<1.2.57",
+                "survos/providence-bundle": "<1.2.57",
+                "survos/ruler-bundle": "<1.2.57",
+                "survos/stripe-product": "<1.2.57",
+                "survos/tree-bundle": "<1.2.57",
+                "survos/wiki-bundle": "<1.2.57",
+                "survos/workflow-helper-bundle": "<1.2.57"
+            },
+            "require-dev": {
+                "nette/php-generator": "^4.1",
+                "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^11.4",
+                "zenstruck/browser": "^1.9"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\CrawlerBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "Provides a way to create tests that crawl a site",
+            "support": {
+                "issues": "https://github.com/survos/SurvosCrawlerBundle/issues",
+                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.5.504"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-13T00:52:54+00:00"
         },
         {
             "name": "survos/installer",

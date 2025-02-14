@@ -3,7 +3,27 @@
 {% block title %}Hello RowController!{% endblock %}
 
 {% block body %}
-    {% if row %}
-{{ row.data|json_pretty }}
-    {% endif %}
+    {% set data = row.data %}
+    {% for key, section in data %}
+        <h4>{{ key }}</h4>
+        {% if block(key) is defined %}
+        {% endif %}
+
+
+        {% if key in  ['identifier','description','name'] %}
+            <ol>
+
+                {% for v in section %}
+                    <li>{{ v.type??'~' }}: {{ v.value }}</li>
+                {% endfor %}
+            </ol>
+            {% else %}
+                {% if is_scalar(section) %}
+                    <pre>{{ section }}</pre>
+                    {% else %}
+                <pre>{{ section|json_pretty }}</pre>
+                        {% endif %}
+
+        {% endif %}
+    {% endfor %}
 {% endblock %}

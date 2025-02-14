@@ -3,10 +3,8 @@
 {% block body %}
     {% set columns = [
         'grp',
-        'code',
         'name',
         'org',
-        'marking',
         'recordCount'
     ] %}
     <twig:simple_datatables
@@ -18,14 +16,13 @@
                 show {{ row.id }}
             </a>
         </twig:block>
-        <twig:block name="source">
-            {{ row.source.code }}
+        <twig:block name="grp">
+            {{ row.grp }}/<code>{{ row.code }}</code>
         </twig:block>
-        <twig:block name="tokenCode">
-            <span title="{{ row.token }}">{{ row.tokenCode }}</span>
-        </twig:block>
-        <twig:block name="nextToken">
-            <span title="{{ row.nextToken }}">{{ row.nextToken|length }}</span>
+        <twig:block name="name">
+            <a href="{{ path('app_record', {source: row.id}) }}">
+                {{ row.name }}
+            </a>
         </twig:block>
 
     </twig:simple_datatables>

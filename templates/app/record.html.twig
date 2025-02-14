@@ -2,12 +2,8 @@
 
 {% block body %}
     {% set columns = [
-        'grp',
-        'code',
-        'name',
-        'org',
-        'marking',
-        'recordCount'
+        'id',
+        'source',
     ] %}
     <twig:simple_datatables
             :perPage="25"
@@ -19,7 +15,7 @@
             </a>
         </twig:block>
         <twig:block name="source">
-            {{ row.source.code }}
+            {{ row.source.name }}
         </twig:block>
         <twig:block name="tokenCode">
             <span title="{{ row.token }}">{{ row.tokenCode }}</span>

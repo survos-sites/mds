@@ -31,18 +31,20 @@ final class AppController extends AbstractController
     {
     }
     #[Route('/record', name: 'app_record', methods: ['GET'])]
-    #[Template('app/source.html.twig')]
+    #[Template('app/record.html.twig')]
     public function record(Request $request,
-                           #[MapQueryParameter] int $limit = 100
+                           #[MapQueryParameter] int $limit = 100,
+                           #[MapQueryParameter] ?string $source = null,
     ): Response|array
     {
+        $filter = [];
+        if ($source) {
+            $filter['source'] = $source;
+        }
         return [
             'columns' => [
-                'id',
-                'marking',
-                'source',
             ],
-            'data' => $this->recordRepository->findBy([], [], $limit),
+            'data' => $this->recordRepository->findBy($filter, [], $limit),
         ];
     }
 
@@ -60,7 +62,7 @@ final class AppController extends AbstractController
     #[Route('/grp', name: 'app_grp', methods: ['GET'])]
     #[Template('app/grp.html.twig')]
     public function grp(Request $request,
-               #[MapQueryParameter] int $limit = 100
+               #[MapQueryParameter] int $limit = 100,
     ): Response|array
     {
         $qb = $this->grpRepository->createQueryBuilder('g')
@@ -68,29 +70,39 @@ final class AppController extends AbstractController
         $total = ($qb->getQuery()->getSingleScalarResult());
         return [
             'total' => $total,
-            'data' => $this->grpRepository->findBy([], ['count' => 'DESC'], $limit),
+            'data' => $this->grpRepository->findBy([], ['name' => 'ASC  '], $limit),
         ];
     }
 
     #[Route('/extract', name: 'app_extract', methods: ['GET'])]
     #[Template('app/extract.html.twig')]
     public function extract(Request $request,
-        #[MapQueryParameter] int $limit = 10
+        #[MapQueryParameter] int $limit = 100,
+        #[MapQueryParameter] ?string $grp=null,
     ): Response|array
     {
-        $lastExtract = $this->extractRepository->findBy([], ['createdAt' => 'DESC'], 9);
+        $filter = [];
+        if ($grp) {
+            $filter['grp'] = $grp;
+        }
+        $lastExtract = $this->extractRepository->findBy($filter, ['createdAt' => 'DESC'], 9);
 
+        $columns = [
+            'tokenCode',
+            'nextToken',
+            'marking',
+            'remaining',
+            'age',
+            'duration',
+            'latency'
+        ];
+        if (!$grp) {
+            $columns[] = 'grp';
+        }
         return [
-            'columns' => [
-                'tokenCode',
-                'nextToken',
-                'marking',
-                'remaining',
-                'age',
-                'duration',
-                'latency'
-            ],
-            'data' => $this->extractRepository->findBy([], ['createdAt' => 'DESC'], $limit),
+            'grp' => $grp,
+            'columns' => $columns,
+            'data' => $this->extractRepository->findBy($filter, ['createdAt' => 'DESC'], $limit),
             'lastExtract' => $lastExtract,
         ];
     }

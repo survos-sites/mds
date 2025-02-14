@@ -76,4 +76,10 @@ class Record implements MarkingInterface, RecordWorkflowInterface, \Stringable
 
         return $this;
     }
+
+    public function getLabel(): ?string
+    {
+        return $this->getData()['identifier'];
+
+    }
 }

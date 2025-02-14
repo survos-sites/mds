@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% if grp %}
+    <h3>Filtered by {{ grp }}</h3>
+    {% endif %}
     <twig:simple_datatables
             :data="data"
             :columns="columns">
@@ -10,13 +13,16 @@
             }) }}>
             {{ row.createdAt|ago }}
             </span>
-            {{ row.createdAt|date('c') }}
+{#            {{ row.createdAt|date('c') }}#}
         </twig:block>
         <twig:block name="remaining">
             {{ row.remaining|number_format }}
         </twig:block>
         <twig:block name="source">
             {{ row.source.code }}
+        </twig:block>
+        <twig:block name="grp">
+            {{ row.grp.code }}
         </twig:block>
         <twig:block name="tokenCode">
             <span title="{{ row.token }}">{{ row.tokenCode }}</span>

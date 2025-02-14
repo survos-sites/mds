@@ -6,6 +6,7 @@
         'code',
         'count',
         'loaded',
+        'progress',
         'name',
     ] %}
     <twig:simple_datatables
@@ -18,13 +19,19 @@
             </a>
             {{ row.id }}
         </twig:block>
+        <twig:block name="loaded">
+            {{ min(row.count, row.extractCount * 10) }}
+        </twig:block>
         <twig:block name="count">
             {{ row.count }}
         </twig:block>
-        <twig:block name="loaded">
+        <twig:block name="progress">
             {% set loaded = min(row.count, row.extractCount * 10) %}
-            {{ (100 * loaded/row.count)|number_format }}%
-            ({{ loaded }})
+            {% set percent =  100 * loaded/row.count  %}
+{#            <label for="file">progress:</label>#}
+
+            <progress id="file" max="{{ row.count }}" value="{{ loaded }}">{{ percent }}%</progress>
+            {{ percent|number_format }}%
 
         </twig:block>
         <twig:block name="tokenCode">
