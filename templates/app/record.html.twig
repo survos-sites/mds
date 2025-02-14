@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% set columns = [
+        'grp',
+        'code',
+        'name',
+        'org',
+        'marking',
+        'recordCount'
+    ] %}
+    <twig:simple_datatables
+            :perPage="25"
+            :data="data"
+            :columns="columns">
+        <twig:block name="id">
+            <a href="{{ path('row_show', {id: row.id}) }}">
+                show {{ row.id }}
+            </a>
+        </twig:block>
+        <twig:block name="source">
+            {{ row.source.code }}
+        </twig:block>
+        <twig:block name="tokenCode">
+            <span title="{{ row.token }}">{{ row.tokenCode }}</span>
+        </twig:block>
+        <twig:block name="nextToken">
+            <span title="{{ row.nextToken }}">{{ row.nextToken|length }}</span>
+        </twig:block>
+
+    </twig:simple_datatables>
+
+{% endblock %}
+
+{% block title 'Extract records' %}
+
