@@ -51,7 +51,7 @@ final class AppController extends AbstractController
     #[Route('/source', name: 'app_source', methods: ['GET'])]
     #[Template('app/source.html.twig')]
     public function source(Request $request,
-                            #[MapQueryParameter] int $limit = 10
+                            #[MapQueryParameter] int $limit = 100
     ): Response|array
     {
         return [

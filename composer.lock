@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b668fdd27d3f768f11d48422699161c",
+    "content-hash": "f3278a380ea3973b62d4f816ab619b3d",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -3353,16 +3353,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "c00d78fb6b29658347f9d37ebe104bffadf36299"
+                "reference": "72e51f7c32c5aef7c8b462195b8c599b11199893"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/c00d78fb6b29658347f9d37ebe104bffadf36299",
-                "reference": "c00d78fb6b29658347f9d37ebe104bffadf36299",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/72e51f7c32c5aef7c8b462195b8c599b11199893",
+                "reference": "72e51f7c32c5aef7c8b462195b8c599b11199893",
                 "shasum": ""
             },
             "require": {
@@ -3394,9 +3394,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.0.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.0.1"
             },
-            "time": "2024-10-13T11:29:49+00:00"
+            "time": "2025-02-13T12:25:43+00:00"
         },
         {
             "name": "psr/cache",
@@ -3706,7 +3706,7 @@
         },
         {
             "name": "survos/bootstrap-bundle",
-            "version": "1.5.504",
+            "version": "1.5.508",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/BootstrapBundle.git",
@@ -3793,7 +3793,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/BootstrapBundle/issues",
-                "source": "https://github.com/survos/BootstrapBundle/tree/1.5.504"
+                "source": "https://github.com/survos/BootstrapBundle/tree/1.5.508"
             },
             "funding": [
                 {
@@ -3805,7 +3805,7 @@
         },
         {
             "name": "survos/command-bundle",
-            "version": "1.5.504",
+            "version": "1.5.508",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCommandBundle.git",
@@ -3860,7 +3860,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCommandBundle/issues",
-                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.5.504"
+                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.5.508"
             },
             "funding": [
                 {
@@ -3872,16 +3872,16 @@
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.5.504",
+            "version": "1.5.508",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
-                "reference": "79af2679b25ae1f1bdae66571edb1736b557c59a"
+                "reference": "1e070c9fbf0ad30327d509da0525d48b523d191b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosCoreBundle/zipball/79af2679b25ae1f1bdae66571edb1736b557c59a",
-                "reference": "79af2679b25ae1f1bdae66571edb1736b557c59a",
+                "url": "https://api.github.com/repos/survos/SurvosCoreBundle/zipball/1e070c9fbf0ad30327d509da0525d48b523d191b",
+                "reference": "1e070c9fbf0ad30327d509da0525d48b523d191b",
                 "shasum": ""
             },
             "require": {
@@ -3949,7 +3949,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.504"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.508"
             },
             "funding": [
                 {
@@ -3957,20 +3957,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-25T13:01:03+00:00"
+            "time": "2025-02-13T11:44:52+00:00"
         },
         {
             "name": "survos/crawler-bundle",
-            "version": "1.5.504",
+            "version": "1.5.508",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCrawlerBundle.git",
-                "reference": "a74f84e545f7ac26dc8afd9ac1f987b5a7b19ef4"
+                "reference": "f7b5cd776ccb409766db900fb7bf543d5fcf1820"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosCrawlerBundle/zipball/a74f84e545f7ac26dc8afd9ac1f987b5a7b19ef4",
-                "reference": "a74f84e545f7ac26dc8afd9ac1f987b5a7b19ef4",
+                "url": "https://api.github.com/repos/survos/SurvosCrawlerBundle/zipball/f7b5cd776ccb409766db900fb7bf543d5fcf1820",
+                "reference": "f7b5cd776ccb409766db900fb7bf543d5fcf1820",
                 "shasum": ""
             },
             "require": {
@@ -4038,7 +4038,7 @@
             "description": "Provides a way to create tests that crawl a site",
             "support": {
                 "issues": "https://github.com/survos/SurvosCrawlerBundle/issues",
-                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.5.504"
+                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.5.508"
             },
             "funding": [
                 {
@@ -4046,7 +4046,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-13T00:52:54+00:00"
+            "time": "2025-02-15T21:53:49+00:00"
         },
         {
             "name": "survos/installer",
@@ -4109,7 +4109,7 @@
         },
         {
             "name": "survos/simple-datatables-bundle",
-            "version": "1.5.504",
+            "version": "1.5.508",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosSimpleDatatablesBundle.git",
@@ -4174,7 +4174,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosSimpleDatatablesBundle/issues",
-                "source": "https://github.com/survos/SurvosSimpleDatatablesBundle/tree/1.5.504"
+                "source": "https://github.com/survos/SurvosSimpleDatatablesBundle/tree/1.5.508"
             },
             "funding": [
                 {
@@ -4186,16 +4186,16 @@
         },
         {
             "name": "survos/workflow-helper-bundle",
-            "version": "1.5.504",
+            "version": "1.5.508",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosWorkflowHelperBundle.git",
-                "reference": "053dfb7af1044a244f8778bba89b65e3ecaa9504"
+                "reference": "f1a6aa6f1e86cea1e202173f10c32a1123baaaef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/053dfb7af1044a244f8778bba89b65e3ecaa9504",
-                "reference": "053dfb7af1044a244f8778bba89b65e3ecaa9504",
+                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/f1a6aa6f1e86cea1e202173f10c32a1123baaaef",
+                "reference": "f1a6aa6f1e86cea1e202173f10c32a1123baaaef",
                 "shasum": ""
             },
             "require": {
@@ -4281,7 +4281,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosWorkflowHelperBundle/issues",
-                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.5.504"
+                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.5.508"
             },
             "funding": [
                 {
@@ -4289,7 +4289,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-13T00:52:59+00:00"
+            "time": "2025-02-17T11:53:27+00:00"
         },
         {
             "name": "symfony/amqp-messenger",
@@ -10025,20 +10025,20 @@
         },
         {
             "name": "twig/extra-bundle",
-            "version": "v3.19.0",
+            "version": "v3.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/twig-extra-bundle.git",
-                "reference": "9746573ca4bc1cd03a767a183faadaf84e0c31fa"
+                "reference": "9df5e1dbb6a68c0665ae5603f6f2c20815647876"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/twig-extra-bundle/zipball/9746573ca4bc1cd03a767a183faadaf84e0c31fa",
-                "reference": "9746573ca4bc1cd03a767a183faadaf84e0c31fa",
+                "url": "https://api.github.com/repos/twigphp/twig-extra-bundle/zipball/9df5e1dbb6a68c0665ae5603f6f2c20815647876",
+                "reference": "9df5e1dbb6a68c0665ae5603f6f2c20815647876",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.2",
+                "php": ">=8.1.0",
                 "symfony/framework-bundle": "^5.4|^6.4|^7.0",
                 "symfony/twig-bundle": "^5.4|^6.4|^7.0",
                 "twig/twig": "^3.2|^4.0"
@@ -10083,7 +10083,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.19.0"
+                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.20.0"
             },
             "funding": [
                 {
@@ -10095,24 +10095,24 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-26T19:22:23+00:00"
+            "time": "2025-02-08T09:47:15+00:00"
         },
         {
             "name": "twig/intl-extra",
-            "version": "v3.19.0",
+            "version": "v3.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/intl-extra.git",
-                "reference": "79a1bea7254783b540d51de10dc5e9f310110794"
+                "reference": "05bc5d46b9df9e62399eae53e7c0b0633298b146"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/intl-extra/zipball/79a1bea7254783b540d51de10dc5e9f310110794",
-                "reference": "79a1bea7254783b540d51de10dc5e9f310110794",
+                "url": "https://api.github.com/repos/twigphp/intl-extra/zipball/05bc5d46b9df9e62399eae53e7c0b0633298b146",
+                "reference": "05bc5d46b9df9e62399eae53e7c0b0633298b146",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.2",
+                "php": ">=8.1.0",
                 "symfony/intl": "^5.4|^6.4|^7.0",
                 "twig/twig": "^3.13|^4.0"
             },
@@ -10147,7 +10147,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/twigphp/intl-extra/tree/v3.19.0"
+                "source": "https://github.com/twigphp/intl-extra/tree/v3.20.0"
             },
             "funding": [
                 {
@@ -10159,24 +10159,24 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-24T20:20:33+00:00"
+            "time": "2025-01-31T20:45:36+00:00"
         },
         {
             "name": "twig/string-extra",
-            "version": "v3.19.0",
+            "version": "v3.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/string-extra.git",
-                "reference": "cb4eec11de02f63ad8ea9d065a1f27752d0bf752"
+                "reference": "4b3337544ac8f76c280def94e32b53acfaec0589"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/string-extra/zipball/cb4eec11de02f63ad8ea9d065a1f27752d0bf752",
-                "reference": "cb4eec11de02f63ad8ea9d065a1f27752d0bf752",
+                "url": "https://api.github.com/repos/twigphp/string-extra/zipball/4b3337544ac8f76c280def94e32b53acfaec0589",
+                "reference": "4b3337544ac8f76c280def94e32b53acfaec0589",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.2",
+                "php": ">=8.1.0",
                 "symfony/string": "^5.4|^6.4|^7.0",
                 "symfony/translation-contracts": "^1.1|^2|^3",
                 "twig/twig": "^3.13|^4.0"
@@ -10214,7 +10214,7 @@
                 "unicode"
             ],
             "support": {
-                "source": "https://github.com/twigphp/string-extra/tree/v3.19.0"
+                "source": "https://github.com/twigphp/string-extra/tree/v3.20.0"
             },
             "funding": [
                 {
@@ -10226,28 +10226,27 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-30T08:42:13+00:00"
+            "time": "2025-01-31T20:45:36+00:00"
         },
         {
             "name": "twig/twig",
-            "version": "v3.19.0",
+            "version": "v3.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "d4f8c2b86374f08efc859323dbcd95c590f7124e"
+                "reference": "3468920399451a384bef53cf7996965f7cd40183"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d4f8c2b86374f08efc859323dbcd95c590f7124e",
-                "reference": "d4f8c2b86374f08efc859323dbcd95c590f7124e",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3468920399451a384bef53cf7996965f7cd40183",
+                "reference": "3468920399451a384bef53cf7996965f7cd40183",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.2",
+                "php": ">=8.1.0",
                 "symfony/deprecation-contracts": "^2.5|^3",
                 "symfony/polyfill-ctype": "^1.8",
-                "symfony/polyfill-mbstring": "^1.3",
-                "symfony/polyfill-php81": "^1.29"
+                "symfony/polyfill-mbstring": "^1.3"
             },
             "require-dev": {
                 "phpstan/phpstan": "^2.0",
@@ -10294,7 +10293,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.19.0"
+                "source": "https://github.com/twigphp/Twig/tree/v3.20.0"
             },
             "funding": [
                 {
@@ -10306,7 +10305,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-29T07:06:14+00:00"
+            "time": "2025-02-13T08:34:43+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -11119,16 +11118,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.4",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "8f99e18eb775dbaf6460c95fa0b65312da9c746a"
+                "reference": "451b17f9665481ee502adc39be987cb71067ece2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8f99e18eb775dbaf6460c95fa0b65312da9c746a",
-                "reference": "8f99e18eb775dbaf6460c95fa0b65312da9c746a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/451b17f9665481ee502adc39be987cb71067ece2",
+                "reference": "451b17f9665481ee502adc39be987cb71067ece2",
                 "shasum": ""
             },
             "require": {
@@ -11173,7 +11172,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-10T08:25:21+00:00"
+            "time": "2025-02-13T12:49:56+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -12648,7 +12647,7 @@
         },
         {
             "name": "survos/deployment-bundle",
-            "version": "1.5.504",
+            "version": "1.5.508",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosDeploymentBundle.git",
@@ -12695,7 +12694,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosDeploymentBundle/issues",
-                "source": "https://github.com/survos/SurvosDeploymentBundle/tree/1.5.504"
+                "source": "https://github.com/survos/SurvosDeploymentBundle/tree/1.5.508"
             },
             "funding": [
                 {
@@ -12707,16 +12706,16 @@
         },
         {
             "name": "survos/maker-bundle",
-            "version": "1.5.504",
+            "version": "1.5.508",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosMakerBundle.git",
-                "reference": "ffd66bfc6422d920bdc5b603e1e9fce22ba9a563"
+                "reference": "11c0006bbd0a3a45ab7dc7436cb07e4b0e9f6f38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosMakerBundle/zipball/ffd66bfc6422d920bdc5b603e1e9fce22ba9a563",
-                "reference": "ffd66bfc6422d920bdc5b603e1e9fce22ba9a563",
+                "url": "https://api.github.com/repos/survos/SurvosMakerBundle/zipball/11c0006bbd0a3a45ab7dc7436cb07e4b0e9f6f38",
+                "reference": "11c0006bbd0a3a45ab7dc7436cb07e4b0e9f6f38",
                 "shasum": ""
             },
             "require": {
@@ -12812,7 +12811,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosMakerBundle/issues",
-                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.5.504"
+                "source": "https://github.com/survos/SurvosMakerBundle/tree/1.5.508"
             },
             "funding": [
                 {
@@ -12820,7 +12819,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-13T00:52:57+00:00"
+            "time": "2025-02-17T11:53:22+00:00"
         },
         {
             "name": "symfony/browser-kit",

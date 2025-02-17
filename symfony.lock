@@ -109,7 +109,7 @@
         ]
     },
     "survos/bootstrap-bundle": {
-        "version": "1.5.503"
+        "version": "1.5.507"
     },
     "survos/command-bundle": {
         "version": "1.5",
