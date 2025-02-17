@@ -13,11 +13,11 @@
             "schedule": "*/1 * * * *"
         },
         {
-            "command": "php -d memory_limit=2G bin/console messenger:consume load_records  --time-limit 175",
+            "command": "php -d memory_limit=4G bin/console messenger:consume load_records  --time-limit 175",
             "schedule": "*/3 * * * *"
         },
         {
-            "command": "php -d memory_limit=2G bin/console messenger:consume load_records  --time-limit 230",
+            "command": "php -d memory_limit=4G bin/console messenger:consume load_records  --time-limit 230",
             "schedule": "*/4 * * * *"
         }
     ],
