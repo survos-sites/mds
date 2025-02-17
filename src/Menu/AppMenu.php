@@ -57,6 +57,8 @@ final class AppMenu implements KnpMenuHelperInterface
             $this->add($menu, 'app_' . $code, label: $code, badge: $repo->count());
         }
 
+        $this->add($menu, 'api_entrypoint');
+
         if ($this->isEnv('dev')) {
 
             $subMenu = $this->addSubmenu($menu, "Workflows");
@@ -65,7 +67,7 @@ final class AppMenu implements KnpMenuHelperInterface
                 $shortName = new \ReflectionClass($class)->getShortName();
                 $this->add($subMenu, 'survos_command', [
                     'className' => addslashes($class),
-                    'commandName' => 'survos:workflow:make'],
+                    'commandName' => 'survos:workflow:generate'],
                     label: "make workflow " . $class);
                 $this->add($subMenu, 'survos_command', [
                     'commandName' => 'workflow:iterate',

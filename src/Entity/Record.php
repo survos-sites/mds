@@ -2,6 +2,12 @@
 
 namespace App\Entity;
 
+
+// https://mds.survos.com/row/ba09178c-9f76-336f-9df5-9757f4a7f354  example of a record with good data
+
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\RecordRepository;
 use App\Workflow\RecordWorkflowInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,6 +17,13 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: RecordRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ]
+)]
+
 class Record implements MarkingInterface, RecordWorkflowInterface, \Stringable
 {
     use MarkingTrait;
@@ -79,7 +92,20 @@ class Record implements MarkingInterface, RecordWorkflowInterface, \Stringable
 
     public function getLabel(): ?string
     {
-        return $this->getData()['identifier'];
+        $identifier =  $this->getData()['identifier'];
+        if (is_array($identifier)) {
+            foreach ($identifier as $id) {
+                foreach (['object number','file name', 'accession number', 'other'] as $candidate) {
+                    if ($id['type'] === $candidate) {
+                        return sprintf("%s: %s", $candidate, $id['value']);
+                    }
+                }
+            }
+            return json_encode($identifier);
+        } else {
+            return $identifier;
+        }
+
 
     }
 }

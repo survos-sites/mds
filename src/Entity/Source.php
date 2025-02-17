@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\SourceRepository;
 use App\Workflow\SourceWorkflowInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,6 +16,13 @@ use Survos\WorkflowBundle\Traits\MarkingTrait;
 
 #[ORM\Entity(repositoryClass: SourceRepository::class)]
 #[ORM\UniqueConstraint(name: 'source_code', columns: ['code'])]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ]
+)]
+
 class Source implements MarkingInterface, SourceWorkflowInterface
 {
     use MarkingTrait;

@@ -117,6 +117,7 @@
     "require-dev": {
         "phpstan/phpstan": "^2.1.5",
         "phpunit/phpunit": "^11.5.7",
+        "pierstoval/smoke-testing": "^1.2",
         "survos/deployment-bundle": "^1.5.508",
         "survos/maker-bundle": "^1.5.508",
         "symfony/browser-kit": "^7.2",
@@ -125,6 +126,7 @@
         "symfony/maker-bundle": "^1.62.1",
         "symfony/phpunit-bridge": "^7.2",
         "symfony/stopwatch": "^7.2.2",
-        "symfony/web-profiler-bundle": "^7.2.3"
+        "symfony/web-profiler-bundle": "^7.2.3",
+        "zenstruck/browser": "^1.9"
     }
 }

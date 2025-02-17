@@ -9,7 +9,7 @@
     ],
     "cron": [
         {
-            "command": "php -d memory_limit=2G bin/console messenger:consume async  --time-limit 53",
+            "command": "php -d memory_limit=4G bin/console messenger:consume async  --time-limit 53",
             "schedule": "*/1 * * * *"
         },
         {

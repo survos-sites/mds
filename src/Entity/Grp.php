@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\GrpRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,6 +14,12 @@ use Survos\WorkflowBundle\Traits\MarkingInterface;
 use Survos\WorkflowBundle\Traits\MarkingTrait;
 
 #[ORM\Entity(repositoryClass: GrpRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ]
+)]
 class Grp implements MarkingInterface
 {
     use MarkingTrait;
@@ -35,7 +44,7 @@ class Grp implements MarkingInterface
     /**
      * @var Collection<int, Extract>
      */
-    #[ORM\OneToMany(targetEntity: Extract::class, mappedBy: 'grp', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Extract::class, mappedBy: 'grp', orphanRemoval: true, fetch: 'EXTRA_LAZY')]
     private Collection $extracts;
 
     #[ORM\Column(nullable: true)]
