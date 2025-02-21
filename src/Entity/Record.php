@@ -15,8 +15,10 @@ use Survos\WorkflowBundle\Traits\MarkingInterface;
 use Survos\WorkflowBundle\Traits\MarkingTrait;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Zenstruck\Alias;
 
 #[ORM\Entity(repositoryClass: RecordRepository::class)]
+#[Alias('record')]
 #[ApiResource(
     operations: [
         new Get(),

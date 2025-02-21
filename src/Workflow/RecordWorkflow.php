@@ -16,24 +16,34 @@ use Symfony\Component\Workflow\Event\TransitionEvent;
 final class RecordWorkflow implements RecordWorkflowInterface
 {
 
-public function __construct(
-    // add services
-)
-{
-}
-
-#[AsGuardListener(self::WORKFLOW_NAME)]
-public function onGuard(GuardEvent $event): void
-{
-    // switch ($event->getTransition()) { ...
-}
-#[AsTransitionListener(self::WORKFLOW_NAME)]
-public function onTransition(TransitionEvent $event): void
+    public function __construct(
+        // add services
+    )
     {
-    switch ($event->getTransition()->getName()) {
-             case self::TRANSITION_PROCESS:
-         break;
+    }
+
+    private function getRecord(TransitionEvent $event): Record
+    {
+        /** @var Record */
+        return $event->getSubject();
+
+    }
+
+    #[AsGuardListener(self::WORKFLOW_NAME)]
+    public function onGuard(GuardEvent $event): void
+    {
+        // switch ($event->getTransition()) { ...
+    }
+
+    #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_PROCESS)]
+    public function onTransition(TransitionEvent $event): void
+    {
+        $record = $this->getRecord($event);
+        dd($record);
+        switch ($event->getTransition()->getName()) {
+            case self::TRANSITION_PROCESS:
+                break;
         }
-}
+    }
 
 }

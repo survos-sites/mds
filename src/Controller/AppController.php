@@ -51,7 +51,7 @@ final class AppController extends AbstractController
     #[Route('/source', name: 'app_source', methods: ['GET'])]
     #[Template('app/source.html.twig')]
     public function source(Request $request,
-                            #[MapQueryParameter] int $limit = 100
+                           #[MapQueryParameter] int $limit = 100
     ): Response|array
     {
         return [
@@ -62,7 +62,7 @@ final class AppController extends AbstractController
     #[Route('/grp', name: 'app_grp', methods: ['GET'])]
     #[Template('app/grp.html.twig')]
     public function grp(Request $request,
-               #[MapQueryParameter] int $limit = 100,
+                        #[MapQueryParameter] int $limit = 100,
     ): Response|array
     {
         $qb = $this->grpRepository->createQueryBuilder('g')
@@ -77,8 +77,8 @@ final class AppController extends AbstractController
     #[Route('/extract', name: 'app_extract', methods: ['GET'])]
     #[Template('app/extract.html.twig')]
     public function extract(Request $request,
-        #[MapQueryParameter] int $limit = 100,
-        #[MapQueryParameter] ?string $grp=null,
+                            #[MapQueryParameter] int $limit = 100,
+                            #[MapQueryParameter] ?string $grp=null,
     ): Response|array
     {
         $filter = [];

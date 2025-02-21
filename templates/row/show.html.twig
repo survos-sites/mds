@@ -12,16 +12,18 @@
 
         {% if key in  ['identifier','description','name'] %}
             <ol>
-
                 {% for v in section %}
                     <li>{{ v.type??'~' }}: {{ v.value }}</li>
                 {% endfor %}
             </ol>
             {% else %}
                 {% if is_scalar(section) %}
-                    <pre>{{ section }}</pre>
+                        <h4>{{ section }}</h4>
                     {% else %}
-                <pre>{{ section|json_pretty }}</pre>
+                        <pre>
+                    {{ section|json_pretty('div') }}
+
+                        </pre>
                         {% endif %}
 
         {% endif %}
