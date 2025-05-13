@@ -20,10 +20,7 @@
                 {% if is_scalar(section) %}
                         <h4>{{ section }}</h4>
                     {% else %}
-                        <pre>
-                    {{ section|json_pretty('div') }}
-
-                        </pre>
+                        <pre>{{ section|json_pretty('div') }}</pre>
                         {% endif %}
 
         {% endif %}
