@@ -53,13 +53,19 @@
 
     {# Footer stays the same #}
     <div class="card-footer d-flex flex-wrap gap-2 align-items-center">
+        {% if app.request.get('debug', false) %}
         <code class="small">{{ hit.marking }}</code>
-        <div class="d-flex flex-column flex-md-row gap-1 flex-shrink-0">
-            <a href="{{ hit.websiteLink }}" target="_blank" class="small text-decoration-none text-primary">@mds</a>
-{#            <a href="https://{{ hit.name }}.wip" target="_blank" class="small text-decoration-none text-secondary">Local</a>#}
-        </div>
+        {% endif %}
+        {% if hit.websiteLink %}
+            <div class="d-flex flex-column flex-md-row gap-1 flex-shrink-0">
+                <a href="{{ hit.websiteLink }}" target="_blank" class="small text-decoration-none text-primary">@mds</a>
+                {#            <a href="https://{{ hit.name }}.wip" target="_blank" class="small text-decoration-none text-secondary">Local</a> #}
+            </div>
+        {% endif %}
         <div class="badge bg-warning text-dark ms-auto">
-            {{ hit.license }}
+            <a href="{{ hit.licenseUrl }}" target="_blank">
+                {{ hit.license }}
+            </a>
         </div>
         {% if hit._rankingScore != 1 %}
             <span class="text-muted small">
