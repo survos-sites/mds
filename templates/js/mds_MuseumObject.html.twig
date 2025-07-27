@@ -5,7 +5,9 @@
             {{ hit._highlightResult.title.value|raw }}
             {{ hit._highlightResult.objectName.value|raw }}
         </span>
-        <span class="badge bg-success rounded-pill">{{ hit.extractCount }} of {{ hit.count }}</span>
+        <span class="badge bg-success rounded-pill">
+
+            {{ hit.concept }}</span>
     </div>
 
     <div class="card-body">
