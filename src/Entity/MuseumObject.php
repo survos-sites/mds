@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -27,9 +28,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
     normalizationContext: ['groups' => ['obj.read','marking', 'record.read']]
 )]
 #[MeiliIndex()]
-#[ApiFilter(OrderFilter::class, properties: [
-    'count','extractCount'
-])]
+//#[ApiFilter(OrderFilter::class, properties: [
+//    'count','extractCount'
+//])]
 #[ApiFilter(FacetsFieldSearchFilter::class, properties: ['marking','status','license'])]
 class MuseumObject implements MarkingInterface
 {
@@ -37,6 +38,7 @@ class MuseumObject implements MarkingInterface
 
     public function __construct(
         #[ORM\Id]
+        #[ApiProperty(identifier: true)]
         #[ORM\Column()]
         #[Groups(['record.read'])]
         private(set) ?string   $id = null,
@@ -59,10 +61,14 @@ class MuseumObject implements MarkingInterface
         $this->dataSource = $dataSource;
     }
 
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
     static public function calcKey(string $dataSource, string $id): string
     {
-        return hash('xxh3', $dataSource) . '_' . $id;
-
+        return hash('xxh3', $dataSource .  $id);
     }
 
     #[Groups(['record.read'])]

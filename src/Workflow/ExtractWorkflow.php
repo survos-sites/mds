@@ -57,20 +57,20 @@ class ExtractWorkflow implements IExtractWorkflow
     }
 
 
-    #[AsGuardListener(self::WORKFLOW_NAME)]
-    public function onGuard(GuardEvent $event): void
-    {
-        /** @var Extract extract */
-        $extract = $event->getSubject();
-
-        switch ($event->getTransition()) {
-            case self::TRANSITION_LOAD:
-                if ($extract->getNextToken()) {
-                    $event->setBlocked(true, "probably already processed");
-                }
-                break;
-        }
-    }
+//    #[AsGuardListener(self::WORKFLOW_NAME)]
+//    public function onGuard(GuardEvent $event): void
+//    {
+//        /** @var Extract extract */
+//        $extract = $event->getSubject();
+//
+//        switch ($event->getTransition()) {
+//            case self::TRANSITION_LOAD:
+//                if ($extract->getNextToken()) {
+//                    $event->setBlocked(true, "probably already processed");
+//                }
+//                break;
+//        }
+//    }
 
     private function getExtract(Event $event): Extract
     {
@@ -79,13 +79,15 @@ class ExtractWorkflow implements IExtractWorkflow
     }
 
     #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_LOAD)]
-    public function onLoadFromExtractData(TransitionEvent $event): void
+    public function onLoadFromExtractData(TransitionEvent $event): array
     {
         $extract = $this->getExtract($event);
         $grp = $extract->getGrp();
         $data = $extract->getResponse()['data'];
         $objs = $this->museumObjectExtractor->extract($extract->getResponse());
-        return;
+        return [
+            'objects loaded' => count($objs)
+        ];
 
         foreach ($data as $idx => $item) {
             $obj = $this->museumObjectExtractor->extract($item);
@@ -129,18 +131,22 @@ class ExtractWorkflow implements IExtractWorkflow
     }
 
     #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
-    public function onTransition(TransitionEvent $event): void
+    public function onFetch(TransitionEvent $event): array
     {
         $extract = $this->getExtract($event);
+        $this->logger->warning($extract->getUrl());
 
         // cache during dev only
         $key = $extract->getTokenCode();
-//        $data = $this->cache->get($key, function (ItemInterface $item) use ($extract) {
+        $this->logger->info("not! Checking cache for $key");
+//        $data = $this->cache->get($key, function (ItemInterface $item) use ($extract, $key){
+            $this->logger->info("$key not in cache, so fetching...");
             $response = $this->httpClient->request('GET', $url = $extract->getUrl(), [
                 'headers' => [
                     'Accept' => 'application/json',
                 ]
             ]);
+            $this->logger->info("Status code: " . $response->getStatusCode());
             if ($response->getStatusCode() !== 200) {
                 dd($url);
             }
@@ -162,12 +168,16 @@ class ExtractWorkflow implements IExtractWorkflow
             ->setResponse($data) // for debugging, but huge!  maybe for re-processing
             ->setLatency($stats['latency']);;
 
-        if ($nextToken = $data['resume']) {
+        if ($nextToken = $data['resume']??null) {
             $extract
                 ->setRemaining($remaining)
                 ->setNextToken($nextToken);
         }
         $this->entityManager->flush();
+        return [
+            'url' => $url,
+            'duration' => $duration
+        ];
 
     }
 

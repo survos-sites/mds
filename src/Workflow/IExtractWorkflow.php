@@ -17,10 +17,10 @@ interface IExtractWorkflow
 	public const PLACE_FETCHED = 'fetched';
 
     /* Fetch the URI with 10 objects and a next token */
-    #[Transition(from: [self::PLACE_NEW], to: self::PLACE_FETCHED)]
+    #[Transition(from: [self::PLACE_NEW], to: self::PLACE_FETCHED, transport: 'extract_fetch', next: [self::TRANSITION_LOAD])]
     public const TRANSITION_FETCH = 'fetch';
 
     /* Load the data into records */
-	#[Transition(from: [self::PLACE_FETCHED], to: self::PLACE_LOADED)]
+	#[Transition(from: [self::PLACE_FETCHED], to: self::PLACE_LOADED, transport: 'extract_load')]
 	public const TRANSITION_LOAD = 'load';
 }
