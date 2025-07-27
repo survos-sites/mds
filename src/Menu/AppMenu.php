@@ -53,6 +53,7 @@ final class AppMenu implements KnpMenuHelperInterface
         $options = $event->getOptions();
         $this->add($menu, 'app_homepage');
         $this->add($menu, 'zenstruck_messenger_monitor_dashboard', label: "*msg");
+        $this->add($menu, 'survos_workflow_entities', label: "*entities");
 
         $subMenu = $this->addSubmenu($menu, 'meili_insta');
         foreach (['mds_Grp', 'mds_MuseumObject'] as $indexName) {
