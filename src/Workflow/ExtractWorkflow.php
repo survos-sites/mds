@@ -4,19 +4,30 @@ namespace App\Workflow;
 
 use App\Entity\Extract;
 use App\Entity\Grp;
+use App\Entity\Record;
+use App\Entity\Source;
 use App\Message\ExtractMessage;
 use App\Repository\ExtractRepository;
 use App\Repository\RecordRepository;
 use App\Repository\SourceRepository;
+use App\Service\MuseumObjectExtractor;
+use App\Service\MuseumObjectExtractorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Survos\CoreBundle\Service\SurvosUtils;
 use Survos\WorkflowBundle\Attribute\Workflow;
-use Survos\WorkflowBundle\Message\AsyncTransitionMessage;
+use Survos\WorkflowBundle\Message\TransitionMessage;
+use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Workflow\Attribute\AsCompletedListener;
 use Symfony\Component\Workflow\Attribute\AsGuardListener;
 use Symfony\Component\Workflow\Attribute\AsTransitionListener;
+use Symfony\Component\Workflow\Event\CompletedEvent;
+use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\GuardEvent;
 use Symfony\Component\Workflow\Event\TransitionEvent;
+use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -32,7 +43,13 @@ class ExtractWorkflow implements IExtractWorkflow
         private readonly SourceRepository       $sourceRepository,
         private ExtractRepository               $extractRepository,
         private HttpClientInterface             $httpClient,
-        private CacheInterface                  $cache, private readonly LoggerInterface $logger,
+        private MuseumObjectExtractor $museumObjectExtractor,
+
+        #[Target(ExtractWorkflow::WORKFLOW_NAME)]
+        private WorkflowInterface               $extractWorkflow,
+
+        private CacheInterface                  $cache,
+        private readonly LoggerInterface        $logger,
         private array                           $seen = []
 
     )
@@ -55,12 +72,66 @@ class ExtractWorkflow implements IExtractWorkflow
         }
     }
 
+    private function getExtract(Event $event): Extract
+    {
+        /** @var Extract */
+        return $event->getSubject();
+    }
+
+    #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_LOAD)]
+    public function onLoadFromExtractData(TransitionEvent $event): void
+    {
+        $extract = $this->getExtract($event);
+        $grp = $extract->getGrp();
+        $data = $extract->getResponse()['data'];
+        $objs = $this->museumObjectExtractor->extract($extract->getResponse());
+        return;
+
+        foreach ($data as $idx => $item) {
+            $obj = $this->museumObjectExtractor->extract($item);
+            dd($item, $obj);
+            // there can be multiple identifiers.  use the admin uuid if it exists
+            assert(array_key_exists('@admin', $item), "no @admin in #$idx of $message->tokenCode");
+            $admin = $item['@admin'];
+            $id = $admin['uuid'];
+
+            SurvosUtils::assertKeyExists('data_source', $admin);
+            $sourceData = $admin['data_source'];
+            $sourceCode = $sourceData['code'];
+            // flush after each...
+            // this is the REAL source, not the grp
+            if (array_key_exists($sourceCode, $this->seen)) {
+                $source = $this->seen[$sourceCode];
+            } elseif (!$source = $this->sourceRepository->findOneBy(['code' => $sourceCode])) {
+                assert($sourceData['code'] == $sourceCode, $sourceData['code'] . "<> $sourceCode");
+                // @todo: add the group here.
+                $source = new Source($sourceCode, $sourceData['name'], $sourceData['organisation'], $sourceData['group']);
+                $this->entityManager->persist($source);
+                $this->entityManager->flush();
+                $this->seen[$sourceCode] = $source;
+            }
+
+            // if it already exists, assume we also have the source
+            $uuid = new Uuid($id);
+            if ($record = $this->recordRepository->find($uuid)) {
+                assert($record->getSource() == $source);
+                continue;
+            } else {
+                $record = new Record($uuid, $source, $item, $extract);
+                $this->entityManager->persist($record);
+                $this->entityManager->flush();
+            }
+        }
+        $this->entityManager->flush();
+
+
+
+    }
 
     #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
     public function onTransition(TransitionEvent $event): void
     {
-        /** @var Extract extract */
-        $extract = $event->getSubject();
+        $extract = $this->getExtract($event);
 
         // cache during dev only
         $key = $extract->getTokenCode();
@@ -74,7 +145,7 @@ class ExtractWorkflow implements IExtractWorkflow
                 dd($url);
             }
             $data = $response->toArray();
-            $duration =  (int) (1000 * $response->getInfo()['total_time']);
+            $duration = (int)(1000 * $response->getInfo()['total_time']);
             $extract
                 ->setDuration($duration);
 
@@ -84,7 +155,6 @@ class ExtractWorkflow implements IExtractWorkflow
         $stats = $data['stats'];
         $remaining = $stats['remaining'];
 
-
         $extract
             ->setResponse($data) // redundant: separate message that received the data and source. Even a separate queue
             ->setStats($stats)
@@ -92,46 +162,44 @@ class ExtractWorkflow implements IExtractWorkflow
             ->setResponse($data) // for debugging, but huge!  maybe for re-processing
             ->setLatency($stats['latency']);;
 
-        $nextToken = $data['resume'] ?? null;
-        $remaining = $stats['remaining'];
-        if ($remaining) {
-            if ($data['has_next']) {
-                $nextToken = $data['resume'];
-                $extract
-                    ->setRemaining($remaining)
-                    ->setNextToken($nextToken);
-                $extract->setNextToken($nextToken);
+        if ($nextToken = $data['resume']) {
+            $extract
+                ->setRemaining($remaining)
+                ->setNextToken($nextToken);
+        }
+        $this->entityManager->flush();
+
+    }
+
+    #[AsCompletedListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
+    public function onFetchComplete(CompletedEvent $event): void
+    {
+        $extract = $this->getExtract($event);
+        // we're complete, create a new event if there's a next token.
+        // @todo: guard?
+        if ($nextToken = $extract->getNextToken()) {
+            {
                 $next = $this->findOrGet($nextToken, $extract->getGrp());
                 // flush before dispatching?
-
-                // skip if next is already in the database? maybe we need a marking. :-(
-                // not if sync!
+                $this->entityManager->flush();
+                if ($this->extractWorkflow->can($next, IExtractWorkflow::TRANSITION_FETCH)) {
 //                $envelope = $this->messageBus->dispatch(new ExtractMessage($nextToken));
-                $envelope = $this->messageBus->dispatch(new AsyncTransitionMessage(
-                    $next->getTokenCode(),
-                    Extract::class,
-                    IExtractWorkflow::TRANSITION_FETCH,
-                    IExtractWorkflow::WORKFLOW_NAME,
-                ));
-                $this->logger->warning("dispatched " . $next->getTokenCode());
+                    $stamps = [];
+//                    $stamps[] = new TransportSt
+                    $envelope = $this->messageBus->dispatch(new TransitionMessage(
+                        $next->getTokenCode(),
+                        Extract::class,
+                        IExtractWorkflow::TRANSITION_FETCH,
+                        IExtractWorkflow::WORKFLOW_NAME,
+                    ), $stamps);
+                    $this->logger->warning("dispatched " . $next->getTokenCode());
+                }
             }
         } else {
             $this->logger->error("All done");
         }
-
-        $this->entityManager->flush(); // this happens in the caller, right?
-
-        // the records are handled in another process to not slow down the fetch
-        if ($extract->getGrp()) {
-
-        }
-        $this->messageBus->dispatch(new ExtractMessage(
-            (string)$extract->getGrp()->getCode(),
-            (string)$extract->getTokenCode(),
-            $data));
-
-
     }
+
 
     public function findOrGet(string $token, Grp $grp): ?Extract
     {

@@ -1,3 +1,5 @@
+import 'instantsearch.css/themes/algolia.min.css';
+
 import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!

@@ -9,3 +9,9 @@ curl "https://museumdata.uk/explore-collections/?_sfm_has_object_records=1&_sf_p
 
 
 bin/console doctrine:query:sql "delete from messenger_messages where queue_name='failed'" 
+
+## 
+
+## Entities
+
+Grp: high-level, the Museum.  To extract the objects, we need a "page" that is the object listing.  Was 10/page, now is 100

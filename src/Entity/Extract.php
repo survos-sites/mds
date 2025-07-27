@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\MeiliBundle\Metadata\MeiliIndex;
 use Survos\WorkflowBundle\Traits\MarkingInterface;
 use Survos\WorkflowBundle\Traits\MarkingTrait;
 
@@ -70,7 +71,7 @@ class Extract implements MarkingInterface, \Stringable
     private ?string $resume = null;
 
     #[ORM\ManyToOne(inversedBy: 'extracts')]
-    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'code')]
+    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'id')]
     private Grp $grp;
 
     /**

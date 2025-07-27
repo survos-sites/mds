@@ -17,6 +17,7 @@ return static function (FrameworkConfig $framework) {
                     ExtractWorkflow::class,
                     RecordWorkflow::class,
                     GrpWorkflow::class,
+                    \App\Workflow\MuseumObjectWorkflow::class,
                  ] as $workflowClass) {
             if (class_exists($workflowClass)) {
                 ConfigureFromAttributesService::configureFramework($workflowClass, $framework, [$workflowClass]);

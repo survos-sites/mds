@@ -61,6 +61,18 @@
             "migrations/.gitignore"
         ]
     },
+    "friendsofsymfony/jsrouting-bundle": {
+        "version": "3.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.3",
+            "ref": "a9f2e49180f75cdc71ae279a929c4b2e0638de84"
+        },
+        "files": [
+            "config/routes/fos_js_routing.yaml"
+        ]
+    },
     "inspector-apm/inspector-symfony": {
         "version": "1.8",
         "recipe": {
@@ -89,6 +101,18 @@
         },
         "files": [
             "config/packages/nelmio_cors.yaml"
+        ]
+    },
+    "php-http/discovery": {
+        "version": "1.20",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.18",
+            "ref": "f45b5dd173a27873ab19f5e3180b2f661c21de02"
+        },
+        "files": [
+            "config/packages/http_discovery.yaml"
         ]
     },
     "phpstan/phpstan": {
@@ -123,6 +147,9 @@
     "survos/bootstrap-bundle": {
         "version": "1.5.507"
     },
+    "survos/code-bundle": {
+        "version": "1.5.602"
+    },
     "survos/command-bundle": {
         "version": "1.5",
         "recipe": {
@@ -155,8 +182,11 @@
     "survos/deployment-bundle": {
         "version": "1.5.503"
     },
-    "survos/maker-bundle": {
-        "version": "1.5.503"
+    "survos/inspection-bundle": {
+        "version": "1.6.7"
+    },
+    "survos/meili-bundle": {
+        "version": "1.6.7"
     },
     "survos/simple-datatables-bundle": {
         "version": "1.5.503"
@@ -479,5 +509,19 @@
             "version": "1.9",
             "ref": "66c5290398734ff02cedddf44dce6eb2002d958c"
         }
+    },
+    "zenstruck/messenger-monitor-bundle": {
+        "version": "0.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.5",
+            "ref": "e830a96e19aef36b23c63a4f8884fe51815f06d8"
+        },
+        "files": [
+            "config/packages/zenstruck_messenger_monitor.yaml",
+            "src/Controller/Admin/MessengerMonitorController.php",
+            "src/Entity/ProcessedMessage.php"
+        ]
     }
 }

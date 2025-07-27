@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Extract;
+use App\Entity\MuseumObject;
 use App\Entity\Record;
 use App\Entity\Source;
 use App\Repository\ExtractRepository;
 use App\Repository\GrpRepository;
+use App\Repository\MuseumObjectRepository;
 use App\Repository\RecordRepository;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,13 +26,14 @@ final class AppController extends AbstractController
         private EntityManagerInterface $entityManager,
         private ExtractRepository      $extractRepository,
         private RecordRepository       $recordRepository,
+        private MuseumObjectRepository $museumObjectRepository,
         private SourceRepository       $sourceRepository,
         private GrpRepository           $grpRepository,
 
     )
     {
     }
-    #[Route('/record', name: 'app_record', methods: ['GET'])]
+    #[Route('/record', name: 'app_obj', methods: ['GET'])]
     #[Template('app/record.html.twig')]
     public function record(Request $request,
                            #[MapQueryParameter] int $limit = 100,
@@ -44,7 +47,7 @@ final class AppController extends AbstractController
         return [
             'columns' => [
             ],
-            'data' => $this->recordRepository->findBy($filter, [], $limit),
+            'data' => $this->museumObjectRepository->findBy($filter, [], $limit),
         ];
     }
 
@@ -69,7 +72,7 @@ final class AppController extends AbstractController
             ->select('SUM(g.count) as c');
         $total = ($qb->getQuery()->getSingleScalarResult());
         return [
-            'total' => $total,
+            'total' =>  $total,
             'data' => $this->grpRepository->findBy([], ['name' => 'ASC  '], $limit),
         ];
     }
@@ -111,7 +114,7 @@ final class AppController extends AbstractController
     public function index(
     ): Response
     {
-        foreach ([Extract::class, Record::class, Source::class] as $class) {
+        foreach ([Extract::class, Record::class, Source::class, MuseumObject::class] as $class) {
             $repo = $this->entityManager->getRepository($class);
             $counts[$class] = $repo->count();
 

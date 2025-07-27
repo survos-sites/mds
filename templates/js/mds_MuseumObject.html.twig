@@ -1,0 +1,74 @@
+<div class="card h-100 shadow-sm p-2">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="fs-5 fw-semibold text-truncate" style="max-width: 85%;">
+
+            {{ hit._highlightResult.title.value|raw }}
+            {{ hit._highlightResult.objectName.value|raw }}
+        </span>
+        <span class="badge bg-success rounded-pill">{{ hit.extractCount }} of {{ hit.count }}</span>
+    </div>
+
+    <div class="card-body">
+        <div class="d-flex flex-column flex-md-row align-items-start">
+            {% if hit.coverUrl %}
+                <img
+                        src="{{ hit.coverUrl }}"
+                        alt="image"
+                        class="img-thumbnail mb-2 mb-md-0 me-md-3 flex-shrink-0"
+                        style="width: 120px; height: auto;"
+                />
+            {% endif %}
+
+
+            <div class="text-muted small mb-0 description-container"
+                 data-controller="description">
+                <div class="description-clamp" data-description-target="text">
+                    {{ hit._highlightResult.description.value|raw|slice(0, 200) }}
+                </div>
+                <button type="button"
+                        class="btn btn-link p-0 mt-1 read-more"
+                        data-description-target="button"
+                        data-action="description#toggle">
+                    Read more
+                </button>
+            </div>
+
+
+        </div>
+        <div>
+            {{ hit.material }}
+        </div>
+        <div>
+            {{ hit.creditLine }}
+        </div>
+        <div>
+            {{ hit.location }}
+        </div>
+        <div>
+            {{ hit.dimension }}
+        </div>
+    </div>
+
+    {# Footer stays the same #}
+    <div class="card-footer d-flex flex-wrap gap-2 align-items-center">
+        <code class="small">{{ hit.marking }}</code>
+        <div class="d-flex flex-column flex-md-row gap-1 flex-shrink-0">
+            <a href="{{ hit.websiteLink }}" target="_blank" class="small text-decoration-none text-primary">@mds</a>
+{#            <a href="https://{{ hit.name }}.wip" target="_blank" class="small text-decoration-none text-secondary">Local</a>#}
+        </div>
+        <div class="badge bg-warning text-dark ms-auto">
+            {{ hit.license }}
+        </div>
+        {% if hit._rankingScore != 1 %}
+            <span class="text-muted small">
+                score: {{ hit._rankingScore|number_format(2) }}
+            </span>
+        {% endif %}
+        <button
+                {{ stimulus_action(_sc_modal, 'modal') }}
+                data-hit-id="{{ hit.id }}"
+                class="btn btn-sm btn-outline-primary ms-auto">
+            { {{ hit.id }} }
+        </button>
+    </div>
+</div>

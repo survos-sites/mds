@@ -4,6 +4,7 @@ namespace App\Menu;
 
 use App\Entity\Extract;
 use App\Entity\Grp;
+use App\Entity\MuseumObject;
 use App\Entity\Record;
 use App\Entity\Source;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,8 +52,14 @@ final class AppMenu implements KnpMenuHelperInterface
         $menu = $event->getMenu();
         $options = $event->getOptions();
         $this->add($menu, 'app_homepage');
+        $this->add($menu, 'zenstruck_messenger_monitor_dashboard', label: "*msg");
 
-        foreach ([Record::class => 'record', Source::class => 'source', Grp::class => 'grp', Extract::class => 'extract'] as $class => $code) {
+        $subMenu = $this->addSubmenu($menu, 'meili_insta');
+        foreach (['mds_Grp', 'mds_MuseumObject'] as $indexName) {
+            $this->add($subMenu, 'meili_insta', ['indexName' => $indexName], label: $indexName);
+        }
+
+        foreach ([MuseumObject::class => 'obj', Source::class => 'source', Grp::class => 'grp', Extract::class => 'extract'] as $class => $code) {
             $repo = $this->entityManager->getRepository($class);
             $this->add($menu, 'app_' . $code, label: $code, badge: $repo->count());
         }
@@ -60,9 +67,16 @@ final class AppMenu implements KnpMenuHelperInterface
         $this->add($menu, 'api_entrypoint');
 
         if ($this->isEnv('dev')) {
+            $this->add($menu, 'survos_command', [
+                'commandName' => 'app:museums'],
+                label: "app:museums",
+            );
+
 
             $subMenu = $this->addSubmenu($menu, "Workflows");
-            foreach ([Record::class => 'record', Source::class => 'source',
+            foreach ([Record::class => 'record',
+                         MuseumObject::class => 'obj',
+                         Source::class => 'source',
                          Extract::class => 'extract'] as $class => $code) {
                 $shortName = new \ReflectionClass($class)->getShortName();
                 $this->add($subMenu, 'survos_command', [

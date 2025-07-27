@@ -5,7 +5,6 @@
         'id',
         'marking',
         'label',
-        'source',
     ] %}
     <twig:simple_datatables
             :perPage="25"
@@ -18,7 +17,7 @@
         </twig:block>
         <twig:block name="label">
             <a href="{{ path('row_show', {id: row.id}) }}">
-            {{ row.label }}
+            {{ row.label|default(row.title) }}
             </a>
         </twig:block>
         <twig:block name="source">

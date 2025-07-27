@@ -6,12 +6,15 @@ use App\Entity\Extract;
 use App\Message\ExtractMessage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Survos\CoreBundle\Traits\QueryBuilderHelperInterface;
+use Survos\CoreBundle\Traits\QueryBuilderHelperTrait;
 
 /**
  * @extends ServiceEntityRepository<Extract>
  */
-class ExtractRepository extends ServiceEntityRepository
+class ExtractRepository extends ServiceEntityRepository implements QueryBuilderHelperInterface
 {
+    use QueryBuilderHelperTrait;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Extract::class);

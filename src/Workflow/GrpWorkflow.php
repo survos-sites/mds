@@ -2,10 +2,14 @@
 
 namespace App\Workflow;
 
+use App\Entity\Extract;
 use App\Entity\Grp;
+use App\Repository\ExtractRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Survos\WorkflowBundle\Attribute\Workflow;
 use Symfony\Component\Workflow\Attribute\AsGuardListener;
 use Symfony\Component\Workflow\Attribute\AsTransitionListener;
+use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\GuardEvent;
 use Symfony\Component\Workflow\Event\TransitionEvent;
 
@@ -14,51 +18,39 @@ class GrpWorkflow implements IGrpWorkflow
 {
 	public const WORKFLOW_NAME = 'GrpWorkflow';
 
-	public function __construct()
+	public function __construct(
+        private ExtractRepository $extractRepository,
+        private EntityManagerInterface $entityManager,
+    )
 	{
 	}
 
+    private function getGrp(Event $event): Grp
+    {
+        /** @var Grp */ return $event->getSubject();
+    }
 
-	#[AsGuardListener(self::WORKFLOW_NAME)]
-	public function onGuard(GuardEvent $event): void
+    /**
+     * @param TransitionEvent $event
+     * @return void
+     *
+     * @description This simple kicks off the _first_ extract request
+     */
+	#[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_DISPATCH)]
+	public function onDispatchExtract(TransitionEvent $event): void
 	{
-		/** @var Grp grp */
-		$grp = $event->getSubject();
+        $grp = $this->getGrp($event);
 
-		switch ($event->getTransition()) {
-		/*
-		e.g.
-		if ($event->getSubject()->cannotTransition()) {
-		  $event->setBlocked(true, "reason");
-		}
-		App\Entity\Grp
-		*/
-		    case self::TRANSITION_DISPATCH:
-		        break;
-		    case self::TRANSITION_FINISH:
-		        break;
-		}
-	}
+        $token = $grp->getStartToken();
+        $tokenCode = Extract::calcCode($token);
 
+        if (!$extract = $this->extractRepository->findOneBy(['tokenCode' => $tokenCode])) {
+            $extract = new Extract($token, $grp);
+            assert($extract->getTokenCode() === $tokenCode);
+            $this->entityManager->persist($extract);
+        }
 
-	#[AsTransitionListener(self::WORKFLOW_NAME)]
-	public function onTransition(TransitionEvent $event): void
-	{
-		/** @var Grp grp */
-		$grp = $event->getSubject();
+        $this->entityManager->flush();
 
-		switch ($event->getTransition()) {
-		/*
-		e.g.
-		if ($event->getSubject()->cannotTransition()) {
-		  $event->setBlocked(true, "reason");
-		}
-		App\Entity\Grp
-		*/
-		    case self::TRANSITION_DISPATCH:
-		        break;
-		    case self::TRANSITION_FINISH:
-		        break;
-		}
-	}
+    }
 }

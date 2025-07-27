@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -10,16 +12,25 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\MeiliBundle\Api\Filter\FacetsFieldSearchFilter;
+use Survos\MeiliBundle\Metadata\MeiliIndex;
 use Survos\WorkflowBundle\Traits\MarkingInterface;
 use Survos\WorkflowBundle\Traits\MarkingTrait;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: GrpRepository::class)]
 #[ApiResource(
     operations: [
         new Get(),
         new GetCollection()
-    ]
+    ],
+    normalizationContext: ['groups' => ['grp.read','marking']]
 )]
+#[MeiliIndex()]
+#[ApiFilter(OrderFilter::class, properties: [
+    'count','extractCount'
+])]
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['marking', 'status','license'])]
 class Grp implements MarkingInterface
 {
     use MarkingTrait;
@@ -27,10 +38,15 @@ class Grp implements MarkingInterface
     public function __construct(
         #[ORM\Column(length: 255)]
         #[ORM\Id]
-        private string $code,
+        #[Groups('grp.read')]
+        private(set) string $id,
 
-        #[ORM\Column(length: 255)]
-        private string $name,
+        #[ORM\Column(type: 'string', length: 255)]
+        #[Groups('grp.read')]
+        private(set) string $name {
+            get => $this->name;
+            set => $this->name = trim($value);
+        },
 
         #[ORM\Column(type: Types::TEXT, nullable: true)]
         private ?string $startToken = null
@@ -38,7 +54,45 @@ class Grp implements MarkingInterface
     {
         $this->marking = 'new';
         $this->extracts = new ArrayCollection();
+    }
 
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    #[Groups('grp.read')]
+    public ?string $wikidataId = null {
+        get => $this->wikidataId;
+        set => $this->wikidataId = $value ? strtoupper($value) : null;
+    }
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups('grp.read')]
+    public ?string $status = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    public ?string $aliases = null {
+        get => $this->aliases;
+        set => $this->aliases = $value ? trim($value) : null;
+    }
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups('grp.read')]
+    public ?string $persistentLink = null {
+        get => $this->persistentLink;
+        set => $this->persistentLink = $value ? rtrim($value, '/') : null;
+    }
+
+    #[ORM\Column(type: 'boolean')]
+    #[Groups('grp.read')]
+    public bool $hasObjectRecords = false;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups('grp.read')]
+    public ?string $description = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups('grp.read')]
+    public ?string $licence = null {
+        get => $this->licence;
+        set => $this->licence = $value ? trim($value) : null;
     }
 
     /**
@@ -48,33 +102,12 @@ class Grp implements MarkingInterface
     private Collection $extracts;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('grp.read')]
     private ?int $count = null;
 
     #[ORM\Column]
+    #[Groups('grp.read')]
     private ?int $extractCount = 0;
-
-
-    public function getId(): string
-    {
-        return $this->getCode();
-    }
-
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
 
     public function getStartToken(): ?string
     {

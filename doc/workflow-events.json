@@ -1,0 +1,74 @@
+{
+    "workflow.ExtractWorkflow.guard": [
+        {
+            "type": "function",
+            "name": "onGuard",
+            "class": "App\\Workflow\\ExtractWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.ExtractWorkflow.transition.fetch": [
+        {
+            "type": "function",
+            "name": "onTransition",
+            "class": "App\\Workflow\\ExtractWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.GrpWorkflow.guard": [
+        {
+            "type": "function",
+            "name": "onGuard",
+            "class": "App\\Workflow\\GrpWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.GrpWorkflow.transition": [
+        {
+            "type": "function",
+            "name": "onTransition",
+            "class": "App\\Workflow\\GrpWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.RecordWorkflowInterface.guard": [
+        {
+            "type": "function",
+            "name": "onGuard",
+            "class": "App\\Workflow\\RecordWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.RecordWorkflowInterface.transition.process": [
+        {
+            "type": "function",
+            "name": "onTransition",
+            "class": "App\\Workflow\\RecordWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.SourceWorkflow.guard": [
+        {
+            "type": "function",
+            "name": "onGuard",
+            "class": "App\\Workflow\\SourceWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.SourceWorkflow.transition": [
+        {
+            "type": "function",
+            "name": "onTransition",
+            "class": "App\\Workflow\\SourceWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.completed": [
+        {
+            "type": "function",
+            "name": "onCompleted",
+            "class": "Survos\\WorkflowBundle\\Service\\WorkflowListener",
+            "priority": 0
+        }
+    ]
+}

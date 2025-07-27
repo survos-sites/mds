@@ -7,9 +7,10 @@ use App\Repository\ExtractRepository;
 use App\Repository\GrpRepository;
 use App\Repository\SourceRepository;
 use App\Workflow\ExtractWorkflow;
+use App\Workflow\IExtractWorkflow;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Survos\WorkflowBundle\Message\AsyncTransitionMessage;
+use Survos\WorkflowBundle\Message\TransitionMessage;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -89,19 +90,19 @@ EOL
 
             $this->entityManager->flush();
             // start the search process with
-            //  ./c workflow:iterate App\\Entity\\Extract --marking=new --transition=fetch -vvv
+            //  ./c workflow:iterate Extract -m new --transition=fetch -vvv
             // or dispatch a TransitionMessage
             // kick off the search, sync so we can monitor
             if ($dispatch) {
-                $envelope = $this->messageBus->dispatch(new AsyncTransitionMessage(
+                $envelope = $this->messageBus->dispatch(new TransitionMessage(
                     $extract->getTokenCode(),
                     Extract::class,
-                    ExtractWorkflow::TRANSITION_FETCH,
-                    ExtractWorkflow::WORKFLOW_NAME,
+                    IExtractWorkflow::TRANSITION_FETCH,
+                    IExtractWorkflow::WORKFLOW_NAME,
                 ), [
 //                new TransportNamesStamp('sync')
                 ]);
-                $io->success("Extract dispatched for " . $grp->getName());
+                $io->success("Extract dispatched for " . $grp->name);
 
             }
         }
