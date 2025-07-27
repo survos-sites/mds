@@ -31,7 +31,10 @@ use Symfony\Component\Serializer\Attribute\Groups;
 //#[ApiFilter(OrderFilter::class, properties: [
 //    'count','extractCount'
 //])]
-#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['marking','material', 'concept', 'status','license'])]
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['marking','material',
+    'dataSource',
+    'productionPlace',
+    'concept', 'status','license'])]
 class MuseumObject implements MarkingInterface
 {
     use MarkingTrait;
@@ -58,7 +61,6 @@ class MuseumObject implements MarkingInterface
     {
         assert($this->id === self::calcKey($this->dataSource, $this->idWithinDataSource));
         $this->marking = 'new';
-        $this->dataSource = $dataSource;
     }
 
     public function getId(): ?string
@@ -129,6 +131,16 @@ class MuseumObject implements MarkingInterface
     }
 
     #[Groups(['record.read'])]
+    public string $productionPlace {
+        get => $this->data['Object Production Place'] ?? '';
+    }
+
+    #[Groups(['record.read'])]
+    public string $productionDate {
+        get => $this->data['Object Production Date'] ?? '';
+    }
+
+    #[Groups(['record.read'])]
     public string $accessionDate {
         get => $this->data['Accession Date'] ?? '';
     }
@@ -183,13 +195,4 @@ class MuseumObject implements MarkingInterface
         get => $this->productionDateStart ?: $this->associatedDate;
     }
 
-    public function getDataSource(): string
-    {
-        return $this->dataSource;
-    }
-
-    public function getRawData(): array
-    {
-        return $this->data;
-    }
 }
