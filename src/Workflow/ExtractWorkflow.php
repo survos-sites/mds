@@ -19,6 +19,7 @@ use Survos\WorkflowBundle\Attribute\Workflow;
 use Survos\WorkflowBundle\Message\TransitionMessage;
 use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\TransportNamesStamp;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Workflow\Attribute\AsCompletedListener;
 use Symfony\Component\Workflow\Attribute\AsGuardListener;
@@ -188,26 +189,30 @@ class ExtractWorkflow implements IExtractWorkflow
         // we're complete, create a new event if there's a next token.
         // @todo: guard?
         if ($nextToken = $extract->getNextToken()) {
-            {
-                $next = $this->findOrGet($nextToken, $extract->getGrp());
-                // flush before dispatching?
-                $this->entityManager->flush();
-                if ($this->extractWorkflow->can($next, IExtractWorkflow::TRANSITION_FETCH)) {
-//                $envelope = $this->messageBus->dispatch(new ExtractMessage($nextToken));
-                    $stamps = [];
-//                    $stamps[] = new TransportSt
-                    $envelope = $this->messageBus->dispatch(new TransitionMessage(
-                        $next->getTokenCode(),
-                        Extract::class,
-                        IExtractWorkflow::TRANSITION_FETCH,
-                        IExtractWorkflow::WORKFLOW_NAME,
-                    ), $stamps);
-                    $this->logger->warning("dispatched " . $next->getTokenCode());
-                }
-            }
+            $this->dispatchNextExtract($nextToken, $extract);
         } else {
             $this->logger->error("All done");
         }
+    }
+
+    public function dispatchNextExtract(string $nextToken, Extract $extract)
+    {
+        $next = $this->findOrGet($nextToken, $extract->getGrp());
+        // flush before dispatching?
+        $this->entityManager->flush();
+        if ($this->extractWorkflow->can($next, IExtractWorkflow::TRANSITION_FETCH)) {
+//                $envelope = $this->messageBus->dispatch(new ExtractMessage($nextToken));
+            $stamps = [];
+            $stamps[] = new TransportNamesStamp('extract_fetch');
+            $envelope = $this->messageBus->dispatch(new TransitionMessage(
+                $next->getTokenCode(),
+                Extract::class,
+                IExtractWorkflow::TRANSITION_FETCH,
+                IExtractWorkflow::WORKFLOW_NAME,
+            ), $stamps);
+            $this->logger->warning("dispatched " . $next->getTokenCode());
+        }
+
     }
 
 

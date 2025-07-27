@@ -31,7 +31,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 //#[ApiFilter(OrderFilter::class, properties: [
 //    'count','extractCount'
 //])]
-#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['marking','status','license'])]
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['marking','material',  'status','license'])]
 class MuseumObject implements MarkingInterface
 {
     use MarkingTrait;
@@ -136,6 +136,11 @@ class MuseumObject implements MarkingInterface
     #[Groups(['record.read'])]
     public string $acquisitionMethod {
         get => $this->data['Acquisition Method'] ?? '';
+    }
+
+    #[Groups(['record.read'])]
+    public string $concept {
+        get => $this->data['Associated Concept'] ?? '';
     }
 
     #[Groups(['record.read'])]

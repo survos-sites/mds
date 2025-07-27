@@ -9,15 +9,19 @@
     ],
     "cron": [
         {
-            "command": "php -d memory_limit=4G bin/console messenger:consume async  --time-limit 53",
+            "command": "php -d memory_limit=4G bin/console messenger:consume extract_fetch  --time-limit 53",
             "schedule": "*/1 * * * *"
         },
         {
-            "command": "php -d memory_limit=4G bin/console messenger:consume load_records  --time-limit 175",
+            "command": "php -d memory_limit=4G bin/console messenger:consume grp_extract extract_fetch extract_load  --time-limit 175",
             "schedule": "*/3 * * * *"
         },
         {
-            "command": "php -d memory_limit=4G bin/console messenger:consume load_records  --time-limit 230",
+            "command": "php -d memory_limit=4G bin/console messenger:consume extract_fetch extract_load  --time-limit 175",
+            "schedule": "*/3 * * * *"
+        },
+        {
+            "command": "php -d memory_limit=4G bin/console messenger:consume extract_load  --time-limit 230",
             "schedule": "*/4 * * * *"
         }
     ],

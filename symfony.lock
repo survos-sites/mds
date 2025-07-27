@@ -179,9 +179,6 @@
             "config/routes/survos_crawler.yaml"
         ]
     },
-    "survos/deployment-bundle": {
-        "version": "1.5.503"
-    },
     "survos/inspection-bundle": {
         "version": "1.6.7"
     },

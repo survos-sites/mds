@@ -1,0 +1,23 @@
+# .symfony.local.yaml
+workers:
+  # built-in command that builds and watches front-end assets
+
+#   built-in command that starts messenger consumer
+  messenger_consume_all:
+       cmd: ['symfony', 'console', 'messenger:consume', 'grp_extract', 'extract_fetch','extract_load']
+       watch: ['config', 'src', 'templates', 'vendor']
+
+  messenger_consume_extract:
+    cmd: ['symfony', 'console', 'messenger:consume', 'extract_fetch','extract_load']
+    watch: ['config', 'src', 'templates', 'vendor']
+
+  messenger_consume_load:
+    cmd: ['symfony', 'console', 'messenger:consume', 'extract_load', 'extract_fetch']
+    watch: ['config', 'src', 'templates', 'vendor']
+
+#  messenger_consume_async: ~
+
+  # you can also add your own custom commands
+#  build_spa:
+#    cmd: ['yarn', '--cwd', './spa/', 'dev']
+

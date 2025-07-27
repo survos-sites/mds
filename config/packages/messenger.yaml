@@ -22,6 +22,12 @@ framework:
                     <<: *doctrine_common
                     queue_name: extract_load
 
+            grp_extract:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    <<: *doctrine_common
+                    queue_name: grp_extract
+
             doctrine_low:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:

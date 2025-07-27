@@ -13,7 +13,6 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Bizkit\VersioningBundle\BizkitVersioningBundle::class => ['all' => true],
-    Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['dev' => true],
     Survos\CoreBundle\SurvosCoreBundle::class => ['all' => true],
     Survos\WorkflowBundle\SurvosWorkflowBundle::class => ['all' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],

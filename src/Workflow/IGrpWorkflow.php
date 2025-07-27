@@ -13,14 +13,15 @@ interface IGrpWorkflow
     public const PLACE_NEW = 'new';
 
     #[Place]
-    public const PLACE_DISPATCHED = 'dispatched';
+    public const PLACE_EXTRACTING = 'extracting';
 
     #[Place]
     public const PLACE_FINISHED = 'finished';
 
-    #[Transition(from: [self::PLACE_NEW], to: self::PLACE_DISPATCHED)]
-    public const TRANSITION_DISPATCH = 'dispatch';
+    #[Transition(from: [self::PLACE_NEW], to: self::PLACE_EXTRACTING,
+        transport: 'grp_extract')]
+    public const TRANSITION_EXTRACT = 'extract';
 
-    #[Transition(from: [self::PLACE_DISPATCHED], to: self::PLACE_FINISHED)]
+    #[Transition(from: [self::PLACE_EXTRACTING], to: self::PLACE_FINISHED)]
     public const TRANSITION_FINISH = 'finish';
 }

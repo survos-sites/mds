@@ -21,6 +21,7 @@ class GrpWorkflow implements IGrpWorkflow
 	public function __construct(
         private ExtractRepository $extractRepository,
         private EntityManagerInterface $entityManager,
+        private ExtractWorkflow $extractWorkflowClass, // the class, not the workflow!
     )
 	{
 	}
@@ -36,7 +37,7 @@ class GrpWorkflow implements IGrpWorkflow
      *
      * @description This simple kicks off the _first_ extract request
      */
-	#[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_DISPATCH)]
+	#[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_EXTRACT)]
 	public function onDispatchExtract(TransitionEvent $event): void
 	{
         $grp = $this->getGrp($event);
@@ -49,8 +50,10 @@ class GrpWorkflow implements IGrpWorkflow
             assert($extract->getTokenCode() === $tokenCode);
             $this->entityManager->persist($extract);
         }
-
         $this->entityManager->flush();
+        // dispatch the first extract
+        $this->extractWorkflowClass->dispatchNextExtract($extract->getToken(), $extract);
 
     }
+
 }
