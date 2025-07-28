@@ -46,6 +46,19 @@ final class AppMenu implements KnpMenuHelperInterface
         $this->menuService->addAuthMenu($menu);
     }
 
+    private function getApproxCount(string $class): int
+    {
+        return (int) $this->entityManager->getConnection()->fetchOne(
+            'SELECT reltuples::BIGINT FROM pg_class WHERE relname = :table',
+            ['table' => $this->getTableName($class)]
+        );
+    }
+
+    private function getTableName(string $entityClass): string
+    {
+        return $this->entityManager->getClassMetadata($entityClass)->getTableName();
+    }
+
     #[AsEventListener(event: KnpMenuEvent::NAVBAR_MENU)]
     public function navbarMenu(KnpMenuEvent $event): void
     {
@@ -61,8 +74,10 @@ final class AppMenu implements KnpMenuHelperInterface
         }
 
         foreach ([MuseumObject::class => 'obj', Source::class => 'source', Grp::class => 'grp', Extract::class => 'extract'] as $class => $code) {
-            $repo = $this->entityManager->getRepository($class);
-            $this->add($menu, 'app_' . $code, label: $code, badge: $repo->count());
+//            dd($this->getApproxCount($class));
+//            $repo = $this->entityManager->getRepository($class);
+            $this->add($menu, 'app_' . $code, label: new \ReflectionClass($class)->getShortName(),
+                badge: $this->getApproxCount($class));
         }
 
         $this->add($menu, 'api_entrypoint');

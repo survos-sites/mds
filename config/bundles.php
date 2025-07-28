@@ -27,7 +27,7 @@ return [
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
     Survos\CrawlerBundle\SurvosCrawlerBundle::class => ['all' => true],
     Pierstoval\SmokeTesting\SmokeTestingBundle::class => ['dev' => true, 'test' => true],
-    Zenstruck\Messenger\Monitor\ZenstruckMessengerMonitorBundle::class => ['all' => true],
+    Zenstruck\Messenger\Monitor\ZenstruckMessengerMonitorBundle::class => ['dev' => true],
     Survos\InspectionBundle\SurvosInspectionBundle::class => ['all' => true],
     Survos\MeiliBundle\SurvosMeiliBundle::class => ['all' => true],
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],

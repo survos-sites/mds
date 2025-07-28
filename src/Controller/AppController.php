@@ -116,7 +116,10 @@ final class AppController extends AbstractController
     {
         foreach ([Extract::class, Record::class, Source::class, MuseumObject::class] as $class) {
             $repo = $this->entityManager->getRepository($class);
-            $counts[$class] = $repo->count();
+            if (!method_exists($repo, 'getApproxCount')) {
+                dd($class);
+            }
+            $counts[$class] = $repo->getApproxCount();
 
 //            $data = $repo->findBy([], ['createdAt' => 'DESC'], 10);
         }
