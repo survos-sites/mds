@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79ee7a36295e572be1e9fa98a3e3e003",
+    "content-hash": "41a5b0f963f6d9e44f90f75a4b9eb3e0",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -4594,7 +4594,7 @@
         },
         {
             "name": "survos/bootstrap-bundle",
-            "version": "1.6.10",
+            "version": "1.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/BootstrapBundle.git",
@@ -4681,7 +4681,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/BootstrapBundle/issues",
-                "source": "https://github.com/survos/BootstrapBundle/tree/1.6.10"
+                "source": "https://github.com/survos/BootstrapBundle/tree/1.6.11"
             },
             "funding": [
                 {
@@ -4693,7 +4693,7 @@
         },
         {
             "name": "survos/command-bundle",
-            "version": "1.6.10",
+            "version": "1.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCommandBundle.git",
@@ -4749,7 +4749,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCommandBundle/issues",
-                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.6.10"
+                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.6.11"
             },
             "funding": [
                 {
@@ -4761,7 +4761,7 @@
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.6.10",
+            "version": "1.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
@@ -4839,7 +4839,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.6.10"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.6.11"
             },
             "funding": [
                 {
@@ -4851,7 +4851,7 @@
         },
         {
             "name": "survos/crawler-bundle",
-            "version": "1.6.10",
+            "version": "1.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCrawlerBundle.git",
@@ -4935,7 +4935,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCrawlerBundle/issues",
-                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.6.10"
+                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.6.11"
             },
             "funding": [
                 {
@@ -4947,7 +4947,7 @@
         },
         {
             "name": "survos/inspection-bundle",
-            "version": "1.6.10",
+            "version": "1.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosInspectionBundle.git",
@@ -5024,7 +5024,7 @@
             "description": "Inspects Doctrine entities with APIPlatform attributes",
             "support": {
                 "issues": "https://github.com/survos/SurvosInspectionBundle/issues",
-                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.6.10"
+                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.6.11"
             },
             "funding": [
                 {
@@ -5099,7 +5099,7 @@
         },
         {
             "name": "survos/meili-bundle",
-            "version": "1.6.10",
+            "version": "1.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/meili-bundle.git",
@@ -5158,7 +5158,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/meili-bundle/issues",
-                "source": "https://github.com/survos/meili-bundle/tree/1.6.10"
+                "source": "https://github.com/survos/meili-bundle/tree/1.6.11"
             },
             "funding": [
                 {
@@ -5170,7 +5170,7 @@
         },
         {
             "name": "survos/simple-datatables-bundle",
-            "version": "1.6.10",
+            "version": "1.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosSimpleDatatablesBundle.git",
@@ -5235,7 +5235,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosSimpleDatatablesBundle/issues",
-                "source": "https://github.com/survos/SurvosSimpleDatatablesBundle/tree/1.6.10"
+                "source": "https://github.com/survos/SurvosSimpleDatatablesBundle/tree/1.6.11"
             },
             "funding": [
                 {
@@ -5247,16 +5247,16 @@
         },
         {
             "name": "survos/workflow-helper-bundle",
-            "version": "1.6.10",
+            "version": "1.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosWorkflowHelperBundle.git",
-                "reference": "58a3ee4376d0bf29f4f9b000a38a58360521fe02"
+                "reference": "978b0ac876b5bfe90f1bb7e92f0ae000550e853b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/58a3ee4376d0bf29f4f9b000a38a58360521fe02",
-                "reference": "58a3ee4376d0bf29f4f9b000a38a58360521fe02",
+                "url": "https://api.github.com/repos/survos/SurvosWorkflowHelperBundle/zipball/978b0ac876b5bfe90f1bb7e92f0ae000550e853b",
+                "reference": "978b0ac876b5bfe90f1bb7e92f0ae000550e853b",
                 "shasum": ""
             },
             "require": {
@@ -5343,7 +5343,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosWorkflowHelperBundle/issues",
-                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.6.10"
+                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.6.11"
             },
             "funding": [
                 {
@@ -5351,7 +5351,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-28T19:42:58+00:00"
+            "time": "2025-07-28T20:44:49+00:00"
         },
         {
             "name": "symfony/amqp-messenger",
@@ -9972,16 +9972,16 @@
         },
         {
             "name": "symfony/stimulus-bundle",
-            "version": "v2.28.0",
+            "version": "v2.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stimulus-bundle.git",
-                "reference": "c20fee01aece40c3e345c7cf2904d748350bc09f"
+                "reference": "960868a682271e133a631ffb70c7e2ceb5031be6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/c20fee01aece40c3e345c7cf2904d748350bc09f",
-                "reference": "c20fee01aece40c3e345c7cf2904d748350bc09f",
+                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/960868a682271e133a631ffb70c7e2ceb5031be6",
+                "reference": "960868a682271e133a631ffb70c7e2ceb5031be6",
                 "shasum": ""
             },
             "require": {
@@ -10021,7 +10021,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.28.0"
+                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.28.1"
             },
             "funding": [
                 {
@@ -10037,7 +10037,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-27T07:05:51+00:00"
+            "time": "2025-07-28T19:36:26+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -10712,16 +10712,16 @@
         },
         {
             "name": "symfony/ux-chartjs",
-            "version": "v2.28.0",
+            "version": "v2.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-chartjs.git",
-                "reference": "3bd55cd56fd2b390defd8694f6530bfb0043d778"
+                "reference": "1f289d15ab33c0999f81e54e87849b19d15fa954"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-chartjs/zipball/3bd55cd56fd2b390defd8694f6530bfb0043d778",
-                "reference": "3bd55cd56fd2b390defd8694f6530bfb0043d778",
+                "url": "https://api.github.com/repos/symfony/ux-chartjs/zipball/1f289d15ab33c0999f81e54e87849b19d15fa954",
+                "reference": "1f289d15ab33c0999f81e54e87849b19d15fa954",
                 "shasum": ""
             },
             "require": {
@@ -10772,7 +10772,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-chartjs/tree/v2.28.0"
+                "source": "https://github.com/symfony/ux-chartjs/tree/v2.28.1"
             },
             "funding": [
                 {
@@ -10788,7 +10788,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-27T07:05:51+00:00"
+            "time": "2025-07-28T19:36:26+00:00"
         },
         {
             "name": "symfony/ux-icons",
