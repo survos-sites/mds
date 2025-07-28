@@ -9,14 +9,16 @@ interface IExtractWorkflow
 {
 	public const WORKFLOW_NAME = 'ExtractWorkflow';
 
-	#[Place(initial: true)]
+	#[Place(initial: true, info: 'created with json data from api call')]
 	public const PLACE_NEW = 'new';
 
-	#[Place]
+	#[Place(
+        info: 'load json data returned in api call to objects'
+    )]
 	public const PLACE_LOADED = 'loaded';
 	public const PLACE_FETCHED = 'fetched';
 
-    /* Fetch the URI with 10 objects and a next token */
+    /* Fetch the URI with 100 objects and a next token */
     #[Transition(from: [self::PLACE_NEW], to: self::PLACE_FETCHED,
         transport: 'extract_fetch', next: [self::TRANSITION_LOAD])]
     public const TRANSITION_FETCH = 'fetch';

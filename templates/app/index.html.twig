@@ -12,7 +12,12 @@
 
     {% for class, count in counts %}
         <h3>
-            {{ class }}: {{ count }}
+            {{ class }}:
+            <span title="{{ count }}">
+                {{ count|format_large_number }}
+                {{ count|number_format }}
+
+            </span>
         </h3>
 
     {% endfor %}

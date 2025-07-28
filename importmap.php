@@ -33,10 +33,10 @@ return [
         'type' => 'css',
     ],
     '@tabler/core' => [
-        'version' => '1.0.0',
+        'version' => '1.4.0',
     ],
     '@tabler/core/dist/css/tabler.min.css' => [
-        'version' => '1.0.0',
+        'version' => '1.4.0',
         'type' => 'css',
     ],
     '@stimulus-components/timeago' => [
