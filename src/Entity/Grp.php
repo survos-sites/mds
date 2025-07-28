@@ -19,6 +19,7 @@ use Survos\WorkflowBundle\Traits\MarkingTrait;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: GrpRepository::class)]
+#[ORM\Index(name: 'grp_marking_idx', columns: ['marking'])]
 #[ApiResource(
     operations: [
         new Get(),

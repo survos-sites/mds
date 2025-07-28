@@ -20,6 +20,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: MuseumObjectRepository::class)]
 #[ORM\Table(name: 'museum_object')]
+#[ORM\Index(name: 'museum_object_marking_idx', columns: ['marking'])]
 #[ApiResource(
     operations: [
         new Get(),
