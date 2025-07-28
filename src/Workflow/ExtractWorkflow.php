@@ -85,7 +85,7 @@ class ExtractWorkflow implements IExtractWorkflow
         $extract = $this->getExtract($event);
         $grp = $extract->getGrp();
         $data = $extract->getResponse()['data'];
-        $objs = $this->museumObjectExtractor->extract($extract->getResponse());
+        $objs = $this->museumObjectExtractor->extract($extract->getResponse(), $extract);
         return [
             'objects loaded' => count($objs)
         ];

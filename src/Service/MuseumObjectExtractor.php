@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Extract;
 use App\Entity\MuseumObject;
 use App\Repository\MuseumObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +19,7 @@ class MuseumObjectExtractor
      * @param array $jsonData
      * @return MuseumObject[]
      */
-    public function extract(array $jsonData): array
+    public function extract(array $jsonData, Extract $extract): array
     {
         $objects = [];
 
@@ -38,6 +39,7 @@ class MuseumObjectExtractor
                 $this->entityManager->persist($obj);
             }
             $obj->data = $map;
+
 //            $obj = new MuseumObject($map, $dataSource);
 //            dd($obj->title, (array)$obj);
             $objects[] = $obj;

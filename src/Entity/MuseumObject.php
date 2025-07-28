@@ -63,6 +63,11 @@ class MuseumObject implements MarkingInterface
         $this->marking = 'new';
     }
 
+//    #[ORM\ManyToOne(inversedBy: 'objs')]
+//    #[ORM\JoinColumn(nullable: false)]
+    public ?Grp $grp = null;
+
+
     public function getId(): ?string
     {
         return $this->id;

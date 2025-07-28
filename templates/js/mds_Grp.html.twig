@@ -34,9 +34,13 @@
 
     {# Footer stays the same #}
     <div class="card-footer d-flex flex-wrap gap-2 align-items-center">
+        {% if globals.debug %}
         <code class="small">{{ hit.marking }}</code>
+        {% endif %}
+        <a href="https://museumdata.uk/museums/{{ hit.id }}/" target="_blank" class="small text-decoration-none text-primary">@mds</a>
+
         <div class="d-flex flex-column flex-md-row gap-1 flex-shrink-0">
-            <a href="{{ hit.persistentLink }}" target="_blank" class="small text-decoration-none text-primary">@mds</a>
+            <a href="{{ hit.persistentLink }}" target="_blank" class="small text-decoration-none text-primary">@live</a>
 {#            <a href="https://{{ hit.name }}.wip" target="_blank" class="small text-decoration-none text-secondary">Local</a>#}
         </div>
         <div class="badge bg-warning text-dark ms-auto">

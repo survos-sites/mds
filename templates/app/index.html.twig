@@ -4,6 +4,12 @@
 
 {% block body %}
 
+    The data here come from
+
+    <a href="https://museumdata.uk/explore-collections/" target="_blank">
+        https://museumdata.uk/explore-collections/
+    </a>
+
     {% for class, count in counts %}
         <h3>
             {{ class }}: {{ count }}

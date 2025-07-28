@@ -56,6 +56,13 @@ class Grp implements MarkingInterface
         $this->extracts = new ArrayCollection();
     }
 
+    /**
+     * @var Collection<int, MuseumObject>
+     */
+//    #[ORM\OneToMany(targetEntity: MuseumObject::class, mappedBy: 'grp', orphanRemoval: true)]
+    private Collection $objs;
+
+
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[Groups('grp.read')]
     public ?string $wikidataId = null {
@@ -176,5 +183,31 @@ class Grp implements MarkingInterface
 
         return $this;
     }
+
+    // are these needed?
+    public function addObj(Obj $obj): static
+    {
+        if (!$this->objs->contains($obj)) {
+//            $this->objCount++;
+            $this->objs->add($obj);
+            $obj->inst = $this;
+        }
+
+        return $this;
+    }
+
+    public function removeObj(Obj $obj): static
+    {
+        if ($this->objs->removeElement($obj)) {
+            // set the owning side to null (unless already changed)
+//            $this->objCount--;
+            if ($obj->inst === $this) {
+                $obj->inst = null;
+            }
+        }
+
+        return $this;
+    }
+
 
 }

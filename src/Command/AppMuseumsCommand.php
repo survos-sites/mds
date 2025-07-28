@@ -7,6 +7,7 @@ use App\Entity\Source;
 use App\Repository\GrpRepository;
 use App\Repository\SourceRepository;
 use App\Service\GrpExtractorService;
+use App\Service\MuseumExtractor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\Argument;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -26,7 +27,8 @@ final class AppMuseumsCommand extends Command
         private GrpRepository          $grpRepository,
         private EntityManagerInterface $entityManager,
         private CacheInterface $cache,
-        private GrpExtractorService $grpExtractorService,
+        private GrpExtractorService $grpExtractorService, // chatGPT
+        private MuseumExtractor $museumExtractor, // co-pilot
         private array                  $grps=[],
     )
     {
@@ -47,6 +49,8 @@ final class AppMuseumsCommand extends Command
             file_put_contents($filename, file_get_contents($url));
         }
         $html = file_get_contents($filename);
+//        $x = $this->museumExtractor->extract($html);
+//        dd($x);
         $grps = $this->grpExtractorService->extract($html);
         $io->success("grp records loaded: " . count($grps));
 
