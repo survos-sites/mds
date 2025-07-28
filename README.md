@@ -15,3 +15,28 @@ bin/console doctrine:query:sql "delete from messenger_messages where queue_name=
 ## Entities
 
 Grp: high-level, the Museum.  To extract the objects, we need a "page" that is the object listing.  Was 10/page, now is 100
+
+add to app.json
+
+```json
+    "cron": [
+        {
+            "command": "php -d memory_limit=4G bin/console messenger:consume extract_fetch  --time-limit 53",
+            "schedule": "*/1 * * * *"
+        },
+        {
+            "command": "php -d memory_limit=4G bin/console messenger:consume grp_extract extract_fetch extract_load  --time-limit 175",
+            "schedule": "*/3 * * * *"
+        },
+        {
+            "command": "php -d memory_limit=4G bin/console messenger:consume extract_fetch extract_load  --time-limit 175",
+            "schedule": "*/3 * * * *"
+        },
+        {
+            "command": "php -d memory_limit=4G bin/console messenger:consume extract_load  --time-limit 230",
+            "schedule": "*/4 * * * *"
+        }
+    ],
+
+
+```

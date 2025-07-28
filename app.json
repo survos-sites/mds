@@ -7,25 +7,6 @@
         "api",
         "museum data service"
     ],
-    "cron": [
-        {
-            "command": "php -d memory_limit=4G bin/console messenger:consume extract_fetch  --time-limit 53",
-            "schedule": "*/1 * * * *"
-        },
-        {
-            "command": "php -d memory_limit=4G bin/console messenger:consume grp_extract extract_fetch extract_load  --time-limit 175",
-            "schedule": "*/3 * * * *"
-        },
-        {
-            "command": "php -d memory_limit=4G bin/console messenger:consume extract_fetch extract_load  --time-limit 175",
-            "schedule": "*/3 * * * *"
-        },
-        {
-            "command": "php -d memory_limit=4G bin/console messenger:consume extract_load  --time-limit 230",
-            "schedule": "*/4 * * * *"
-        }
-    ],
-
     "repository": "https://github.com/survos-sites/mds",
     "scripts": {
         "dokku": {
