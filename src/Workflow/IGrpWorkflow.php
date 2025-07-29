@@ -22,7 +22,7 @@ interface IGrpWorkflow
     public const PLACE_FINISHED = 'finished';
 
     #[Transition(from: [self::PLACE_NEW], to: self::PLACE_READY,
-        info: "fetch the initial API key",next: [self::PLACE_EXTRACTING])]
+        info: "fetch the initial API key",next: [self::TRANSITION_EXTRACT])]
     public const TRANSITION_API_KEY = 'get_api_key';
 
     #[Transition(from: [self::PLACE_READY], to: self::PLACE_EXTRACTING,

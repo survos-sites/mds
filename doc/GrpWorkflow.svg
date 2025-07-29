@@ -19,11 +19,11 @@
 <!-- transition_0 -->
 <g id="node5" class="node">
 <title>transition_0</title>
-<polygon fill="none" stroke="#333333" points="109,-419 9,-419 9,-383 109,-383 109,-419"/>
+<polygon fill="none" stroke="#333333" points="104,-419 14,-419 14,-383 104,-383 104,-419"/>
 <text text-anchor="start" x="35" y="-407.6" font-family="Arial" font-weight="bold" font-size="8.00">get_api_key</text>
 <text text-anchor="start" x="33.5" y="-399.6" font-family="Arial" font-style="italic" font-size="8.00">fetch the initial</text>
-<text text-anchor="start" x="17" y="-391.6" font-family="Arial" font-style="italic" font-size="8.00">API key</text>
-<text text-anchor="start" x="45" y="-391.6" font-family="Arial" font-size="8.00">Next: extracting</text>
+<text text-anchor="start" x="22" y="-391.6" font-family="Arial" font-style="italic" font-size="8.00">API key</text>
+<text text-anchor="start" x="50" y="-391.6" font-family="Arial" font-size="8.00">Next: extract</text>
 </g>
 <!-- place_new&#45;&gt;transition_0 -->
 <!-- new -->

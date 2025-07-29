@@ -6,11 +6,11 @@ bin/console mess:stats
 ## use sleep  so that you can break out with ^C
 while true; do
     bin/console messenger:consume meili extract_load extract_fetch grp_extract async \
-        -v --limit=400 --time-limit=240
+        -v --time-limit=15
 
-    echo "pausing..."
     bin/console mess:stats
-    sleep 4
+    echo "pausing..."
+    sleep 3
 done
 
 for i in {1..12}

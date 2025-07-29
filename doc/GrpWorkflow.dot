@@ -7,7 +7,7 @@ digraph workflow {
   place_ready [label=<<B>ready</B><BR/><I>has initial API key</I>>, shape=oval fillcolor="lightgreen" style="filled"];
   place_extracting [label=<<B>extracting</B>>, shape=oval fillcolor="lightgreen" style="filled"];
   place_finished [label=<<B>finished</B>>, shape=oval fillcolor="lightgreen" style="filled"];
-  transition_0 [label=<<B>get_api_key</B><BR/><I>fetch the initial<BR/>API key</I>Next: extracting>, shape="box" regular=""];
+  transition_0 [label=<<B>get_api_key</B><BR/><I>fetch the initial<BR/>API key</I>Next: extract>, shape="box" regular=""];
   transition_1 [label=<<B>extract</B><BR/><I>create the extract?</I><BR/>transport: grp_extract>, shape="box" regular=""];
   transition_2 [label=<<B>finish</B>>, shape="box" regular=""];
   place_new -> transition_0 [style="solid", comment="new"];

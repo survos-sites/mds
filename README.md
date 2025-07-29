@@ -9,9 +9,22 @@ It's a bizarre API, you get a key that start off the record fetch ("extract") an
 Create the database and migration (via migrations or d:sc:update --force if sqlite)
 
 ```bash
+bin/console d:d:drop --force --if-exists
+bin/console d:d:create 
+bin/console d:m:m -n
+
+# create the meili indexes
+bin/console meili:index --reset
+symfony server:start -d
+
 # load the Grp records, marking=new
-bin/console load:Grp 
-bin/console iterate Grp -m new -t get_api_key --transport=sync --limit 2 -vv
+bin/console load:Grp --max 3 
+# dispatch a request fetch the API keys
+bin/console iterate Grp -m new -t get_api_key 
+
+# the workflow should now start
+bin/consume
+
 
 ```
 
