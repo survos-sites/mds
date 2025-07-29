@@ -26,10 +26,10 @@ return [
         'version' => '8.0.13',
     ],
     'simple-datatables' => [
-        'version' => '10.0.0',
+        'version' => '9.2.2',
     ],
     'simple-datatables/dist/style.min.css' => [
-        'version' => '10.0.0',
+        'version' => '9.2.2',
         'type' => 'css',
     ],
     '@tabler/core' => [

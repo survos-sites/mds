@@ -9,6 +9,9 @@ It's a bizarre API, you get a key that start off the record fetch ("extract") an
 Create the database and migration (via migrations or d:sc:update --force if sqlite)
 
 ```bash
+git clone git@github.com:survos-sites/mds && cd mds
+composer install
+
 bin/console d:d:drop --force --if-exists
 bin/console d:d:create 
 bin/console d:m:m -n
