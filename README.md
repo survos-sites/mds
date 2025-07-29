@@ -4,6 +4,17 @@ A micro-site to merge and view the data from the MDS API
 
 It's a bizarre API, you get a key that start off the record fetch ("extract") and in that result is the link to the next set.
 
+## Workflow
+
+Create the database and migration (via migrations or d:sc:update --force if sqlite)
+
+```bash
+# load the Grp records, marking=new
+bin/console load:Grp 
+bin/console iterate Grp -m new -t get_api_key --transport=sync --limit 2 -vv
+
+```
+
 
 curl "https://museumdata.uk/explore-collections/?_sfm_has_object_records=1&_sf_ppp=100"  > data/museums.html 
 

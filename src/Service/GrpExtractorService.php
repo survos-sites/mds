@@ -22,14 +22,20 @@ class GrpExtractorService
 	/**
 	 * @return Grp[]
 	 */
-	public function extract(string $html): array
+	public function extract(string $html, ?int $max): array
 	{
 		$crawler = new Crawler($html);
 		$groups = [];
 
-		$crawler->filter('details.museum-overview')->each(function (Crawler $museumNode) use (&$groups) {
+		$crawler->filter('details.museum-overview')->each(function (Crawler $museumNode) use (&$groups, $max) {
 		    // Museum name
-		    $name = $museumNode->filter('.museum-overview__heading')->text('');
+
+            if ($max && (count($groups) >= $max)) {
+                return;
+            }
+
+            $name = $museumNode->filter('.museum-overview__heading')->text('');
+            $this->logger->warning("Found $name");
 
 		    // Persistent link and internal code
 		    $plink = $museumNode->filter('dt:contains("Persistent shareable link") + dd a');
@@ -73,7 +79,6 @@ class GrpExtractorService
 		        : null;
 
 		    $groups[] = $grp;
-            $this->entityManager->flush();
 		});
 
 
@@ -86,19 +91,6 @@ class GrpExtractorService
 		if (!$grp = $this->grpRepository->find($id)) {
 		    $grp = new Grp($id, $name);
 		    $this->entityManager->persist($grp);
-		}
-		if (!$grp->getStartToken()) {
-
-		    $apiKeyRequest = "https://museumdata.uk/get-api-token/get_api_token.php?user_id=tacman&institution=Museado&q=" .
-              urlencode($name);
-		    $apiKeyData  = $this->cache->get($id, fn(ItemInterface $item) => json_decode(file_get_contents($apiKeyRequest)));
-            if (!$apiKeyData) {
-                dd($apiKeyData, $apiKeyRequest);
-            }
-            $this->logger->warning($apiKeyRequest);
-            $grp
-		        ->setCount($apiKeyData->count)
-		        ->setStartToken($apiKeyData->resume);
 		}
         return $grp;
 	}

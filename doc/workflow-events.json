@@ -1,25 +1,65 @@
 {
-    "workflow.ExtractWorkflow.guard": [
+    "workflow.ExtractWorkflow.completed.fetch": [
         {
             "type": "function",
-            "name": "onGuard",
+            "name": "onFetchComplete",
             "class": "App\\Workflow\\ExtractWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.ExtractWorkflow.enter": [
+        {
+            "type": "function",
+            "name": "onEnter",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
+            "priority": 0
+        }
+    ],
+    "workflow.ExtractWorkflow.leave": [
+        {
+            "type": "function",
+            "name": "onLeave",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
+            "priority": 0
+        }
+    ],
+    "workflow.ExtractWorkflow.transition": [
+        {
+            "type": "function",
+            "name": "onTransition",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
             "priority": 0
         }
     ],
     "workflow.ExtractWorkflow.transition.fetch": [
         {
             "type": "function",
-            "name": "onTransition",
+            "name": "onFetch",
             "class": "App\\Workflow\\ExtractWorkflow",
             "priority": 0
         }
     ],
-    "workflow.GrpWorkflow.guard": [
+    "workflow.ExtractWorkflow.transition.load": [
         {
             "type": "function",
-            "name": "onGuard",
-            "class": "App\\Workflow\\GrpWorkflow",
+            "name": "onLoadFromExtractData",
+            "class": "App\\Workflow\\ExtractWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.GrpWorkflow.enter": [
+        {
+            "type": "function",
+            "name": "onEnter",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
+            "priority": 0
+        }
+    ],
+    "workflow.GrpWorkflow.leave": [
+        {
+            "type": "function",
+            "name": "onLeave",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
             "priority": 0
         }
     ],
@@ -27,7 +67,79 @@
         {
             "type": "function",
             "name": "onTransition",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
+            "priority": 0
+        }
+    ],
+    "workflow.GrpWorkflow.transition.extract": [
+        {
+            "type": "function",
+            "name": "onDispatchExtract",
             "class": "App\\Workflow\\GrpWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.GrpWorkflow.transition.get_api_key": [
+        {
+            "type": "function",
+            "name": "onFetchApiKey",
+            "class": "App\\Workflow\\GrpWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.MuseumObjectWorkflow.enter": [
+        {
+            "type": "function",
+            "name": "onEnter",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
+            "priority": 0
+        }
+    ],
+    "workflow.MuseumObjectWorkflow.guard": [
+        {
+            "type": "function",
+            "name": "onGuard",
+            "class": "App\\Workflow\\MuseumObjectWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.MuseumObjectWorkflow.leave": [
+        {
+            "type": "function",
+            "name": "onLeave",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
+            "priority": 0
+        }
+    ],
+    "workflow.MuseumObjectWorkflow.transition": [
+        {
+            "type": "function",
+            "name": "onTransition",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
+            "priority": 0
+        }
+    ],
+    "workflow.MuseumObjectWorkflow.transition.finish": [
+        {
+            "type": "function",
+            "name": "onFinish",
+            "class": "App\\Workflow\\MuseumObjectWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.MuseumObjectWorkflow.transition.thumbnails": [
+        {
+            "type": "function",
+            "name": "onThumbnails",
+            "class": "App\\Workflow\\MuseumObjectWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.RecordWorkflowInterface.enter": [
+        {
+            "type": "function",
+            "name": "onEnter",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
             "priority": 0
         }
     ],
@@ -36,6 +148,22 @@
             "type": "function",
             "name": "onGuard",
             "class": "App\\Workflow\\RecordWorkflow",
+            "priority": 0
+        }
+    ],
+    "workflow.RecordWorkflowInterface.leave": [
+        {
+            "type": "function",
+            "name": "onLeave",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
+            "priority": 0
+        }
+    ],
+    "workflow.RecordWorkflowInterface.transition": [
+        {
+            "type": "function",
+            "name": "onTransition",
+            "class": "Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener",
             "priority": 0
         }
     ],

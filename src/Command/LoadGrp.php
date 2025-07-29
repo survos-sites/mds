@@ -19,8 +19,8 @@ use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
-#[AsCommand('app:museums', 'Scrape the list of museums into Grp')]
-final class AppMuseumsCommand extends Command
+#[AsCommand('load:Grp', 'Scrape the html from https://museumdata.uk/explore-collections the Grp entity')]
+final class LoadGrp extends Command
 {
 
     public function __construct(
@@ -42,6 +42,8 @@ final class AppMuseumsCommand extends Command
 
         #[Option(description: 'refresh the HTML page')]
         bool   $refresh = true,
+
+        #[Option('max number to import')] ?int $max = null
     ): int
     {
         $filename = 'data/museums.html';
@@ -51,8 +53,19 @@ final class AppMuseumsCommand extends Command
         $html = file_get_contents($filename);
 //        $x = $this->museumExtractor->extract($html);
 //        dd($x);
-        $grps = $this->grpExtractorService->extract($html);
+        $grps = $this->grpExtractorService->extract($html, $max);
+        $this->entityManager->flush();
         $io->success("grp records loaded: " . count($grps));
+        $io->writeln(<<<END
+
+Next:
+
+
+bin/console iterate Grp --stats
+bin/console iterate Grp -m new -t get_api_key --limit 3
+bin/consume
+END
+);
 
         return self::SUCCESS;
     }

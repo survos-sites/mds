@@ -4,59 +4,55 @@ Markdown for GrpWorkflow
 
 
 
-##  -- guard
+## extract -- transition
 
 
 ```php
-#[AsGuardListener(self::WORKFLOW_NAME)]
-public function onGuard(GuardEvent $event): void
+#[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_EXTRACT)]
+public function onDispatchExtract(TransitionEvent $event): void
 {
-    /** @var Grp grp */
-    $grp = $event->getSubject();
+    $grp = $this->getGrp($event);
 
-    switch ($event->getTransition()) {
-    /*
-    e.g.
-    if ($event->getSubject()->cannotTransition()) {
-      $event->setBlocked(true, "reason");
+    $token = $grp->getStartToken();
+    $tokenCode = Extract::calcCode($token);
+
+    if (!$extract = $this->extractRepository->findOneBy(['tokenCode' => $tokenCode])) {
+        $extract = new Extract($token, $grp);
+        assert($extract->getTokenCode() === $tokenCode);
+        $this->entityManager->persist($extract);
     }
-    App\Entity\Grp
-    */
-        case self::TRANSITION_DISPATCH:
-            break;
-        case self::TRANSITION_FINISH:
-            break;
-    }
+    $this->entityManager->flush();
+    // dispatch the first extract
+    $this->extractWorkflowClass->dispatchNextExtract($extract->getToken(), $extract);
+
 }
 ```
-blob/main/src/Workflow/GrpWorkflow.php#L23-41
+blob/main/src/Workflow/GrpWorkflow.php#L46-62
         
 
-
-##  -- transition
+## get_api_key -- transition
 
 
 ```php
-#[AsTransitionListener(self::WORKFLOW_NAME)]
-public function onTransition(TransitionEvent $event): void
+#[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_API_KEY)]
+public function onFetchApiKey(TransitionEvent $event): void
 {
-    /** @var Grp grp */
-    $grp = $event->getSubject();
+    $grp = $this->getGrp($event);
+    if (!$grp->getStartToken()) {
 
-    switch ($event->getTransition()) {
-    /*
-    e.g.
-    if ($event->getSubject()->cannotTransition()) {
-      $event->setBlocked(true, "reason");
-    }
-    App\Entity\Grp
-    */
-        case self::TRANSITION_DISPATCH:
-            break;
-        case self::TRANSITION_FINISH:
-            break;
+        $apiKeyRequest = "https://museumdata.uk/get-api-token/get_api_token.php?user_id=tacman&institution=Museado&q=" .
+            urlencode($grp->name);
+        $apiKeyData = $this->cache->get($grp->id, fn(ItemInterface $item) => json_decode(file_get_contents($apiKeyRequest)));
+        if (!$apiKeyData) {
+            dd($apiKeyData, $apiKeyRequest);
+        }
+        $this->logger->warning($apiKeyRequest);
+        $grp
+            ->setCount($apiKeyData->count)
+            ->setStartToken($apiKeyData->resume);
+        $this->entityManager->flush(); // so that the next transition is accurate
     }
 }
 ```
-blob/main/src/Workflow/GrpWorkflow.php#L45-63
+blob/main/src/Workflow/GrpWorkflow.php#L65-82
         

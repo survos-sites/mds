@@ -2,9 +2,16 @@
 
 set SYMFONY_DEPRECATIONS_HELPER=disabled
 # more verbose on the first run
-bin/console mess:stats async
+bin/console mess:stats
 ## use sleep  so that you can break out with ^C
-while true; do  bin/console messenger:consume extract_load extract_fetch grp_extract -v --limit 400  --time-limit 240; echo "pausing..."; bin/console mess:stats && sleep 4;   done;
+while true; do
+    bin/console messenger:consume meili extract_load extract_fetch grp_extract async \
+        -v --limit=400 --time-limit=240
+
+    echo "pausing..."
+    bin/console mess:stats
+    sleep 4
+done
 
 for i in {1..12}
 do

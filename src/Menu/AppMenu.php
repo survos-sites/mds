@@ -105,11 +105,12 @@ final class AppMenu implements KnpMenuHelperInterface
 //        }
 //
         $this->add($menu, 'api_entrypoint', label: 'API', external: true);
+        $this->add($menu, 'app_extract', label: 'extracts');
 
         if ($this->isEnv('dev')) {
             $this->add($menu, 'survos_command', [
-                'commandName' => 'app:museums'],
-                label: "app:museums",
+                'commandName' => 'load:Grp'],
+                label: "load:Grp",
             );
 
 
