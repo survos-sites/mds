@@ -23,6 +23,10 @@
         {
             "command": "php -d memory_limit=4G bin/console messenger:consume extract_load  --time-limit 230",
             "schedule": "*/4 * * * *"
+        },
+        {
+            "command": "php -d memory_limit=4G bin/console messenger:consume meili --time-limit 230",
+            "schedule": "*/4 * * * *"
         }
     ],
 
