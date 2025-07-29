@@ -12,10 +12,14 @@ use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Service\MenuService;
 use Survos\BootstrapBundle\Traits\KnpMenuHelperInterface;
 use Survos\BootstrapBundle\Traits\KnpMenuHelperTrait;
+use Survos\CoreBundle\Service\SurvosUtils;
+use Survos\MeiliBundle\Service\MeiliService;
+use Survos\WorkflowBundle\Service\WorkflowHelperService;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Zenstruck\Bytes;
 
 // events are
 /*
@@ -35,7 +39,8 @@ final class AppMenu implements KnpMenuHelperInterface
         private MenuService                                  $menuService,
         private Security                                     $security,
         private EntityManagerInterface                       $entityManager,
-        private ?AuthorizationCheckerInterface               $authorizationChecker = null
+        private readonly MeiliService                        $meiliService, private readonly WorkflowHelperService $workflowHelperService,
+        private ?AuthorizationCheckerInterface               $authorizationChecker = null,
     )
     {
     }
@@ -65,22 +70,41 @@ final class AppMenu implements KnpMenuHelperInterface
         $menu = $event->getMenu();
         $options = $event->getOptions();
         $this->add($menu, 'app_homepage');
-        $this->add($menu, 'zenstruck_messenger_monitor_dashboard', label: "*msg");
+        if ($this->isEnv('dev')) {
+            $this->add($menu, 'zenstruck_messenger_monitor_dashboard', label: "*msg");
+        }
         $this->add($menu, 'survos_workflow_entities', label: "*entities");
 
-        $subMenu = $this->addSubmenu($menu, 'meili_insta');
-        foreach (['mds_Grp', 'mds_MuseumObject'] as $indexName) {
-            $this->add($subMenu, 'meili_insta', ['indexName' => $indexName], label: $indexName);
+
+//        $subMenu = $this->addSubmenu($menu, 'meili_insta');
+
+//        foreach ($this->meiliService->)
+            foreach ($this->meiliService->indexedEntities as $class) {
+                $indexName = $this->meiliService->getPrefixedIndexName($class);
+                $shortClass = new \ReflectionClass($class)->getShortName();
+            $this->add($menu, 'meili_insta', ['indexName' => $indexName],
+                badge: SurvosUtils::formatLargeNumber($this->workflowHelperService->getApproxCount($class)),
+                label: $shortClass);
         }
 
-        foreach ([MuseumObject::class => 'obj', Source::class => 'source', Grp::class => 'grp', Extract::class => 'extract'] as $class => $code) {
-//            dd($this->getApproxCount($class));
-//            $repo = $this->entityManager->getRepository($class);
-            $this->add($menu, 'app_' . $code, label: new \ReflectionClass($class)->getShortName(),
-                badge: $this->getApproxCount($class));
-        }
 
-        $this->add($menu, 'api_entrypoint');
+//        foreach ($this->workflowHelperService->getWorkflowsGroupedByClass() as $class=>$wf) {
+////
+//////        }
+//////        foreach ([Extract::class, Record::class, Source::class, MuseumObject::class] as $class) {
+////            $repo = $this->entityManager->getRepository($class);
+////            $counts[$class] = $this->workflowHelperService->getApproxCount($class);
+////
+////            foreach ([MuseumObject::class => 'obj', Source::class => 'source', Grp::class => 'grp', Extract::class => 'extract'] as $class => $code) {
+//////            dd($this->getApproxCount($class));
+//////            $repo = $this->entityManager->getRepository($class);
+//        }
+//
+//        foreach ($this->meiliService->indexedEntities as $class) {
+//            dd($class, $this->meiliService->getPrefixedIndexName($class));
+//        }
+//
+        $this->add($menu, 'api_entrypoint', label: 'API', external: true);
 
         if ($this->isEnv('dev')) {
             $this->add($menu, 'survos_command', [

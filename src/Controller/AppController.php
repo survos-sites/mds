@@ -12,6 +12,8 @@ use App\Repository\MuseumObjectRepository;
 use App\Repository\RecordRepository;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Survos\MeiliBundle\Service\MeiliService;
+use Survos\WorkflowBundle\Service\WorkflowHelperService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +31,8 @@ final class AppController extends AbstractController
         private MuseumObjectRepository $museumObjectRepository,
         private SourceRepository       $sourceRepository,
         private GrpRepository           $grpRepository,
+        private WorkflowHelperService $workflowHelperService,
+        private MeiliService $meiliService,
 
     )
     {
@@ -114,12 +118,16 @@ final class AppController extends AbstractController
     public function index(
     ): Response
     {
-        foreach ([Extract::class, Record::class, Source::class, MuseumObject::class] as $class) {
+        foreach ($this->workflowHelperService->getWorkflowsGroupedByClass() as $class=>$wf) {
+
+//        }
+//        foreach ([Extract::class, Record::class, Source::class, MuseumObject::class] as $class) {
             $repo = $this->entityManager->getRepository($class);
-            if (!method_exists($repo, 'getApproxCount')) {
-                dd($class);
-            }
-            $counts[$class] = $repo->getApproxCount();
+            $counts[$class] = $this->workflowHelperService->getApproxCount($class);
+//            if (!method_exists($repo, 'getApproxCount')) {
+//                dd($class);
+//            }
+//            $counts[$class] = $repo->getApproxCount();
 
 //            $data = $repo->findBy([], ['createdAt' => 'DESC'], 10);
         }
