@@ -16,6 +16,12 @@ framework:
                     <<: *doctrine_common
                     queue_name: extract_fetch
 
+            meili:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    <<: *doctrine_common
+                    queue_name: meili
+
             extract_load:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:
@@ -69,4 +75,5 @@ framework:
 #            Symfony\Component\Notifier\Message\SmsMessage: async
 #            App\Message\ExtractMessage: load_records
             Survos\WorkflowBundle\Message\TransitionMessage: async
+            Survos\MeiliBundle\Message\BatchIndexEntitiesMessage: meili
 
