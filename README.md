@@ -16,6 +16,13 @@ bin/console d:d:drop --force --if-exists
 bin/console d:d:create 
 bin/console d:m:m -n
 
+# OR
+
+echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db" > .env.local
+echo "MEILI_SERVER=http://127.0.0.1:7700" >> .env.local
+bin/console d:sc:update --force
+
+
 # create the meili indexes
 bin/console meili:index --reset
 symfony server:start -d
