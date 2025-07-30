@@ -1,12 +1,17 @@
+
 Markdown for ExtractWorkflow
 
 ![ExtractWorkflow.svg](ExtractWorkflow.svg)
 
 
 
-## fetch -- transition
+---
+## Transition: fetch
 
+### fetch.Transition
 
+        onFetch()
+        // 
 ```php
     #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
     public function onFetch(TransitionEvent $event): array
@@ -59,12 +64,38 @@ Markdown for ExtractWorkflow
 
     }
 ```
-blob/main/src/Workflow/ExtractWorkflow.php#L135-183
-        
+[View source](mds/blob/main/src/Workflow/ExtractWorkflow.php#L135-L183)
 
-## load -- transition
+### fetch.Completed
+
+        onFetchComplete()
+        // 
+```php
+#[AsCompletedListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
+public function onFetchComplete(CompletedEvent $event): void
+{
+    $extract = $this->getExtract($event);
+    // we're complete, create a new event if there's a next token.
+    // @todo: guard?
+    if ($nextToken = $extract->getNextToken()) {
+        $this->dispatchNextExtract($nextToken, $extract);
+    } else {
+        $this->logger->error("All done");
+    }
+}
+```
+[View source](mds/blob/main/src/Workflow/ExtractWorkflow.php#L186-L196)
 
 
+
+
+---
+## Transition: load
+
+### load.Transition
+
+        onLoadFromExtractData()
+        // 
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_LOAD)]
 public function onLoadFromExtractData(TransitionEvent $event): array
@@ -118,26 +149,6 @@ public function onLoadFromExtractData(TransitionEvent $event): array
 
 }
 ```
-blob/main/src/Workflow/ExtractWorkflow.php#L83-132
-        
+[View source](mds/blob/main/src/Workflow/ExtractWorkflow.php#L83-L132)
 
 
-## fetch -- completed
-
-
-```php
-#[AsCompletedListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
-public function onFetchComplete(CompletedEvent $event): void
-{
-    $extract = $this->getExtract($event);
-    // we're complete, create a new event if there's a next token.
-    // @todo: guard?
-    if ($nextToken = $extract->getNextToken()) {
-        $this->dispatchNextExtract($nextToken, $extract);
-    } else {
-        $this->logger->error("All done");
-    }
-}
-```
-blob/main/src/Workflow/ExtractWorkflow.php#L186-196
-        

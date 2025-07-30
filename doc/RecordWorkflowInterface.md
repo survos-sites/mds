@@ -1,26 +1,17 @@
+
 Markdown for RecordWorkflowInterface
 
 ![RecordWorkflowInterface.svg](RecordWorkflowInterface.svg)
 
 
 
-##  -- guard
+---
+## Transition: process
 
+### process.Transition
 
-```php
-#[AsGuardListener(self::WORKFLOW_NAME)]
-public function onGuard(GuardEvent $event): void
-{
-    // switch ($event->getTransition()) { ...
-}
-```
-blob/main/src/Workflow/RecordWorkflow.php#L33-36
-        
-
-
-## process -- transition
-
-
+        onTransition()
+        // 
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_PROCESS)]
 public function onTransition(TransitionEvent $event): void
@@ -33,5 +24,6 @@ public function onTransition(TransitionEvent $event): void
     }
 }
 ```
-blob/main/src/Workflow/RecordWorkflow.php#L39-47
-        
+[View source](mds/blob/main/src/Workflow/RecordWorkflow.php#L39-L47)
+
+

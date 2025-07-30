@@ -1,38 +1,17 @@
+
 Markdown for GrpWorkflow
 
 ![GrpWorkflow.svg](GrpWorkflow.svg)
 
 
 
-## extract -- transition
+---
+## Transition: get_api_key
 
+### get_api_key.Transition
 
-```php
-#[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_EXTRACT)]
-public function onDispatchExtract(TransitionEvent $event): void
-{
-    $grp = $this->getGrp($event);
-
-    $token = $grp->getStartToken();
-    $tokenCode = Extract::calcCode($token);
-
-    if (!$extract = $this->extractRepository->findOneBy(['tokenCode' => $tokenCode])) {
-        $extract = new Extract($token, $grp);
-        assert($extract->getTokenCode() === $tokenCode);
-        $this->entityManager->persist($extract);
-    }
-    $this->entityManager->flush();
-    // dispatch the first extract
-    $this->extractWorkflowClass->dispatchNextExtract($extract->getToken(), $extract);
-
-}
-```
-blob/main/src/Workflow/GrpWorkflow.php#L46-62
-        
-
-## get_api_key -- transition
-
-
+        onFetchApiKey()
+        // fetch the initial API key
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_API_KEY)]
 public function onFetchApiKey(TransitionEvent $event): void
@@ -54,5 +33,38 @@ public function onFetchApiKey(TransitionEvent $event): void
     }
 }
 ```
-blob/main/src/Workflow/GrpWorkflow.php#L65-82
-        
+[View source](mds/blob/main/src/Workflow/GrpWorkflow.php#L65-L82)
+
+
+
+
+---
+## Transition: extract
+
+### extract.Transition
+
+        onDispatchExtract()
+        // create the extract?
+```php
+#[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_EXTRACT)]
+public function onDispatchExtract(TransitionEvent $event): void
+{
+    $grp = $this->getGrp($event);
+
+    $token = $grp->getStartToken();
+    $tokenCode = Extract::calcCode($token);
+
+    if (!$extract = $this->extractRepository->findOneBy(['tokenCode' => $tokenCode])) {
+        $extract = new Extract($token, $grp);
+        assert($extract->getTokenCode() === $tokenCode);
+        $this->entityManager->persist($extract);
+    }
+    $this->entityManager->flush();
+    // dispatch the first extract
+    $this->extractWorkflowClass->dispatchNextExtract($extract->getToken(), $extract);
+
+}
+```
+[View source](mds/blob/main/src/Workflow/GrpWorkflow.php#L46-L62)
+
+
