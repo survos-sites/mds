@@ -11,7 +11,7 @@
         "api-platform/doctrine-orm": "^4.1.20",
         "api-platform/symfony": "^4.1.20",
         "bizkit/versioning-bundle": "^1.2.1",
-        "doctrine/dbal": "^3.10.0",
+        "doctrine/dbal": "^3.10|^4.3.1",
         "doctrine/doctrine-bundle": "^2.15.0",
         "doctrine/doctrine-migrations-bundle": "^3.4.2",
         "doctrine/orm": "^3.5.0",
@@ -121,7 +121,7 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1.21",
-        "phpunit/phpunit": "^11.5.27",
+        "phpunit/phpunit": "^12.2.8",
         "pierstoval/smoke-testing": "^1.2.2",
         "survos/code-bundle": "^1.5.602",
         "symfony/browser-kit": "^7.3",

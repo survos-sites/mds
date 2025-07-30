@@ -7,7 +7,6 @@ bin/console mess:stats
 while true; do
     bin/console messenger:consume meili extract_load extract_fetch grp_extract async \
         -v --time-limit=15
-
     bin/console mess:stats
     echo "pausing..."
     sleep 3
