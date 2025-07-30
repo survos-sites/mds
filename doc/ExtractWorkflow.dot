@@ -1,13 +1,13 @@
 digraph workflow {
   ratio="compress" rankdir="TB" label=<<B>ExtractWorkflow</B>>
-  node [fontsize="8" fontname="Arial" color="#333333" fillcolor="lightgreen" fixedsize="false" width="1"];
+  node [fontsize="8" fontname="Arial" color="lightBlue" style="filled" fixedsize="false" width="2" height="1"];
   edge [fontsize="7" fontname="Arial" color="#333333" arrowhead="normal" arrowsize="0.5"];
 
   place_new [label=<<B>new</B><BR/><I>created with json<BR/>data from api call</I>>, shape=oval fillcolor="lightgreen" style="filled"];
   place_loaded [label=<<B>loaded</B><BR/><I>load json data<BR/>returned in api call<BR/>to objects</I>>, shape=oval fillcolor="lightgreen" style="filled"];
   place_fetched [label=<<B>fetched</B>>, shape=oval fillcolor="lightgreen" style="filled"];
-  transition_0 [label=<<B>fetch</B><BR/>transport: extract_fetchNext: load>, shape="box" regular=""];
-  transition_1 [label=<<B>load</B><BR/>transport: extract_load>, shape="box" regular=""];
+  transition_0 [label=<<B>fetch</B><BR/>Via: extract_fetch<BR/><BR/>Then: load>, shape="box" regular=""];
+  transition_1 [label=<<B>load</B><BR/>Via: extract_load>, shape="box" regular=""];
   place_new -> transition_0 [style="solid", comment="new"];
   transition_0 -> place_fetched [style="solid"];
   place_fetched -> transition_1 [style="solid", comment="fetched"];
