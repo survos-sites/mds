@@ -36,7 +36,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     'dataSource',
     'productionPlace',
     'concept', 'status','license'])]
-class MuseumObject implements MarkingInterface
+class MuseumObject implements MarkingInterface, \Stringable
 {
     use MarkingTrait;
 
@@ -199,6 +199,11 @@ class MuseumObject implements MarkingInterface
     #[Groups(['record.read'])]
     public string $year {
         get => $this->productionDateStart ?: $this->associatedDate;
+    }
+
+    public function __toString()
+    {
+        return $this->id;
     }
 
 }
