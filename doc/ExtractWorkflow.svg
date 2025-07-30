@@ -22,9 +22,11 @@
 <g id="node4" class="node">
 <title>transition_0</title>
 <polygon fill="lightBlue" stroke="lightBlue" points="145,-419 1,-419 1,-347 145,-347 145,-419"/>
-<text text-anchor="start" x="62.5" y="-393.6" font-family="Arial" font-weight="bold" font-size="8.00">fetch</text>
-<text text-anchor="start" x="42" y="-385.6" font-family="Arial" font-size="8.00">Via: extract_fetch</text>
-<text text-anchor="start" x="53.5" y="-369.6" font-family="Arial" font-size="8.00">Then: load</text>
+<text text-anchor="start" x="62.5" y="-401.6" font-family="Arial" font-weight="bold" font-size="8.00">fetch</text>
+<text text-anchor="start" x="39" y="-393.6" font-family="Arial" font-style="italic" font-size="8.00">fetch json, dispatch</text>
+<text text-anchor="start" x="52" y="-385.6" font-family="Arial" font-style="italic" font-size="8.00">next extract</text>
+<text text-anchor="start" x="42" y="-377.6" font-family="Arial" font-size="8.00">Via: extract_fetch</text>
+<text text-anchor="start" x="53.5" y="-361.6" font-family="Arial" font-size="8.00">Then: load</text>
 </g>
 <!-- place_new&#45;&gt;transition_0 -->
 <!-- new -->

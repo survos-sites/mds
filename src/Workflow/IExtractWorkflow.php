@@ -20,6 +20,7 @@ interface IExtractWorkflow
 
     /* Fetch the URI with 100 objects and a next token */
     #[Transition(from: [self::PLACE_NEW], to: self::PLACE_FETCHED,
+        info: "fetch json, dispatch next extract",
         transport: 'extract_fetch', next: [self::TRANSITION_LOAD])]
     public const TRANSITION_FETCH = 'fetch';
 

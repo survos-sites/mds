@@ -11,7 +11,7 @@ Markdown for ExtractWorkflow
 ### fetch.Transition
 
         onFetch()
-        // 
+        // fetch json, dispatch next extract
 ```php
     #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
     public function onFetch(TransitionEvent $event): array
@@ -69,7 +69,7 @@ Markdown for ExtractWorkflow
 ### fetch.Completed
 
         onFetchComplete()
-        // 
+        // fetch json, dispatch next extract
 ```php
 #[AsCompletedListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
 public function onFetchComplete(CompletedEvent $event): void
