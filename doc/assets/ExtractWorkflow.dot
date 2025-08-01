@@ -1,0 +1,15 @@
+digraph workflow {
+  ratio="compress" rankdir="TB" label=<<B>ExtractWorkflow</B>>
+  node [fontsize="8" fontname="Arial" color="lightBlue" style="filled" fixedsize="false" width="2" height="1"];
+  edge [fontsize="7" fontname="Arial" color="#333333" arrowhead="normal" arrowsize="0.5"];
+
+  place_new [label=<<B>new</B><BR/><I>has Api Key</I>>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place new: created with json data from api call"];
+  place_loaded [label=<<B>loaded</B><BR/><I>Has data</I>>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place loaded: load json data returned in api call to objects"];
+  place_fetched [label=<<B>fetched</B>>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place fetched: "];
+  transition_fetch [label=<<B>fetch</B><BR/><I>fetch json, dispatch next extract</I><BR/><BR/>Via: extract_fetch<BR/><BR/>Then: load>, shape="box" regular="" xlabel="Transition fetch: "];
+  transition_load [label=<<B>load</B><BR/><I>entity data from raw</I><BR/><BR/>Via: extract_load>, shape="box" regular="" xlabel="Transition load: "];
+  place_new -> transition_fetch [style="solid", comment="new"];
+  transition_fetch -> place_fetched [style="solid"];
+  place_fetched -> transition_load [style="solid", comment="fetched"];
+  transition_load -> place_loaded [style="solid"];
+}

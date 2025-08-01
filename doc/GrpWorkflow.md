@@ -1,7 +1,7 @@
 
 Markdown for GrpWorkflow
 
-![GrpWorkflow.svg](GrpWorkflow.svg)
+![GrpWorkflow](assets/GrpWorkflow.svg)
 
 
 
@@ -11,7 +11,7 @@ Markdown for GrpWorkflow
 ### get_api_key.Transition
 
         onFetchApiKey()
-        // fetch the initial API key
+        // fetch key from https://museumdata.uk/get-api-token/get_api_token.php
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_API_KEY)]
 public function onFetchApiKey(TransitionEvent $event): void
@@ -19,7 +19,7 @@ public function onFetchApiKey(TransitionEvent $event): void
     $grp = $this->getGrp($event);
     if (!$grp->getStartToken()) {
 
-        $apiKeyRequest = "https://museumdata.uk/get-api-token/get_api_token.php?user_id=tacman&institution=Museado&q=" .
+        $apiKeyRequest = self::BASE_URL . "?user_id=tacman&institution=Museado&q=" .
             urlencode($grp->name);
         $apiKeyData = $this->cache->get($grp->id, fn(ItemInterface $item) => json_decode(file_get_contents($apiKeyRequest)));
         if (!$apiKeyData) {
@@ -33,7 +33,7 @@ public function onFetchApiKey(TransitionEvent $event): void
     }
 }
 ```
-[View source](mds/blob/main/src/Workflow/GrpWorkflow.php#L65-L82)
+[View source](mds/blob/main/src/Workflow/GrpWorkflow.php#L66-L83)
 
 
 
@@ -44,7 +44,7 @@ public function onFetchApiKey(TransitionEvent $event): void
 ### extract.Transition
 
         onDispatchExtract()
-        // create the extract?
+        // fetch data using token, AND create the next extract from next_token
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_EXTRACT)]
 public function onDispatchExtract(TransitionEvent $event): void
@@ -65,6 +65,6 @@ public function onDispatchExtract(TransitionEvent $event): void
 
 }
 ```
-[View source](mds/blob/main/src/Workflow/GrpWorkflow.php#L46-L62)
+[View source](mds/blob/main/src/Workflow/GrpWorkflow.php#L47-L63)
 
 

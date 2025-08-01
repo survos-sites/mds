@@ -1,7 +1,7 @@
 
 Markdown for MuseumObjectWorkflow
 
-![MuseumObjectWorkflow.svg](MuseumObjectWorkflow.svg)
+![MuseumObjectWorkflow](assets/MuseumObjectWorkflow.svg)
 
 
 

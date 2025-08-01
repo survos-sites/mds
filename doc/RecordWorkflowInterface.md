@@ -1,7 +1,7 @@
 
 Markdown for RecordWorkflowInterface
 
-![RecordWorkflowInterface.svg](RecordWorkflowInterface.svg)
+![RecordWorkflowInterface](assets/RecordWorkflowInterface.svg)
 
 
 

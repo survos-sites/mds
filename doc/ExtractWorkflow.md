@@ -1,7 +1,7 @@
 
 Markdown for ExtractWorkflow
 
-![ExtractWorkflow.svg](ExtractWorkflow.svg)
+![ExtractWorkflow](assets/ExtractWorkflow.svg)
 
 
 
@@ -11,7 +11,7 @@ Markdown for ExtractWorkflow
 ### fetch.Transition
 
         onFetch()
-        // fetch json, dispatch next extract
+        // 
 ```php
     #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
     public function onFetch(TransitionEvent $event): array
@@ -69,7 +69,7 @@ Markdown for ExtractWorkflow
 ### fetch.Completed
 
         onFetchComplete()
-        // fetch json, dispatch next extract
+        // 
 ```php
 #[AsCompletedListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
 public function onFetchComplete(CompletedEvent $event): void
@@ -101,13 +101,13 @@ public function onFetchComplete(CompletedEvent $event): void
 public function onLoadFromExtractData(TransitionEvent $event): array
 {
     $extract = $this->getExtract($event);
-    $grp = $extract->getGrp();
-    $data = $extract->getResponse()['data'];
     $objs = $this->museumObjectExtractor->extract($extract->getResponse(), $extract);
     return [
         'objects loaded' => count($objs)
     ];
 
+    $grp = $extract->getGrp();
+    $data = $extract->getResponse()['data'];
     foreach ($data as $idx => $item) {
         $obj = $this->museumObjectExtractor->extract($item);
         dd($item, $obj);

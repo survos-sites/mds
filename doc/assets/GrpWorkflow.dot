@@ -1,0 +1,19 @@
+digraph workflow {
+  ratio="compress" rankdir="TB" label=<<B>GrpWorkflow</B>>
+  node [fontsize="8" fontname="Arial" color="lightBlue" style="filled" fixedsize="false" width="2" height="1"];
+  edge [fontsize="7" fontname="Arial" color="#333333" arrowhead="normal" arrowsize="0.5"];
+
+  place_basic [label=<<B>basic</B><BR/><I>created during load:Grp</I>>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place basic: Basic data from https://museumdata.uk/explore-collections"];
+  place_ready [label=<<B>ready</B><BR/><I>has initial API key</I><BR/><BR/>Then: extract>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place ready: "];
+  place_extracting [label=<<B>extracting</B>>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place extracting: "];
+  place_finished [label=<<B>finished</B>>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place finished: "];
+  transition_get_api_key [label=<<B>get_api_key</B><BR/><I>fetch the initial API key</I>>, shape="box" regular="" xlabel="Transition get_api_key: fetch key from https://museumdata.uk/get-api-token/get_api_token.php"];
+  transition_extract [label=<<B>extract</B><BR/><I>create initial extract</I><BR/><BR/>Via: grp_extract>, shape="box" regular="" xlabel="Transition extract: fetch data using token, AND create the next extract from next_token"];
+  transition_finish [label=<<B>finish</B>>, shape="box" regular="" xlabel="Transition finish: "];
+  place_basic -> transition_get_api_key [style="solid", comment="basic"];
+  transition_get_api_key -> place_ready [style="solid"];
+  place_ready -> transition_extract [style="solid", comment="ready"];
+  transition_extract -> place_extracting [style="solid"];
+  place_extracting -> transition_finish [style="solid", comment="extracting"];
+  transition_finish -> place_finished [style="solid"];
+}
