@@ -1,8 +1,22 @@
 # MDS: Museum Data Services
 
-A micro-site to merge and view the data from the MDS API
+A micro-site to merge and view the data from the MDS API.
 
 It's a bizarre API, you get a key that start off the record fetch ("extract") and in that result is the link to the next set.
+
+## Messenger Configuration
+
+**Important**: MDS uses a single exchange messenger architecture with dynamic routing middleware. Make sure to use the correct DSN:
+
+```bash
+# ✅ Correct - Use phpamqplib:// for Dynamic Routing Middleware support
+MESSENGER_TRANSPORT_DSN_RABBITMQ=phpamqplib://guest:guest@localhost:5672/mds
+
+# ❌ Incorrect - Don't use amqp:// (limited routing capabilities)
+# MESSENGER_TRANSPORT_DSN_RABBITMQ=amqp://guest:guest@localhost:5672/mds
+```
+
+See [docs/](docs/) for detailed messenger configuration documentation.
 
 ## Workflow
 

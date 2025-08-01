@@ -85,6 +85,9 @@
             "config/packages/inspector.yaml"
         ]
     },
+    "jwage/phpamqplib-messenger": {
+        "version": "0.8.5"
+    },
     "knplabs/knp-menu-bundle": {
         "version": "v3.5.0"
     },

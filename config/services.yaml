@@ -22,3 +22,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    
+    # Dynamic routing middleware for single exchange message routing
+    # Converts TransportNamesStamp to AmqpStamp routing keys
+    Survos\WorkflowBundle\Messenger\Middleware\DynamicRoutingMiddleware:
+        tags:
+            - { name: messenger.middleware, alias: dynamic_routing }
+    
+    dynamic_routing: '@Survos\WorkflowBundle\Messenger\Middleware\DynamicRoutingMiddleware'

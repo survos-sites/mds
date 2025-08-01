@@ -1,79 +1,95 @@
+# Single exchange messenger configuration with individual transports
+# All queues use the same exchange (mds_main) but each has its own transport for granular consumption
+
 parameters:
-    # Define the anchor with all shared Doctrine Messenger options
-    doctrine_messenger_options: &doctrine_common
-        table_name: messenger_messages
-        auto_setup: true  # optional, can be removed if not needed
+    # Shared configuration anchors
+    rabbitmq_dsn: &rabbitmq_dsn
+        dsn: '%env(MESSENGER_TRANSPORT_DSN_RABBITMQ)%'
+    
+    rabbitmq_retry: &rabbitmq_retry
+        max_retries: 3
+        multiplier: 2
+    
+    # Single exchange configuration template
+    mds_exchange: &mds_exchange
+        exchange:
+            name: mds_main
+            type: direct
+            durable: true
 
 framework:
-
     messenger:
+
         failure_transport: failed
 
         transports:
+            # Individual transports for each queue - all using the same exchange
             extract_fetch:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                <<: *rabbitmq_dsn
                 options:
-                    <<: *doctrine_common
-                    queue_name: extract_fetch
-
-            meili:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    <<: *doctrine_common
-                    queue_name: meili
-
+                    <<: *mds_exchange
+                    queues:
+                        extract_fetch:
+                            binding_keys: [extract_fetch]
+                retry_strategy: *rabbitmq_retry
+            
             extract_load:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                <<: *rabbitmq_dsn
                 options:
-                    <<: *doctrine_common
-                    queue_name: extract_load
-
+                    <<: *mds_exchange
+                    queues:
+                        extract_load:
+                            binding_keys: [extract_load]
+                retry_strategy: *rabbitmq_retry
+            
             grp_extract:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                <<: *rabbitmq_dsn
                 options:
-                    <<: *doctrine_common
-                    queue_name: grp_extract
-
-            doctrine_low:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                    <<: *mds_exchange
+                    queues:
+                        grp_extract:
+                            binding_keys: [grp_extract]
+                retry_strategy: *rabbitmq_retry
+            
+            meili:
+                <<: *rabbitmq_dsn
                 options:
-                    <<: *doctrine_common
-                    queue_name: low_priority_queue
-
-
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
+                    <<: *mds_exchange
+                    queues:
+                        meili:
+                            binding_keys: [meili]
+                retry_strategy: *rabbitmq_retry
+            
             async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                retry_strategy:
-                    delay: 2000
-                    max_retries: 5
-                    multiplier: 2
-            failed: 'doctrine://default?queue_name=failed'
-            sync: 'sync://'
+                <<: *rabbitmq_dsn
+                options:
+                    <<: *mds_exchange
+                    queues:
+                        async:
+                            binding_keys: [async]
+                retry_strategy: *rabbitmq_retry
 
-#            load_records:
-#                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-#                options:
-#                    exchange:
-#                        name: load_records
-#                    queues:
-#                        load_records: ~
-#
+            failed:
+                <<: *rabbitmq_dsn
+                options:
+                    <<: *mds_exchange
+                    queues:
+                        failed:
+                            binding_keys: [failed]
+            # sync: 'sync://'  # Removed to prevent fallback to sync
 
         default_bus: messenger.bus.default
 
         buses:
             messenger.bus.default:
+                default_middleware: true
                 middleware:
+                    - validation
                     - doctrine_ping_connection
-                    - doctrine_close_connection
-                    - doctrine_transaction
+                    - dynamic_routing  # Enables TransportNamesStamp -> AmqpStamp conversion
 
         routing:
-#            Symfony\Component\Mailer\Messenger\SendEmailMessage: async
-#            Symfony\Component\Notifier\Message\ChatMessage: async
-#            Symfony\Component\Notifier\Message\SmsMessage: async
-#            App\Message\ExtractMessage: load_records
-            Survos\WorkflowBundle\Message\TransitionMessage: async
-            Survos\MeiliBundle\Message\BatchIndexEntitiesMessage: meili
+            # Default message routing - can be overridden with TransportNamesStamp
+            'Survos\WorkflowBundle\Message\TransitionMessage': async
+            'Survos\MeiliBundle\Message\BatchIndexEntitiesMessage': meili
 
