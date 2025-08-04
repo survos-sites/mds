@@ -83,13 +83,13 @@ class ExtractWorkflow implements IExtractWorkflow
     public function onLoadFromExtractData(TransitionEvent $event): array
     {
         $extract = $this->getExtract($event);
-        $grp = $extract->getGrp();
-        $data = $extract->getResponse()['data'];
         $objs = $this->museumObjectExtractor->extract($extract->getResponse(), $extract);
         return [
             'objects loaded' => count($objs)
         ];
 
+        $grp = $extract->getGrp();
+        $data = $extract->getResponse()['data'];
         foreach ($data as $idx => $item) {
             $obj = $this->museumObjectExtractor->extract($item);
             dd($item, $obj);

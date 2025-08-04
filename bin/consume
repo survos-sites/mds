@@ -21,3 +21,8 @@ for i in {1..8}
 do
    php -d memory_limit=2G bin/console messenger:consume load_records 2>&1  &
 done
+
+for i in {1..12}
+do
+   php -d memory_limit=2G bin/console messenger:consume meili -v 2>&1  &
+done

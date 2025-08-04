@@ -19,9 +19,10 @@ use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
-#[AsCommand('load:Grp', 'Scrape the html from https://museumdata.uk/explore-collections the Grp entity')]
+#[AsCommand('load:Grp', 'Scrape the html from ' . self::COLLECTIONS_URL  . '  the Grp entity')]
 final class LoadGrp extends Command
 {
+    const COLLECTIONS_URL = 'https://museumdata.uk/explore-collections';
 
     public function __construct(
         private GrpRepository          $grpRepository,

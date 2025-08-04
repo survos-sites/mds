@@ -20,6 +20,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 class GrpWorkflow implements IGrpWorkflow
 {
 	public const WORKFLOW_NAME = 'GrpWorkflow';
+    public const BASE_URL = 'https://museumdata.uk/get-api-token/get_api_token.php';
 
 	public function __construct(
         private ExtractRepository $extractRepository,
@@ -67,7 +68,7 @@ class GrpWorkflow implements IGrpWorkflow
         $grp = $this->getGrp($event);
         if (!$grp->getStartToken()) {
 
-            $apiKeyRequest = "https://museumdata.uk/get-api-token/get_api_token.php?user_id=tacman&institution=Museado&q=" .
+            $apiKeyRequest = self::BASE_URL . "?user_id=tacman&institution=Museado&q=" .
                 urlencode($grp->name);
             $apiKeyData = $this->cache->get($grp->id, fn(ItemInterface $item) => json_decode(file_get_contents($apiKeyRequest)));
             if (!$apiKeyData) {
