@@ -10,8 +10,10 @@ Markdown for MuseumObjectWorkflow
 
 ### thumbnails.Transition
 
-        onThumbnails()
+onThumbnails()
         // 
+        // 
+
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_THUMBNAILS)]
 public function onThumbnails(TransitionEvent $event): void
@@ -29,8 +31,10 @@ public function onThumbnails(TransitionEvent $event): void
 
 ### finish.Transition
 
-        onFinish()
+onFinish()
         // 
+        // 
+
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_FINISH)]
 public function onFinish(TransitionEvent $event): void

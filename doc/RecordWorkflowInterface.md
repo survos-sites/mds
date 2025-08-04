@@ -10,8 +10,10 @@ Markdown for RecordWorkflowInterface
 
 ### process.Transition
 
-        onTransition()
+onTransition()
         // 
+        // 
+
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_PROCESS)]
 public function onTransition(TransitionEvent $event): void

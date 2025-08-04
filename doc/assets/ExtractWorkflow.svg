@@ -25,7 +25,9 @@
 <text text-anchor="start" x="265.5" y="-401.6" font-family="Arial" font-weight="bold" font-size="8.00">fetch</text>
 <text text-anchor="start" x="220" y="-393.6" font-family="Arial" font-style="italic" font-size="8.00">fetch json, dispatch next extract</text>
 <text text-anchor="start" x="245" y="-377.6" font-family="Arial" font-size="8.00">Via: extract_fetch</text>
-<text text-anchor="start" x="256.5" y="-361.6" font-family="Arial" font-size="8.00">Then: load</text>
+<text text-anchor="start" x="254.5" y="-361.6" font-family="Arial" font-size="8.00">Then: </text>
+<text text-anchor="start" x="278.5" y="-361.6" font-family="Arial" text-decoration="underline" font-size="8.00">load</text>
+<text text-anchor="start" x="294.5" y="-361.6" font-family="Arial" font-size="8.00"> </text>
 <text text-anchor="middle" x="175" y="-421.6" font-family="Arial" font-size="8.00">Transition fetch: </text>
 </g>
 <!-- place_new&#45;&gt;transition_fetch -->

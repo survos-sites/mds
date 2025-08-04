@@ -10,8 +10,10 @@ Markdown for GrpWorkflow
 
 ### get_api_key.Transition
 
-        onFetchApiKey()
+onFetchApiKey()
+        // fetch the initial API key
         // fetch key from https://museumdata.uk/get-api-token/get_api_token.php
+
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_API_KEY)]
 public function onFetchApiKey(TransitionEvent $event): void
@@ -43,8 +45,10 @@ public function onFetchApiKey(TransitionEvent $event): void
 
 ### extract.Transition
 
-        onDispatchExtract()
+onDispatchExtract()
+        // create initial extract
         // fetch data using token, AND create the next extract from next_token
+
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_EXTRACT)]
 public function onDispatchExtract(TransitionEvent $event): void

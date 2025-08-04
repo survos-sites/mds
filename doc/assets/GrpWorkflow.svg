@@ -39,7 +39,9 @@
 <ellipse fill="lightgreen" stroke="lightBlue" cx="407" cy="-491" rx="72" ry="36"/>
 <text text-anchor="start" x="396" y="-501.6" font-family="Arial" font-weight="bold" font-size="8.00">ready</text>
 <text text-anchor="start" x="376" y="-493.6" font-family="Arial" font-style="italic" font-size="8.00">has initial API key</text>
-<text text-anchor="start" x="383" y="-477.6" font-family="Arial" font-size="8.00">Then: extract</text>
+<text text-anchor="start" x="381" y="-477.6" font-family="Arial" font-size="8.00">Then: </text>
+<text text-anchor="start" x="405" y="-477.6" font-family="Arial" text-decoration="underline" font-size="8.00">extract</text>
+<text text-anchor="start" x="430" y="-477.6" font-family="Arial" font-size="8.00"> </text>
 <text text-anchor="middle" x="311.5" y="-529.6" font-family="Arial" font-size="8.00">Place ready: </text>
 </g>
 <!-- transition_extract -->

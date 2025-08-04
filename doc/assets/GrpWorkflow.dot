@@ -4,7 +4,7 @@ digraph workflow {
   edge [fontsize="7" fontname="Arial" color="#333333" arrowhead="normal" arrowsize="0.5"];
 
   place_basic [label=<<B>basic</B><BR/><I>created during load:Grp</I>>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place basic: Basic data from https://museumdata.uk/explore-collections"];
-  place_ready [label=<<B>ready</B><BR/><I>has initial API key</I><BR/><BR/>Then: extract>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place ready: "];
+  place_ready [label=<<B>ready</B><BR/><I>has initial API key</I><BR/><BR/>Then: <U>extract</U> >, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place ready: "];
   place_extracting [label=<<B>extracting</B>>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place extracting: "];
   place_finished [label=<<B>finished</B>>, shape=oval fillcolor="lightgreen" style="filled" xlabel="Place finished: "];
   transition_get_api_key [label=<<B>get_api_key</B><BR/><I>fetch the initial API key</I>>, shape="box" regular="" xlabel="Transition get_api_key: fetch key from https://museumdata.uk/get-api-token/get_api_token.php"];

@@ -10,8 +10,10 @@ Markdown for ExtractWorkflow
 
 ### fetch.Transition
 
-        onFetch()
+onFetch()
+        // fetch json, dispatch next extract
         // 
+
 ```php
     #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
     public function onFetch(TransitionEvent $event): array
@@ -68,8 +70,10 @@ Markdown for ExtractWorkflow
 
 ### fetch.Completed
 
-        onFetchComplete()
+onFetchComplete()
+        // fetch json, dispatch next extract
         // 
+
 ```php
 #[AsCompletedListener(self::WORKFLOW_NAME, self::TRANSITION_FETCH)]
 public function onFetchComplete(CompletedEvent $event): void
@@ -94,8 +98,10 @@ public function onFetchComplete(CompletedEvent $event): void
 
 ### load.Transition
 
-        onLoadFromExtractData()
+onLoadFromExtractData()
+        // entity data from raw
         // 
+
 ```php
 #[AsTransitionListener(self::WORKFLOW_NAME, self::TRANSITION_LOAD)]
 public function onLoadFromExtractData(TransitionEvent $event): array
