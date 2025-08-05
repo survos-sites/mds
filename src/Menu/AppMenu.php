@@ -74,6 +74,7 @@ final class AppMenu implements KnpMenuHelperInterface
             $this->add($menu, 'zenstruck_messenger_monitor_dashboard', label: "*msg");
         }
         $this->add($menu, 'survos_workflow_entities', label: "*entities");
+        $this->add($menu, 'admin', label: "ez");
 
 
 //        $subMenu = $this->addSubmenu($menu, 'meili_insta');

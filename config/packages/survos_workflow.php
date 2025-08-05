@@ -16,6 +16,7 @@ return static function (FrameworkConfig $framework) {
 //            \App\Workflow\SourceWorkflow::class,
                     ExtractWorkflow::class,
                     RecordWorkflow::class,
+                    \App\Workflow\SourceWorkflow::class,
                     GrpWorkflow::class,
                     \App\Workflow\MuseumObjectWorkflow::class,
                  ] as $workflowClass) {
