@@ -81,9 +81,9 @@ final class AppMenu implements KnpMenuHelperInterface
 
 //        foreach ($this->meiliService->)
             foreach ($this->meiliService->indexedEntities as $class) {
-                $indexName = $this->meiliService->getPrefixedIndexName($class);
+//                $indexName = $this->meiliService->getPrefixedIndexName($class);
                 $shortClass = new \ReflectionClass($class)->getShortName();
-            $this->add($menu, 'meili_insta', ['indexName' => $indexName],
+            $this->add($menu, 'meili_insta', ['indexName' => $class],
                 badge: SurvosUtils::formatLargeNumber($this->workflowHelperService->getApproxCount($class)),
                 label: $shortClass);
         }
@@ -106,7 +106,6 @@ final class AppMenu implements KnpMenuHelperInterface
 //        }
 //
         $this->add($menu, 'api_entrypoint', label: 'API', external: true);
-        $this->add($menu, 'app_extract', label: 'extracts');
 
         if ($this->isEnv('dev')) {
             $this->add($menu, 'survos_command', [
