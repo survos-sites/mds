@@ -18,33 +18,16 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use Survos\CoreBundle\Controller\BaseCrudController;
 use Survos\WorkflowBundle\Traits\EasyMarkingTrait;
 use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\Workflow\WorkflowInterface;
 
-abstract class CrudController extends AbstractCrudController
+abstract class CrudController extends BaseCrudController
 {
     use EasyMarkingTrait;
 
-    // EasyMarkingTrait
-    private function markingChoice(): ChoiceField
-    {
-        return ChoiceField::new('marking')->setChoices(
-            $this->workflow->getDefinition()->getPlaces()
-        );
-    }
-
-    public function xxconfigureActions(Actions $actions): Actions
-    {
-        return $actions
-            ->remove(Crud::PAGE_INDEX, Action::NEW)
-            ->remove(Crud::PAGE_INDEX, Action::DELETE)
-            // Add the 'DETAIL' action on the index page
-            ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            ;
-    }
-
-    public function configureActions(Actions $actions): Actions
+    public function XXconfigureActions(Actions $actions): Actions
     {
         return parent::configureActions($actions)
             ->setPermission(Action::NEW, 'ROLE_ADMIN')
