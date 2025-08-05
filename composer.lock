@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "199cd4e7bc5dba354ec348a5ba7ba4db",
+    "content-hash": "290448430e3fc88727e5a861bb668ca8",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -4951,7 +4951,7 @@
         },
         {
             "name": "survos/bootstrap-bundle",
-            "version": "1.6.22",
+            "version": "1.6.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/BootstrapBundle.git",
@@ -5038,7 +5038,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/BootstrapBundle/issues",
-                "source": "https://github.com/survos/BootstrapBundle/tree/1.6.22"
+                "source": "https://github.com/survos/BootstrapBundle/tree/1.6.23"
             },
             "funding": [
                 {
@@ -5050,7 +5050,7 @@
         },
         {
             "name": "survos/command-bundle",
-            "version": "1.6.22",
+            "version": "1.6.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCommandBundle.git",
@@ -5106,7 +5106,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCommandBundle/issues",
-                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.6.22"
+                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.6.23"
             },
             "funding": [
                 {
@@ -5118,7 +5118,7 @@
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.6.22",
+            "version": "1.6.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
@@ -5196,7 +5196,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.6.22"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.6.23"
             },
             "funding": [
                 {
@@ -5208,7 +5208,7 @@
         },
         {
             "name": "survos/crawler-bundle",
-            "version": "1.6.22",
+            "version": "1.6.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCrawlerBundle.git",
@@ -5292,7 +5292,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCrawlerBundle/issues",
-                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.6.22"
+                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.6.23"
             },
             "funding": [
                 {
@@ -5304,7 +5304,7 @@
         },
         {
             "name": "survos/inspection-bundle",
-            "version": "1.6.22",
+            "version": "1.6.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosInspectionBundle.git",
@@ -5381,7 +5381,7 @@
             "description": "Inspects Doctrine entities with APIPlatform attributes",
             "support": {
                 "issues": "https://github.com/survos/SurvosInspectionBundle/issues",
-                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.6.22"
+                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.6.23"
             },
             "funding": [
                 {
@@ -5456,7 +5456,7 @@
         },
         {
             "name": "survos/meili-bundle",
-            "version": "1.6.22",
+            "version": "1.6.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/meili-bundle.git",
@@ -5519,7 +5519,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/meili-bundle/issues",
-                "source": "https://github.com/survos/meili-bundle/tree/1.6.22"
+                "source": "https://github.com/survos/meili-bundle/tree/1.6.23"
             },
             "funding": [
                 {
@@ -5531,7 +5531,7 @@
         },
         {
             "name": "survos/simple-datatables-bundle",
-            "version": "1.6.22",
+            "version": "1.6.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosSimpleDatatablesBundle.git",
@@ -5596,7 +5596,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosSimpleDatatablesBundle/issues",
-                "source": "https://github.com/survos/SurvosSimpleDatatablesBundle/tree/1.6.22"
+                "source": "https://github.com/survos/SurvosSimpleDatatablesBundle/tree/1.6.23"
             },
             "funding": [
                 {
@@ -5608,7 +5608,7 @@
         },
         {
             "name": "survos/workflow-helper-bundle",
-            "version": "1.6.22",
+            "version": "1.6.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosWorkflowHelperBundle.git",
@@ -5705,7 +5705,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosWorkflowHelperBundle/issues",
-                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.6.22"
+                "source": "https://github.com/survos/SurvosWorkflowHelperBundle/tree/1.6.23"
             },
             "funding": [
                 {
