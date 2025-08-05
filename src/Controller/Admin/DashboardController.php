@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Extract;
 use App\Entity\Grp;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -59,7 +60,7 @@ class DashboardController extends AbstractDashboardController
             $shortName = new \ReflectionClass($class)->getShortName();
             yield MenuItem::linkToCrud($shortName, 'fas fa-list', $class);
             yield MenuItem::linkToRoute($shortName . ' Search', 'fas fa-search', 'meili_insta', ['indexName' => $class]);
-
         }
+        yield MenuItem::linkToCrud("Extracts", 'fas fa-list', Extract::class);
     }
 }
