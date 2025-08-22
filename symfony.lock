@@ -159,6 +159,9 @@
     "pierstoval/smoke-testing": {
         "version": "v1.2.0"
     },
+    "survos/babel-bundle": {
+        "version": "dev-main"
+    },
     "survos/bootstrap-bundle": {
         "version": "1.5.507"
     },

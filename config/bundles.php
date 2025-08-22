@@ -35,4 +35,5 @@ return [
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
     Jwage\PhpAmqpLibMessengerBundle\PhpAmqpLibMessengerBundle::class => ['all' => true],
     EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle::class => ['all' => true],
+    Survos\BabelBundle\SurvosBabelBundle::class => ['all' => true],
 ];
