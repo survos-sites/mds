@@ -3,6 +3,8 @@
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
+    "name": "survos-sites/mds",
+    "description": "museumdata.uk (original, moved to md)",
     "require": {
         "php": "^8.4",
         "ext-ctype": "*",
@@ -105,15 +107,17 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
+            
             "assets:install %PUBLIC_DIR% --symlink --relative": "symfony-cmd",
-            "fos:js-routing:dump --format=js --target=public/js/fos_js_routes.js --callback=\"export default \"": "symfony-cmd",
+            "fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json": "symfony-cmd",
             "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
+            "php -d memory_limit=512M bin/console cache:clear",
             "@auto-scripts"
         ],
         "post-update-cmd": [
+            "php -d memory_limit=512M bin/console cache:clear",
             "@auto-scripts"
         ]
     },

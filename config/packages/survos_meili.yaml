@@ -3,3 +3,7 @@ survos_meili:
   apiKey: '%env(default::MEILI_API_KEY)%'
 
 
+  chat:
+    workspaces:
+      meili_assistant:
+        apiKey: '%env(OPENAI_API_KEY)%'
